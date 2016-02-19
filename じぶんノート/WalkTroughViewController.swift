@@ -11,7 +11,6 @@ import UIKit
 class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
 
     
-    var test:UILabel!
   
     var titleLabel:UILabel!
     var subTextLabel:UILabel!
