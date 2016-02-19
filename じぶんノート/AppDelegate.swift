@@ -7,17 +7,106 @@
 //
 
 import UIKit
+import Photos
+import Fabric
+import Crashlytics
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    //取得した写真を入れる配列
+    var photosAssets = [PHAsset]()
+    
+    var textData:String?
+    
+    //タブバーから直接立ち上げたカメラか？
+    var tabBarCamera:Bool?
+    
+    //カメラ経由かどうかを判定
+    var textOrCameraFlag:Bool?
+    
+    //noPhotoButton経由の場合
+    var noPhotoButtonTaped:Bool?
+    
+    //アルバム経由かどうか
+    var albumFlag:Bool?
+    
+    //アルバム→カメラ→アルバム
+    var returnCamera:Bool = false
+    
+    //タイマー経由
+    var timerFlag:Bool?
+    
+    //タイムラインとノート作成画面からの遷移を判定
+    var noteFlag:Bool?
+    //noteDetailからphotoDetailに渡す
+    var detailPhoto:UIImage?
+    var detailPhotoId = 0
+    
+    //カメラ経由かどうかを判定
+    var cameraViewFlag:Bool?
+    //写真の追加であることを知らせる。
+    var addPhotoFlag:Bool?
+    //編集したいノートのid
+    var editNoteId:Int?
+    //編集したノートのNSdate
+    var editNoteDate:NSDate?
+    //ノートの写真枚数
+    var photosCount = 0
+    //新規作成→キャンセルからの写真やコメント追加
+    var cancelAdd:Bool?
 
+    //初回起動時に呼ばれる
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Fabric.with([Crashlytics.self])
+        
+        
+        //グーグルアナリティクス
+        var configureError:NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil,"Error congiguring Google services:\(configureError)")
+        
+        var gai = GAI.sharedInstance()
+        gai.trackUncaughtExceptions = true
+        gai.logger.logLevel = GAILogLevel.Verbose
+        
+        
+        //UserDefaultsにtrueを保存
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let dic = ["firstLunch":true]
+        userDefaults.registerDefaults(dic)
+        
+
+        let storyBorad = UIStoryboard(name: "Main", bundle: nil)
+        var viewController = UIViewController()
+        
+        if userDefaults.boolForKey("firstLunch"){
+            
+             viewController = storyBorad.instantiateViewControllerWithIdentifier("WalkTrough") as!
+                 WalkTroughViewController
+              // userDefaults.setBool(false, forKey: "firstLunch")
+            
+        }else{
+            
+             viewController = storyBorad.instantiateViewControllerWithIdentifier("navi1")
+             //userDefaults.setBool(true, forKey: "firstLunch")
+        }
+        
+        self.window?.rootViewController = viewController
+        //self.window?.makeKeyAndVisible()
+        
+        let UIUserNotification:UIUserNotificationType = [UIUserNotificationType.Alert,UIUserNotificationType.Sound]
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotification, categories: nil))
+        
         return true
     }
+    
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

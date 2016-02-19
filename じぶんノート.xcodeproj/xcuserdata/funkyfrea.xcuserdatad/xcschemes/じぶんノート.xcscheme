@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "59B7BF431C19B48C008878B2"
-               BuildableName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.app"
-               BlueprintName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
+               BuildableName = "TSUBAKI.app"
+               BlueprintName = "&#x3058;&#x3076;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
                ReferencedContainer = "container:&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -53,8 +53,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59B7BF431C19B48C008878B2"
-            BuildableName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.app"
-            BlueprintName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
+            BuildableName = "TSUBAKI.app"
+            BlueprintName = "&#x3058;&#x3076;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
             ReferencedContainer = "container:&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -76,8 +76,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59B7BF431C19B48C008878B2"
-            BuildableName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.app"
-            BlueprintName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
+            BuildableName = "TSUBAKI.app"
+            BlueprintName = "&#x3058;&#x3076;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
             ReferencedContainer = "container:&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -95,8 +95,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59B7BF431C19B48C008878B2"
-            BuildableName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.app"
-            BlueprintName = "&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
+            BuildableName = "TSUBAKI.app"
+            BlueprintName = "&#x3058;&#x3076;&#x3093;&#x30ce;&#x30fc;&#x30c8;"
             ReferencedContainer = "container:&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
