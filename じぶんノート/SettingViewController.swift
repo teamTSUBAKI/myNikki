@@ -69,7 +69,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 0:
             return 2
         case 1:
-            return 2
+            return 1
         default:
             return 0
         }
@@ -100,12 +100,14 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             switch indexPath.row{
             case 0:
-                cell.Photo.image = UIImage(named: "Icon-Small-1")
-                cell.TSUBAKILabel.text = "TSUBAKI"
+                cell.Photo.image = UIImage(named: "114")
+                cell.TSUBAKILabel.text = "trim"
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
             case 1:
                 
                 cells.menuLabel.text = "バージョン"
                 cells.accessoryLabel.text = "1.0.0"
+                cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
             default:
                 cell.textLabel?.text = "エラー"
@@ -120,9 +122,6 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 0:
                 cell.textLabel?.text = "フィードバック・改善要望を送る"
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            case 1:
-                cell.textLabel?.text = "レビューを書く"
-                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             default:
                 cell.textLabel?.text = "エラー"
             }
@@ -132,6 +131,8 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         return cell
         
     }
+    
+
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -153,6 +154,8 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
                 mailController.setSubject("フィードバック・改善要望")
                 mailController.setToRecipients(toAddress)
                 mailController.setCcRecipients(ccAddress)
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 
                 self.presentViewController(mailController, animated: true, completion: nil)
             }

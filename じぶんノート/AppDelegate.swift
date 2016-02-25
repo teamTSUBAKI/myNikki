@@ -89,12 +89,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
              viewController = storyBorad.instantiateViewControllerWithIdentifier("WalkTrough") as!
                  WalkTroughViewController
-              // userDefaults.setBool(false, forKey: "firstLunch")
+            
             
         }else{
             
              viewController = storyBorad.instantiateViewControllerWithIdentifier("navi1")
-             //userDefaults.setBool(true, forKey: "firstLunch")
+            // userDefaults.setBool(true, forKey: "firstLunch")
         }
         
         self.window?.rootViewController = viewController

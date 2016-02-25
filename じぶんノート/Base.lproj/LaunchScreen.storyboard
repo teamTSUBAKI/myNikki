@@ -14,14 +14,29 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="スプラッシュ画面(2208x1242).fw" translatesAutoresizingMaskIntoConstraints="NO" id="9bC-Ne-tew">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="9bC-Ne-tew" secondAttribute="bottom" id="0jP-6e-Ir3"/>
+                            <constraint firstAttribute="trailing" secondItem="9bC-Ne-tew" secondAttribute="trailing" id="B8W-Aq-0gn"/>
+                            <constraint firstItem="9bC-Ne-tew" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Z26-6n-o9U"/>
+                            <constraint firstItem="9bC-Ne-tew" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="e2I-36-8ky"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="8" y="290"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="スプラッシュ画面(2208x1242).fw" width="621" height="1104"/>
+    </resources>
 </document>

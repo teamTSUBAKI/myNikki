@@ -990,14 +990,17 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lm-ij-fSD">
-                                                    <rect key="frame" x="86" y="25" width="94" height="28"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                    <rect key="frame" x="86" y="25" width="94" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="94" id="Gyi-nc-VX7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7lm-ij-fSD" firstAttribute="leading" secondItem="eIe-us-Qd6" secondAttribute="trailing" constant="8" id="MiX-e9-s0k"/>
+                                                <constraint firstItem="7lm-ij-fSD" firstAttribute="leading" secondItem="eIe-us-Qd6" secondAttribute="trailing" constant="12" id="LxV-Xo-HxA"/>
                                                 <constraint firstItem="eIe-us-Qd6" firstAttribute="leading" secondItem="v3O-F2-YJs" secondAttribute="leading" constant="8" id="RF7-Fz-IOZ"/>
                                                 <constraint firstItem="eIe-us-Qd6" firstAttribute="top" secondItem="v3O-F2-YJs" secondAttribute="top" constant="4" id="h1C-ar-EUl"/>
                                                 <constraint firstItem="7lm-ij-fSD" firstAttribute="top" secondItem="v3O-F2-YJs" secondAttribute="top" constant="25" id="peS-fm-wWP"/>
@@ -1008,7 +1011,7 @@
                                             <outlet property="TSUBAKILabel" destination="7lm-ij-fSD" id="GOP-wJ-Y7D"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="other" id="PGs-RU-nef" customClass="SettingOtherTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="other" id="PGs-RU-nef" customClass="SettingOtherTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="172" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PGs-RU-nef" id="Kjr-0A-wGb">

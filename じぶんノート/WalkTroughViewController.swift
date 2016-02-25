@@ -12,6 +12,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
 
     
   
+    let screenHeight = Double(UIScreen.mainScreen().bounds.size.height)
     var titleLabel:UILabel!
     var subTextLabel:UILabel!
     var descriptionTextView:UITextView!
@@ -67,24 +68,51 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
             //titleLabel.hidden = true
             //descroptionLabel.hidden = true
             
-            let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1),70,self.view.bounds.width,self.view.bounds.height-200))
-            v.image = UIImage(named: pageImage[p-1]!)
-            v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
-            v.contentMode = UIViewContentMode.ScaleAspectFit
-            self.scrollView.addSubview(v)
+               switch screenHeight{
+                
+                case 480:
+                 let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1),20,self.view.bounds.width,self.view.bounds.height-150))
+                 v.image = UIImage(named: pageImage[p-1]!)
+                 v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                 v.contentMode = UIViewContentMode.ScaleAspectFit
+                 self.scrollView.addSubview(v)
+               
+                case 568:
+                 let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 170))
+                 v.image = UIImage(named: pageImage[p-1]!)
+                 v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                 v.contentMode = UIViewContentMode.ScaleAspectFit
+                self.scrollView.addSubview(v)
+                
+                case 667:
+                let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 200))
+                v.image = UIImage(named: pageImage[p-1]!)
+                v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                v.contentMode = UIViewContentMode.ScaleAspectFit
+                self.scrollView.addSubview(v)
+                
+                case 736:
+                let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 200))
+                v.image = UIImage(named: pageImage[p-1]!)
+                v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                v.contentMode = UIViewContentMode.ScaleAspectFit
+                self.scrollView.addSubview(v)
+
+                default:
+                print("エラー")
+                }
+           
             }else{
                 
-                
-                
                 titleLabel = UILabel(frame: CGRectMake(0,0,250,44))
-                titleLabel.text = "成長サポートアプリ"
+                titleLabel.text = "写真で成長ノート"
                 titleLabel.textAlignment = NSTextAlignment.Center
                 titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
                 titleLabel.textColor = UIColor.whiteColor()
                 titleLabel.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2-160)
                 
                 subTextLabel = UILabel(frame: CGRectMake(0,0,250,44))
-                subTextLabel.text = "TSUBAKI"
+                subTextLabel.text = "trim"
                 subTextLabel.textColor = UIColor.whiteColor()
                 subTextLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
                 subTextLabel.textAlignment = NSTextAlignment.Center

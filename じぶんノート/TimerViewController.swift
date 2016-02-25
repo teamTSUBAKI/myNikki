@@ -152,6 +152,8 @@ class TimerViewController: UIViewController {
         tracker.send(builder.build() as [NSObject:AnyObject])
     }
     
+    
+    
     func setNotification(){
         
         myNotification = UILocalNotification()
