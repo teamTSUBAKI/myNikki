@@ -20,6 +20,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     
     @IBOutlet weak var topImage: UIImageView!
     
+    @IBOutlet weak var noImagePhotoButtonHeight: NSLayoutConstraint!
     
     @IBOutlet weak var allViewContainerConst: NSLayoutConstraint!
     @IBOutlet weak var textViewContainerConst: NSLayoutConstraint!
@@ -289,11 +290,15 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             if note![0].photos.count == 0{
                 
                 self.imageViewY.constant = 150
+                self.topImageViewContainerHeight.constant = 250
+                
                 self.topImageViewHeight.constant = 0
-                self.topImageViewContainerHeight.constant = 150
                 self.imageViewHeight.constant = 0
+                
+                
                 toPhotoDetailButton.hidden = true
                 noImagePhotoButton.hidden = false
+                print("よ")
                 
             }else{
                 
@@ -609,8 +614,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 print("ゆい")
                 self.imageViewY.constant = 0
                 self.topImageViewHeight.constant = 0
-                self.topImageViewContainerHeight.constant = 150
+                self.topImageViewContainerHeight.constant = 200
                 self.imageViewHeight.constant = 0
+                self.noImagePhotoButtonHeight.constant = 200
                 toPhotoDetailButton.hidden = true
                 
             }else{

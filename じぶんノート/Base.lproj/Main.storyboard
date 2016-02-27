@@ -573,6 +573,7 @@
                         <outlet property="imageViewHeight" destination="HLI-4j-g8B" id="kwJ-TI-4OR"/>
                         <outlet property="imageViewY" destination="5tK-Oz-PYU" id="Q9H-gP-bYc"/>
                         <outlet property="noImagePhotoButton" destination="slr-nq-utf" id="Sfc-db-D0B"/>
+                        <outlet property="noImagePhotoButtonHeight" destination="TNe-F6-UIu" id="A7e-HL-bHn"/>
                         <outlet property="nonImageView1" destination="G3w-si-FfP" id="rzF-zL-qdx"/>
                         <outlet property="nonImageView2" destination="Cko-Yj-IZd" id="r3X-ah-UIS"/>
                         <outlet property="nonImageView3" destination="Zfs-QF-dL2" id="Auw-xd-z0V"/>
