@@ -256,6 +256,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                         self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
                         appDelegate?.addPhotoFlag = false
                         appDelegate?.noteFlag = true
+                        appDelegate?.noPhotoButtonTaped = false
                         print("ウグイス")
                     }else if appDelegate?.noteFlag == false && appDelegate?.returnCamera == false{
                         
@@ -556,14 +557,21 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     
     @IBAction func canceButton(sender: AnyObject) {
         print("キャンセル")
+        appDelegate?.noPhotoButtonTaped = false
         if appDelegate?.textOrCameraFlag == true{
+       
             self.presentingViewController!.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             appDelegate?.addPhotoFlag = false
             appDelegate?.textOrCameraFlag = false
             appDelegate?.cameraViewFlag = false
+                   print("キャンスる")
+          
         }else{
+            
             appDelegate?.addPhotoFlag = false
             self.dismissViewControllerAnimated(true, completion: nil)
+            print("キャンス")
+        
             
         }
         
