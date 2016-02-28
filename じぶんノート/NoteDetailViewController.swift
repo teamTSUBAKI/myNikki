@@ -100,7 +100,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         print("タイマーの結果\(allTime)")
         
-        noImagePhotoButton.hidden = true
+
         
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
@@ -153,6 +153,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
         
+        //とりあえず最初は隠しておいて、状況に応じて表示する
+        noImagePhotoButton.hidden = true
+        timerLabels.hidden = true
+        
         
     }
     
@@ -170,6 +174,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         self.photoSet()
         self.hightFirstLineInTextView(textView)
+ 
         
     }
     //一行目を太字にしたい
@@ -298,6 +303,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 
                 toPhotoDetailButton.hidden = true
                 noImagePhotoButton.hidden = false
+                
                 print("よ")
                 
             }else{
@@ -307,7 +313,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 
                 toPhotoDetailButton.hidden = false
                 noImagePhotoButton.hidden = true
-                
+        
                 for ind in 1...4{
                     
                     if ind == 1{
@@ -407,6 +413,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if myTimers >= 3600{
                 
+                timerLabels.hidden = false
                 timerLabels.textColor = UIColor.whiteColor()
                 timerLabels.text = "タイム：\(hours)時間\(minutes)分\(seconds)秒"
                 timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
@@ -417,7 +424,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 
             }else if myTimers >= 1{
                 
-            
+                timerLabels.hidden = false
                 timerLabels.textColor = UIColor.whiteColor()
                 timerLabels.text = "タイム：\(minutes)分\(seconds)秒"
                 timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
@@ -571,6 +578,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if myTime >= 3600{
                 
+                timerLabels.hidden = false
                 timerLabels.textColor = UIColor.whiteColor()
                 timerLabels.text = "タイム：\(hours)時間\(minutes)分\(seconds)秒"
                 timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
@@ -584,6 +592,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             }else if myTime >= 1{
                 print("ゆいこ")
                 
+                timerLabels.hidden = false
                 timerLabels.textColor = UIColor.whiteColor()
                 timerLabels.text = "タイム：\(minutes)分\(seconds)秒"
                 timerLabelWidth.constant = 130
@@ -987,6 +996,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         self.tabBarController?.tabBar.hidden = false
         self.tabBarController?.view.subviews[2].hidden = false
         
+        
+        
         //タイムラインに戻るボタンが押されたら
         let viewControllers = self.navigationController?.viewControllers
         if indexOfArray(viewControllers!,searchObject:self) == nil{
@@ -1099,6 +1110,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         
     }
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
