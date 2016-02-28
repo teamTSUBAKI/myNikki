@@ -71,13 +71,15 @@ class CalendarView: UIView,UIScrollViewDelegate {
         let monthPhotos = realm.objects(Photos).filter(predicate)
         let allPhotos = realm.objects(Photos)
         
-        monthPhotoCount = UILabel(frame: CGRectMake(photoCountView.frame.size.width/4.0-40,20,120,21))
+        monthPhotoCount = UILabel(frame: CGRectMake(photoCountView.frame.size.width/4.0-40,20,140,21))
         monthPhotoCount.textColor = UIColor.grayColor()
         monthPhotoCount.text = "今月：\(monthPhotos.count)フォト"
+    
         
-        allPhotoCount = UILabel(frame: CGRectMake(photoCountView.frame.size.width/4.0*3.0-60,20,140,21))
+        allPhotoCount = UILabel(frame: CGRectMake(photoCountView.frame.size.width/4.0*3.0-70,20,150,21))
         allPhotoCount.textColor = UIColor.grayColor()
         allPhotoCount.text = "すべて：\(allPhotos.count)フォト"
+        
         
         
         yearAndManthLabel = UILabel(frame:CGRectMake(yearAndMonthView.frame.size.width/2 - 30,20,70,21))
