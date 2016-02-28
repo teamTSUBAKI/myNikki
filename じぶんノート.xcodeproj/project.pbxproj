@@ -39,6 +39,13 @@
 		594A5F971C365AF1002CB673 /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */; };
 		595E86CA1C5511A70048BEF5 /* SEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E86C91C5511A70048BEF5 /* SEManager.swift */; };
 		595E86D21C55B3D10048BEF5 /* pastel color1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */; };
+		59A04D421C82D16000C75001 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D411C82D16000C75001 /* SystemConfiguration.framework */; };
+		59A04D441C82D17200C75001 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D431C82D17200C75001 /* StoreKit.framework */; };
+		59A04D461C82D18000C75001 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D451C82D18000C75001 /* Security.framework */; };
+		59A04D481C82D19700C75001 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D471C82D19700C75001 /* QuartzCore.framework */; };
+		59A04D4A1C82D1A800C75001 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D491C82D1A800C75001 /* MobileCoreServices.framework */; };
+		59A04D4C1C82D1BA00C75001 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D4B1C82D1BA00C75001 /* CoreLocation.framework */; };
+		59A04D4E1C82D1C800C75001 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D4D1C82D1C800C75001 /* CoreGraphics.framework */; };
 		59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF471C19B48C008878B2 /* AppDelegate.swift */; };
 		59B7BF4D1C19B48C008878B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59B7BF4B1C19B48C008878B2 /* Main.storyboard */; };
 		59B7BF4F1C19B48C008878B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B7BF4E1C19B48C008878B2 /* Assets.xcassets */; };
@@ -104,6 +111,13 @@
 		594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		595E86C91C5511A70048BEF5 /* SEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SEManager.swift; sourceTree = "<group>"; };
 		595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pastel color1.mp3"; sourceTree = "<group>"; };
+		59A04D411C82D16000C75001 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		59A04D431C82D17200C75001 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		59A04D451C82D18000C75001 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		59A04D471C82D19700C75001 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		59A04D491C82D1A800C75001 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		59A04D4B1C82D1BA00C75001 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		59A04D4D1C82D1C800C75001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		59B7BF441C19B48C008878B2 /* TSUBAKI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TSUBAKI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B7BF471C19B48C008878B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59B7BF4C1C19B48C008878B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -140,6 +154,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59A04D4E1C82D1C800C75001 /* CoreGraphics.framework in Frameworks */,
+				59A04D4C1C82D1BA00C75001 /* CoreLocation.framework in Frameworks */,
+				59A04D4A1C82D1A800C75001 /* MobileCoreServices.framework in Frameworks */,
+				59A04D481C82D19700C75001 /* QuartzCore.framework in Frameworks */,
+				59A04D461C82D18000C75001 /* Security.framework in Frameworks */,
+				59A04D441C82D17200C75001 /* StoreKit.framework in Frameworks */,
+				59A04D421C82D16000C75001 /* SystemConfiguration.framework in Frameworks */,
 				593E999F1C673ABE005465D6 /* MessageUI.framework in Frameworks */,
 				59212E431C7361DE00CE845B /* Crashlytics.framework in Frameworks */,
 				593E99961C64DB78005465D6 /* Realm.framework in Frameworks */,
@@ -348,6 +369,13 @@
 		8E3C053D5C9F1907181E37B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				59A04D4D1C82D1C800C75001 /* CoreGraphics.framework */,
+				59A04D4B1C82D1BA00C75001 /* CoreLocation.framework */,
+				59A04D491C82D1A800C75001 /* MobileCoreServices.framework */,
+				59A04D471C82D19700C75001 /* QuartzCore.framework */,
+				59A04D451C82D18000C75001 /* Security.framework */,
+				59A04D431C82D17200C75001 /* StoreKit.framework */,
+				59A04D411C82D16000C75001 /* SystemConfiguration.framework */,
 				593E999E1C673ABE005465D6 /* MessageUI.framework */,
 				593E99951C64DB78005465D6 /* Realm.framework */,
 				593E99931C64DB6E005465D6 /* RealmSwift.framework */,
