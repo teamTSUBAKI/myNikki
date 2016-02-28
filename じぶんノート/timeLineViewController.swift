@@ -79,6 +79,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         let textButton = UIBarButtonItem(title: "メモを書く", style: .Plain, target: self, action: "textButtonTaped")
      
+        
+        
         self.navigationItem.rightBarButtonItem = textButton
         
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
@@ -133,6 +135,9 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     override func viewWillAppear(animated: Bool) {
         self.setupYearandMonth()
         
+    
+      
+        
         let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "TimeLine")
         let builder = GAIDictionaryBuilder.createScreenView()
@@ -164,12 +169,23 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
 
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        //ノートから戻るボタンで戻ってきた場合はnoteFlagを一度nilにする。
+        if appDelegate!.noteReturn == true{
+            
+            appDelegate!.noteFlag = nil
+            appDelegate!.noteReturn = false
+            
+        }
+    }
   
     
     
     //セクションヘッダーに年月を入れるための準備
     func setupYearandMonth(){
     //使用するカレンダーを選択
+        
     let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     //NSDate形式の情報から変換するフォーマットを作る
     let dateFormattaer:NSDateFormatter = NSDateFormatter()

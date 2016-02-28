@@ -58,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var photosCount = 0
     //新規作成→キャンセルからの写真やコメント追加
     var cancelAdd:Bool?
+    
+    //noteDetailからタイムラインに戻るボタンを押した場合
+    var noteReturn:Bool?
 
     //初回起動時に呼ばれる
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

@@ -158,6 +158,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         timerLabels.hidden = true
         
         
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -997,12 +999,13 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         self.tabBarController?.view.subviews[2].hidden = false
         
         
-        
         //タイムラインに戻るボタンが押されたら
         let viewControllers = self.navigationController?.viewControllers
         if indexOfArray(viewControllers!,searchObject:self) == nil{
             
-            appDelegate?.noteFlag = nil
+            //ここをnilじゃなくて、falseにしたらどうかな。影響を考える。
+            appDelegate?.noteFlag = false
+            appDelegate?.noteReturn = true
             appDelegate?.textData = nil
             appDelegate?.photosCount = 0
             
@@ -1011,6 +1014,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         super.viewWillDisappear(animated)
         
     }
+    
+
     
     func indexOfArray(array:[AnyObject],searchObject:AnyObject)->Int?{
         
@@ -1025,6 +1030,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         }
         return nil
     }
+    
+    
     
     /* override func viewDidLayoutSubviews() {
     let fixedWidth = textView.frame.size.width
