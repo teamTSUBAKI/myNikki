@@ -20,6 +20,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     var tableViewSections:NSMutableArray = []
     var tableViewCells:[NSString:[NSMutableArray]]?
 
+    var sectionHeding:NSString!
     
     var emptyStatLabel:UILabel!
     var descriptionLabel:UITextView!
@@ -225,19 +226,25 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             notes = realm.objects(Note).filter(predicate).sorted("id",ascending: false)
             
         }
+        
+        
     
         //帰ってきた全てのノートデータを取り出す
         for note in notes!  {
         
+            
+            
+            if note.createDate != nil{
             let coms:NSDateComponents = (calendar?.components(unit, fromDate: note.createDate!))!
-            let year:Int = coms.year
-            let month:Int = coms.month
-        
+             year = coms.year
+             month = coms.month
+            
             //ノートデータの年月が年、もしくは月が違うならば。次の月ならば。
             //こうすることで、同じ年の同じ月のデータの時は回らない。
-            if (year != previousYear || month != previousMonth){
+                if (year != previousYear || month != previousMonth){
     
-                let sectionHeding:NSString = dateFormattaer.stringFromDate(note.createDate!)
+                sectionHeding = dateFormattaer.stringFromDate(note.createDate!)
+                
                 //tableViewSectionsという配列に年月のデータを入れる。これがセクション数になる
                 self.tableViewSections.addObject(sectionHeding)
                 //これがないと、セルを消そうとした時おかしくなる。
@@ -246,8 +253,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
                 self.tableViewCells!["\(sectionHeding)"] = [tableViewCellsForSection]
                 
                 //ノートデータの年、月を入れる
-                previousYear = year
-                previousMonth = month
+                previousYear = year!
+                previousMonth = month!
                 
                 
             }
@@ -257,9 +264,17 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
             
             
+            }else{
+                
+                print("エラー")
+                
+            }
+    
         }
+        
     }
     
+        
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         print("セクションの数！\(self.tableViewSections.count)")
         return self.tableViewSections.count
@@ -283,6 +298,17 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
       return self.tableViewSections[section] as? String
         
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let label = UILabel()
+        label.backgroundColor = colorFromRGB.colorWithHexString("FCFCFC")
+        label.textAlignment = NSTextAlignment.Center
+        label.textColor = colorFromRGB.colorWithHexString("999999")
+        label.text = self.tableViewSections[section] as? String
+        
+        return label
     }
     
     

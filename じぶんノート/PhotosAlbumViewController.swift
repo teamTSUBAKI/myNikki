@@ -459,9 +459,11 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 note.id = maxNote[0].id + 1
             }
             
-            note.createDate = NSDate()
+            
+             note.createDate = NSDate()
+            
             /*
-            let date:String = "2016-2-16 23:06:12"
+            let date:String = "2017-5-17 23:30:12"
             let dateformatter:NSDateFormatter = NSDateFormatter()
             dateformatter.locale = NSLocale(localeIdentifier: "ja")
             dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
