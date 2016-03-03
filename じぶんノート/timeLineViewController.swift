@@ -222,7 +222,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             let realm = try!Realm()
             
             let predicate = NSPredicate(format: "createDate BETWEEN {%@,%@}", targetDate,lastTargetDate)
-            notes = realm.objects(Note).filter(predicate)
+            notes = realm.objects(Note).filter(predicate).sorted("id",ascending: false)
             
         }
     

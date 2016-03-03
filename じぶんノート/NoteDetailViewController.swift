@@ -18,6 +18,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     var path:String?
     var asset:PHFetchResult!
     
+    //共有などを行うためのボタン
+    var shareButton:UIButton!
+    
     @IBOutlet weak var topImage: UIImageView!
     
     @IBOutlet weak var noImagePhotoButtonHeight: NSLayoutConstraint!
@@ -535,6 +538,14 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             DateLabels.center = CGPointMake(self.view.bounds.width/2-30, 20)
             self.view.subviews[3].addSubview(DateLabels)
             
+            shareButton = UIButton(frame: CGRectMake(0,0,44,44))
+            shareButton.setImage(UIImage(named:"Plus-50"), forState: .Normal)
+            shareButton.addTarget(self, action: "sharedButtonTaped", forControlEvents: .TouchUpInside)
+            shareButton.center = CGPointMake(self.view.bounds.width - 20, 20)
+            self.view.subviews[3].addSubview(shareButton)
+            
+            
+            
             
             let minute = comps.minute.description
             if minute.characters.count == 1{
@@ -927,8 +938,148 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
     }
     
-    @IBAction func toPhotoDetailButtonTaped(sender: AnyObject) {
+    func sharedButtonTaped(){
         
+        self.createPDFFromView(self.view,saveToDocumentsWithFileName: "PDFファイル")
+        
+    }
+    
+    func createPDFFromView(aView:UIView,saveToDocumentsWithFileName FileName:String){
+        
+    
+       // UIGraphicsBeginPDFContextToData(PDFData, aView.bounds, nil)
+        let fileName = "シンプル1"
+        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        var path:NSString!
+        
+        if paths.count > 0{
+            
+            path = paths[0]
+            
+        }
+        
+        let fullname = fileName.stringByAppendingString(".pdf")
+        let pdfFileName = (path as NSString).stringByAppendingPathComponent(fullname)
+        
+        let PDFSize = CGRectMake(0, 0, 570, 850)
+        print(aView.bounds)
+        
+        UIGraphicsBeginPDFContextToFile(pdfFileName,PDFSize, nil)
+        UIGraphicsBeginPDFPage()
+        
+        if appDelegate?.noteFlag == true{
+            
+          let fileName = note![0].photos[0].filename
+          let filePath = (path as NSString).stringByAppendingPathComponent(fileName)
+          let image = UIImage(contentsOfFile: filePath)
+          
+        
+            
+          let point = CGPointMake(0, 0)
+          image?.drawAtPoint(point)
+            
+        }else{
+            
+            let fileName = notes?.photos[0].filename
+            let filePath = (path as NSString).stringByAppendingPathComponent(fileName!)
+            let image = UIImage(named: filePath)
+            
+            image?.drawInRect(CGRectMake(70, 50, 400, 480))
+            
+            let Rect:CGRect = CGRectMake(0, 0, 300, 400)
+            
+            drawString(Rect, Color: UIColor.blackColor().CGColor, FontSize: 24, ul: false)
+            
+            
+                    }
+        
+        UIGraphicsEndPDFContext()
+        
+       
+        
+    }
+    
+    //pdfに文字を描画するためのメソッド
+    func drawString(rect:CGRect,Color color:CGColorRef,FontSize fontSize:CGFloat,ul:Bool){
+        
+        //文字色やサイズを設定。
+        //フォントを設定
+        let font:CTFontRef = CTFontCreateUIFontForLanguage(CTFontUIFontType.kCTFontSystemFontType, fontSize, nil)!
+        
+        
+        //一行目を太字にするところを参考に書く。
+        let textAsNSString = textView.text as NSString
+        let lineBreakrange = textAsNSString.rangeOfString("\n")
+        
+        let newAttributedText = NSMutableAttributedString(attributedString: textView.attributedText)
+        let boldRange:NSRange!
+        if lineBreakrange.location < textAsNSString.length{
+            
+            boldRange = NSRange(location: 0, length: lineBreakrange.location)
+            
+        }else{
+            
+            boldRange = NSRange(location: 0, length: textAsNSString.length)
+        }
+        
+        //描画領域の準備
+        let frameSetter:CTFramesetterRef = CTFramesetterCreateWithAttributedString(newAttributedText)
+        let framePath:CGMutablePathRef = CGPathCreateMutable()
+        CGPathAddRect(framePath, nil, rect)
+        
+        //レンダリングをするフレームを取得
+        let currentRange:CFRange = CFRangeMake(0, 0)
+        let frameRef:CTFrameRef = CTFramesetterCreateFrame(frameSetter, currentRange, framePath, nil)
+        
+        //グラフィックコンテキストを取得
+        let currentContext:CGContextRef = UIGraphicsGetCurrentContext()!
+        
+        //コンテキストの保存
+        CGContextSaveGState(currentContext)
+        
+        //テキスト行列を既知の状態にする
+        CGContextSetTextMatrix(currentContext, CGAffineTransformIdentity)
+        
+        //coreTextは左下隅から上に向かって描画されるため、反転処理を行う
+        CGContextTranslateCTM(currentContext, 0, self.view.bounds.height)
+        CGContextScaleCTM(currentContext, 1.0, -1.0)
+        
+        //フレームを描画する
+        CTFrameDraw(frameRef, currentContext)
+        
+        //コンテキストの復元
+        CGContextRestoreGState(currentContext)
+        
+        
+        
+        
+        /*
+let textAsNSString = textViews.text as NSString
+let lineBreakRange = textAsNSString.rangeOfString("\n")
+
+let newAttributedText = NSMutableAttributedString(attributedString: textViews.attributedText)
+let boldRange:NSRange!
+if lineBreakRange.location < textAsNSString.length{
+boldRange = NSRange(location: 0, length: lineBreakRange.location)
+}else{
+
+boldRange = NSRange(location: 0, length: textAsNSString.length)
+
+}
+
+let Font:UIFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)!
+newAttributedText.addAttribute(NSFontAttributeName, value: Font, range: boldRange)
+
+let paragraphStyle = NSMutableParagraphStyle()
+paragraphStyle.lineSpacing = 15
+newAttributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: boldRange)
+
+textViews.attributedText = newAttributedText*/
+
+}
+
+    @IBAction func toPhotoDetailButtonTaped(sender: AnyObject) {
+
         appDelegate?.detailPhoto = topImage.image
         appDelegate?.detailPhotoId = presentTopImage
         
