@@ -863,6 +863,55 @@
             </objects>
             <point key="canvasLocation" x="2120" y="-488"/>
         </scene>
+        <!--メール/PDFで共有-->
+        <scene sceneID="fSQ-xW-58A">
+            <objects>
+                <viewController storyboardIdentifier="shareVC" id="Jp2-DE-bVM" customClass="shareViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="N9L-Zn-Ksu"/>
+                        <viewControllerLayoutGuide type="bottom" id="NyF-tT-Na4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YjS-sx-x5M">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XNe-HR-8Fr">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="shareCell" id="TFZ-rn-28P" customClass="shareTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TFZ-rn-28P" id="kwZ-9w-Vqu">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Jp2-DE-bVM" id="pcG-Aj-6m8"/>
+                                    <outlet property="delegate" destination="Jp2-DE-bVM" id="quM-1a-1c7"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XNe-HR-8Fr" firstAttribute="leading" secondItem="YjS-sx-x5M" secondAttribute="leading" id="FVn-gz-FDS"/>
+                            <constraint firstItem="XNe-HR-8Fr" firstAttribute="top" secondItem="YjS-sx-x5M" secondAttribute="top" id="Urm-TE-EoF"/>
+                            <constraint firstItem="NyF-tT-Na4" firstAttribute="top" secondItem="XNe-HR-8Fr" secondAttribute="bottom" id="abU-Tt-uRb"/>
+                            <constraint firstAttribute="trailing" secondItem="XNe-HR-8Fr" secondAttribute="trailing" id="sHT-6f-4e4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="メール/PDFで共有" id="vM0-i8-bhE"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="XNe-HR-8Fr" id="9nI-gY-W4x"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gxg-WP-JgN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3134" y="-488"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="v26-OD-Agd">
             <objects>
@@ -1286,6 +1335,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8XC-YR-Xz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-146" y="1030"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="teu-PY-8ER">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DHf-nf-CRi" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gJZ-75-cHI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Jp2-DE-bVM" kind="relationship" relationship="rootViewController" id="iVQ-9n-3Su"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I8N-lf-yX5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2731" y="-488"/>
         </scene>
     </scenes>
     <resources>

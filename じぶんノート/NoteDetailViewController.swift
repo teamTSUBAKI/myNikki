@@ -539,13 +539,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             self.view.subviews[3].addSubview(DateLabels)
             
             shareButton = UIButton(frame: CGRectMake(0,0,44,44))
-            shareButton.setImage(UIImage(named:"Plus-50"), forState: .Normal)
+            shareButton.setImage(UIImage(named:"Upload-50"), forState: .Normal)
             shareButton.addTarget(self, action: "sharedButtonTaped", forControlEvents: .TouchUpInside)
-            shareButton.center = CGPointMake(self.view.bounds.width - 20, 20)
+            shareButton.center = CGPointMake(self.view.bounds.width - 30, 20)
             self.view.subviews[3].addSubview(shareButton)
-            
-            
-            
             
             let minute = comps.minute.description
             if minute.characters.count == 1{
@@ -599,9 +596,6 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 timerLabels.layer.masksToBounds = true
                 timerLabels.layer.cornerRadius = 5
 
-                
-                
-                
             }else if myTime >= 1{
                 print("ゆいこ")
                 
@@ -626,8 +620,6 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             
         }else{
-            
-            
             
             if appDelegate?.timerFlag == true{
                 appDelegate?.timerFlag = false
@@ -940,6 +932,13 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     
     func sharedButtonTaped(){
         
+        let vc:shareViewController = self.storyboard?.instantiateViewControllerWithIdentifier("shareVC") as!
+            shareViewController
+        let navigation = UINavigationController()
+        navigation.viewControllers = [vc]
+        presentViewController(navigation, animated: true, completion: nil)
+        
+        
         self.createPDFFromView(self.view,saveToDocumentsWithFileName: "PDFファイル")
         
     }
@@ -947,80 +946,107 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     func createPDFFromView(aView:UIView,saveToDocumentsWithFileName FileName:String){
         
     
-       // UIGraphicsBeginPDFContextToData(PDFData, aView.bounds, nil)
+       
         let fileName = "シンプル1"
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        var path:NSString!
+        let tmpPath:NSString = NSTemporaryDirectory()
         
-        if paths.count > 0{
-            
-            path = paths[0]
-            
-        }
-        
+     
         let fullname = fileName.stringByAppendingString(".pdf")
-        let pdfFileName = (path as NSString).stringByAppendingPathComponent(fullname)
+        //PDFを作成し、一時的にtmpフォルダに保存。
+        let pdfFileName = tmpPath.stringByAppendingPathComponent(fullname)
         
         let PDFSize = CGRectMake(0, 0, 570, 850)
         print(aView.bounds)
         
         UIGraphicsBeginPDFContextToFile(pdfFileName,PDFSize, nil)
-        UIGraphicsBeginPDFPage()
+        //UIGraphicsBeginPDFPage()
+        
+        //.DocumentDirectryから写真データを引っ張ってくるために使うパス
+        let Path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        
+        if Path.count > 0{
+            path = Path[0]
+        }
         
         if appDelegate?.noteFlag == true{
             
           let fileName = note![0].photos[0].filename
-          let filePath = (path as NSString).stringByAppendingPathComponent(fileName)
+          let filePath = (path! as NSString).stringByAppendingPathComponent(fileName)
           let image = UIImage(contentsOfFile: filePath)
           
-        
-            
           let point = CGPointMake(0, 0)
           image?.drawAtPoint(point)
             
         }else{
             
-            let fileName = notes?.photos[0].filename
-            let filePath = (path as NSString).stringByAppendingPathComponent(fileName!)
-            let image = UIImage(named: filePath)
+            for ind in 1...notes!.photos.count{
             
-            image?.drawInRect(CGRectMake(70, 50, 400, 480))
+                //ページを定義
+                UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,570,850), nil)
+                if ind == 1{
+                 
+                    let day = "2016年３月４日金曜日１０：５６"
+                    let rect = CGRectMake(20, 70, 300, 300)
+                    let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
+                    
+                    drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+                    
+                }
+   
+                let fileName = notes?.photos[ind-1].filename
+                let filePath = (path! as NSString).stringByAppendingPathComponent(fileName!)
+                let image = UIImage(named: filePath)
             
-            let Rect:CGRect = CGRectMake(0, 0, 300, 400)
+                image?.drawInRect(CGRectMake(70, 50, 380, 480))
             
-            drawString(Rect, Color: UIColor.blackColor().CGColor, FontSize: 24, ul: false)
+            }
             
+            UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,570,850), nil)
+            let descriptionRect:CGRect = CGRectMake(0, 150, 200, 200)
+            let description:String = "メモ"
+          
+            drawString(description, rect: descriptionRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "AppleSDGothicNeo-Medium", ul: false)
+            
+            let textRect:CGRect = CGRectMake(0, 0, 300, 300)
+            drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "AppleSDGothicNeo-Light", ul: false)
             
                     }
         
         UIGraphicsEndPDFContext()
+        
         
        
         
     }
     
     //pdfに文字を描画するためのメソッド
-    func drawString(rect:CGRect,Color color:CGColorRef,FontSize fontSize:CGFloat,ul:Bool){
+    func drawString(string:String,rect:CGRect,Color color:CGColorRef,FontSize fontSize:CGFloat,Font fontname:String,ul:Bool){
         
         //文字色やサイズを設定。
         //フォントを設定
-        let font:CTFontRef = CTFontCreateUIFontForLanguage(CTFontUIFontType.kCTFontSystemFontType, fontSize, nil)!
+        //let font:CTFontRef = CTFontCreateUIFontForLanguage(CTFontUIFontType.kCTFontSystemFontType, fontSize, nil)!
+        
+        //参考にするコード
+        /*let Font:UIFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)!
+        newAttributedText.addAttribute(NSFontAttributeName, value: Font, range: boldRange)
+        */
         
         
-        //一行目を太字にするところを参考に書く。
-        let textAsNSString = textView.text as NSString
-        let lineBreakrange = textAsNSString.rangeOfString("\n")
+        let newAttributedText = NSMutableAttributedString(string: string)
+        let Font:UIFont = UIFont(name: fontname, size: fontSize)!
+        let ranges = NSRange(location: 0, length: newAttributedText.length)
+
+        newAttributedText.addAttribute(NSFontAttributeName, value: Font, range: ranges)
+        let textLength = newAttributedText.length
         
-        let newAttributedText = NSMutableAttributedString(attributedString: textView.attributedText)
-        let boldRange:NSRange!
-        if lineBreakrange.location < textAsNSString.length{
-            
-            boldRange = NSRange(location: 0, length: lineBreakrange.location)
-            
-        }else{
-            
-            boldRange = NSRange(location: 0, length: textAsNSString.length)
-        }
+        
+        //文字色を変えたい
+        //let rgbColorSpace:CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
+        //let components:[CGFloat] = [1.0,0.0,0.0,0.8]
+        // let color:CGColorRef = CGColorCreate(rgbColorSpace, components)!
+        CFAttributedStringSetAttribute(newAttributedText, CFRangeMake(0,textLength),kCTForegroundColorAttributeName, color)
+        
+        
         
         //描画領域の準備
         let frameSetter:CTFramesetterRef = CTFramesetterCreateWithAttributedString(newAttributedText)
@@ -1041,7 +1067,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         CGContextSetTextMatrix(currentContext, CGAffineTransformIdentity)
         
         //coreTextは左下隅から上に向かって描画されるため、反転処理を行う
-        CGContextTranslateCTM(currentContext, 0, self.view.bounds.height)
+        CGContextTranslateCTM(currentContext,50, 400)
+        
+        print("高さ\(self.view.bounds.height)")
         CGContextScaleCTM(currentContext, 1.0, -1.0)
         
         //フレームを描画する
@@ -1050,32 +1078,6 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         //コンテキストの復元
         CGContextRestoreGState(currentContext)
         
-        
-        
-        
-        /*
-let textAsNSString = textViews.text as NSString
-let lineBreakRange = textAsNSString.rangeOfString("\n")
-
-let newAttributedText = NSMutableAttributedString(attributedString: textViews.attributedText)
-let boldRange:NSRange!
-if lineBreakRange.location < textAsNSString.length{
-boldRange = NSRange(location: 0, length: lineBreakRange.location)
-}else{
-
-boldRange = NSRange(location: 0, length: textAsNSString.length)
-
-}
-
-let Font:UIFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)!
-newAttributedText.addAttribute(NSFontAttributeName, value: Font, range: boldRange)
-
-let paragraphStyle = NSMutableParagraphStyle()
-paragraphStyle.lineSpacing = 15
-newAttributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: boldRange)
-
-textViews.attributedText = newAttributedText*/
-
 }
 
     @IBAction func toPhotoDetailButtonTaped(sender: AnyObject) {

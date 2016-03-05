@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import Fabric
 import Crashlytics
+import SwiftyDropbox
 
 
 @UIApplicationMain
@@ -66,6 +67,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        Dropbox.setupWithAppKey("zhyddhnllulwogy")
+        
+        
         Fabric.with([Crashlytics.self])
         
         
@@ -109,6 +114,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        
+        if let authResult = Dropbox.handleRedirectURL(url){
+            switch authResult {
+                case .Success(let token):
+                 print("Sucess! User is logged into Dropbox with token: \(token)")
+           
+                case .Error(let error,let description):
+                 print("Error\(error):\(description)")
+                
+            }
+            
+            
+        }
+        return false
+        
+    }
     
 
     func applicationWillResignActive(application: UIApplication) {

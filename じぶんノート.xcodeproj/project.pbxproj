@@ -46,6 +46,8 @@
 		59A04D4A1C82D1A800C75001 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D491C82D1A800C75001 /* MobileCoreServices.framework */; };
 		59A04D4C1C82D1BA00C75001 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D4B1C82D1BA00C75001 /* CoreLocation.framework */; };
 		59A04D4E1C82D1C800C75001 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D4D1C82D1C800C75001 /* CoreGraphics.framework */; };
+		59A04D511C8AA9CF00C75001 /* shareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A04D501C8AA9CF00C75001 /* shareViewController.swift */; };
+		59A04D531C8AABAD00C75001 /* shareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A04D521C8AABAD00C75001 /* shareTableViewCell.swift */; };
 		59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF471C19B48C008878B2 /* AppDelegate.swift */; };
 		59B7BF4D1C19B48C008878B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59B7BF4B1C19B48C008878B2 /* Main.storyboard */; };
 		59B7BF4F1C19B48C008878B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B7BF4E1C19B48C008878B2 /* Assets.xcassets */; };
@@ -118,6 +120,8 @@
 		59A04D491C82D1A800C75001 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		59A04D4B1C82D1BA00C75001 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		59A04D4D1C82D1C800C75001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		59A04D501C8AA9CF00C75001 /* shareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shareViewController.swift; sourceTree = "<group>"; };
+		59A04D521C8AABAD00C75001 /* shareTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shareTableViewCell.swift; sourceTree = "<group>"; };
 		59B7BF441C19B48C008878B2 /* TSUBAKI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TSUBAKI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B7BF471C19B48C008878B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59B7BF4C1C19B48C008878B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -260,8 +264,6 @@
 			children = (
 				594A5F861C301E6C002CB673 /* timeLineViewController.swift */,
 				594A5F8A1C301EA1002CB673 /* timeLineTableViewCell.swift */,
-				594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */,
-				59F23BF61C3E466800E78103 /* PhotoDetailViewController.swift */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -273,6 +275,17 @@
 				594A5F921C360E79002CB673 /* CalendarViewNavigationController.swift */,
 			);
 			name = tabs;
+			sourceTree = "<group>";
+		};
+		59A04D4F1C8AA98300C75001 /* noteDetail */ = {
+			isa = PBXGroup;
+			children = (
+				594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */,
+				59F23BF61C3E466800E78103 /* PhotoDetailViewController.swift */,
+				59A04D501C8AA9CF00C75001 /* shareViewController.swift */,
+				59A04D521C8AABAD00C75001 /* shareTableViewCell.swift */,
+			);
+			name = noteDetail;
 			sourceTree = "<group>";
 		};
 		59B7BF3B1C19B48C008878B2 = {
@@ -303,6 +316,8 @@
 		59B7BF461C19B48C008878B2 /* じぶんノート */ = {
 			isa = PBXGroup;
 			children = (
+				593E99971C66312E005465D6 /* setting */,
+				59A04D4F1C8AA98300C75001 /* noteDetail */,
 				593E99A01C68C631005465D6 /* firstLunch */,
 				591A6F9F1C4FBC2300416A22 /* timer */,
 				592302C51C46854E00558322 /* calendar */,
@@ -310,7 +325,6 @@
 				594A5F8E1C301EC1002CB673 /* timeline */,
 				59B7BF761C19B544008878B2 /* 全体 */,
 				594A5F7D1C2E3A54002CB673 /* Common */,
-				593E99971C66312E005465D6 /* setting */,
 				59B7BF751C19B51D008878B2 /* note */,
 				594A5F771C2D47DF002CB673 /* Database */,
 				59B7BF471C19B48C008878B2 /* AppDelegate.swift */,
@@ -687,6 +701,8 @@
 				59B7BF781C19B5C1008878B2 /* TabBarController.swift in Sources */,
 				59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */,
 				59B7BF7A1C1AFAC2008878B2 /* CameraViewController.swift in Sources */,
+				59A04D531C8AABAD00C75001 /* shareTableViewCell.swift in Sources */,
+				59A04D511C8AA9CF00C75001 /* shareViewController.swift in Sources */,
 				59F23BF71C3E466800E78103 /* PhotoDetailViewController.swift in Sources */,
 				593E999B1C66348D005465D6 /* SettingTableViewCell.swift in Sources */,
 				595E86CA1C5511A70048BEF5 /* SEManager.swift in Sources */,
