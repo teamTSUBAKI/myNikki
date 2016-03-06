@@ -93,7 +93,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         }
         
         //realmをデータベースごと消したいときに使う
-      /* if let path = Realm.Configuration.defaultConfiguration.path{
+    /*   if let path = Realm.Configuration.defaultConfiguration.path{
             try?NSFileManager.defaultManager().removeItemAtPath(path)
             
         }*/
@@ -109,7 +109,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         })*/
         
         //Documentのデータを全部消す
-     //   try?NSFileManager.defaultManager().removeItemAtPath(path!)
+      // try?NSFileManager.defaultManager().removeItemAtPath(path!)
         
          self.setupYearandMonth()
         

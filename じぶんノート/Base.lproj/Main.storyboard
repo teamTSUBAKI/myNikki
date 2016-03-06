@@ -491,7 +491,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="130" id="UwP-KH-Z9F"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsW-8d-N4m">
@@ -838,25 +838,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="A7P-8K-ANh">
-                                <rect key="frame" x="0.0" y="9" width="320" height="658"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="A7P-8K-ANh">
+                                <rect key="frame" x="0.0" y="9" width="320" height="422"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="A7P-8K-ANh" firstAttribute="top" secondItem="bKr-Uq-u4z" secondAttribute="bottom" constant="-55" id="2Ts-SW-wo0"/>
-                            <constraint firstItem="ehQ-9h-JYx" firstAttribute="top" secondItem="A7P-8K-ANh" secondAttribute="bottom" id="9ol-dy-owu"/>
                             <constraint firstItem="A7P-8K-ANh" firstAttribute="leading" secondItem="QDG-QY-bY2" secondAttribute="leading" id="Vnf-Gx-vys"/>
+                            <constraint firstItem="ehQ-9h-JYx" firstAttribute="top" secondItem="A7P-8K-ANh" secondAttribute="bottom" id="bnE-TU-IhD"/>
                             <constraint firstAttribute="trailing" secondItem="A7P-8K-ANh" secondAttribute="trailing" id="n5H-sU-LIh"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="textBottomConst" destination="9ol-dy-owu" id="I2G-jL-Uyc"/>
                         <outlet property="textView" destination="A7P-8K-ANh" id="ySS-BA-5sL"/>
+                        <outlet property="textViewBottomConst" destination="bnE-TU-IhD" id="0mb-Sp-xtW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PKO-ZZ-zQA" userLabel="First Responder" sceneMemberID="firstResponder"/>

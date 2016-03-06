@@ -955,11 +955,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         //PDFを作成し、一時的にtmpフォルダに保存。
         let pdfFileName = tmpPath.stringByAppendingPathComponent(fullname)
         
-        let PDFSize = CGRectMake(0, 0, 570, 850)
+        let PDFSize = CGRectMake(0, 0, 610, 795)
         print(aView.bounds)
         
         UIGraphicsBeginPDFContextToFile(pdfFileName,PDFSize, nil)
-        //UIGraphicsBeginPDFPage()
         
         //.DocumentDirectryから写真データを引っ張ってくるために使うパス
         let Path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
@@ -977,38 +976,86 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
           let point = CGPointMake(0, 0)
           image?.drawAtPoint(point)
             
+       
+        
+        
         }else{
+            
+            let weekDay = ["","日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"]
+            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+            let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day,NSCalendarUnit.Hour,NSCalendarUnit.Minute,NSCalendarUnit.Weekday]
+            let comps:NSDateComponents = (calendar?.components(unit, fromDate: (notes?.createDate)!))!
+            
+            if notes!.photos.isEmpty != true{
             
             for ind in 1...notes!.photos.count{
             
                 //ページを定義
-                UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,570,850), nil)
+                UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,610,795), nil)
                 if ind == 1{
                  
-                    let day = "2016年３月４日金曜日１０：５６"
-                    let rect = CGRectMake(20, 70, 300, 300)
+                    let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
+                    let rect = CGRectMake(100, 20, 300, 300)
                     let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
                     
                     drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
-                    
                 }
    
                 let fileName = notes?.photos[ind-1].filename
                 let filePath = (path! as NSString).stringByAppendingPathComponent(fileName!)
                 let image = UIImage(named: filePath)
             
-                image?.drawInRect(CGRectMake(70, 50, 380, 480))
+                image?.drawInRect(CGRectMake(124, 100, 361, 482))
             
+            
+                }
+                
             }
             
-            UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,570,850), nil)
-            let descriptionRect:CGRect = CGRectMake(0, 150, 200, 200)
-            let description:String = "メモ"
-          
+            
+            UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,610,795), nil)
+            
+            //写真がない時は、ここで日付を表示したい
+            if ((notes?.photos.isEmpty) != nil){
+                print("ゆいこん")
+                let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
+                let rect = CGRectMake(100, 50, 300, 300)
+                let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
+                
+                drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+                
+            }
+
+            let descriptionRect:CGRect = CGRectMake(100, 130, 200, 200)
+            let description:String = "ノート"
+            
+            
+            //メモの下に下線を引きたい
+            //グラフィックコンテキストをサイズ指定
+    
+            //グラフィックコンテキストを取得
+            let context:CGContextRef = UIGraphicsGetCurrentContext()!
+   
+            //ラインの幅を決める
+            CGContextSetLineWidth(context, 2.0)
+            let Color:CGColorRef = UIColor.grayColor().CGColor
+            CGContextSetStrokeColorWithColor(context, Color)
+            
+            //ラインの始点を設定
+            CGContextMoveToPoint(context, 130, 100)
+            CGContextAddLineToPoint(context, 500, 100)
+            //パスを閉じる
+            CGContextClosePath(context)
+            //パスで指定した線を描画
+            CGContextStrokePath(context)
+            
+            
             drawString(description, rect: descriptionRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "AppleSDGothicNeo-Medium", ul: false)
             
-            let textRect:CGRect = CGRectMake(0, 0, 300, 300)
-            drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "AppleSDGothicNeo-Light", ul: false)
+            let textRect:CGRect = CGRectMake(100, -450, 320, 700)
+            drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 12, Font: "AppleSDGothicNeo-Light", ul: false)
+            
+            print("ギリギリ入る高さ\(textView.bounds.size.height)")
             
                     }
         

@@ -12,7 +12,8 @@ import RealmSwift
 class TextViewController: UIViewController,UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var textBottomConst: NSLayoutConstraint!
+    @IBOutlet weak var textViewBottomConst: NSLayoutConstraint!
+    
     
         
     var appDelegate:AppDelegate?
@@ -75,8 +76,25 @@ class TextViewController: UIViewController,UITextViewDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.textView.textContainerInset = UIEdgeInsetsMake(8, 8, 0, 8)
         self.textView.sizeToFit()
+        
+        //キーボードの値をNSNotificationで取得
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keybordWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        
+    
     }
     
+    func keybordWillChangeFrame(Notification:NSNotification){
+        
+        if let UserInfo = Notification.userInfo{
+            
+            let keyBoardVale:NSValue = UserInfo[UIKeyboardFrameEndUserInfoKey]! as! NSValue
+            let keyBoradFrame:CGRect = keyBoardVale.CGRectValue()
+            
+            self.textViewBottomConst.constant = keyBoradFrame.height
+            
+        }
+        
+    }
     
     func okButtonTaped(){
         
@@ -86,8 +104,6 @@ class TextViewController: UIViewController,UITextViewDelegate {
             let editId = appDelegate?.editNoteId
             print(editId)
             let note = realm.objects(Note).filter("id = \(editId!)")
-            
-            
             
             try!realm.write({ () -> Void in
                 note[0].noteText = textView.text
@@ -152,6 +168,11 @@ class TextViewController: UIViewController,UITextViewDelegate {
     func cancelButtonTaped(){
         
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
