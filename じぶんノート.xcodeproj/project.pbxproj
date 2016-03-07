@@ -48,6 +48,9 @@
 		59A04D4E1C82D1C800C75001 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D4D1C82D1C800C75001 /* CoreGraphics.framework */; };
 		59A04D511C8AA9CF00C75001 /* shareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A04D501C8AA9CF00C75001 /* shareViewController.swift */; };
 		59A04D531C8AABAD00C75001 /* shareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A04D521C8AABAD00C75001 /* shareTableViewCell.swift */; };
+		59A04D5B1C8D13C100C75001 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A04D5A1C8D13C100C75001 /* ShareViewController.swift */; };
+		59A04D5E1C8D13C100C75001 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59A04D5C1C8D13C100C75001 /* MainInterface.storyboard */; };
+		59A04D621C8D13C100C75001 /* shareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 59A04D581C8D13C000C75001 /* shareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF471C19B48C008878B2 /* AppDelegate.swift */; };
 		59B7BF4D1C19B48C008878B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59B7BF4B1C19B48C008878B2 /* Main.storyboard */; };
 		59B7BF4F1C19B48C008878B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B7BF4E1C19B48C008878B2 /* Assets.xcassets */; };
@@ -68,6 +71,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		59A04D601C8D13C100C75001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59B7BF3C1C19B48C008878B2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59A04D571C8D13C000C75001;
+			remoteInfo = shareExtension;
+		};
 		59B7BF591C19B48D008878B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 59B7BF3C1C19B48C008878B2 /* Project object */;
@@ -83,6 +93,20 @@
 			remoteInfo = "じぶんノート";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59A04D661C8D13C100C75001 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				59A04D621C8D13C100C75001 /* shareExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		14273FAF4E9F3BF1587789D3 /* Pods_________Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_________Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +146,10 @@
 		59A04D4D1C82D1C800C75001 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		59A04D501C8AA9CF00C75001 /* shareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shareViewController.swift; sourceTree = "<group>"; };
 		59A04D521C8AABAD00C75001 /* shareTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shareTableViewCell.swift; sourceTree = "<group>"; };
+		59A04D581C8D13C000C75001 /* shareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = shareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		59A04D5A1C8D13C100C75001 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		59A04D5D1C8D13C100C75001 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		59A04D5F1C8D13C100C75001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59B7BF441C19B48C008878B2 /* TSUBAKI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TSUBAKI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B7BF471C19B48C008878B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59B7BF4C1C19B48C008878B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -154,6 +182,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		59A04D551C8D13C000C75001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59B7BF411C19B48C008878B2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -288,6 +323,16 @@
 			name = noteDetail;
 			sourceTree = "<group>";
 		};
+		59A04D591C8D13C100C75001 /* shareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				59A04D5A1C8D13C100C75001 /* ShareViewController.swift */,
+				59A04D5C1C8D13C100C75001 /* MainInterface.storyboard */,
+				59A04D5F1C8D13C100C75001 /* Info.plist */,
+			);
+			path = shareExtension;
+			sourceTree = "<group>";
+		};
 		59B7BF3B1C19B48C008878B2 = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +342,7 @@
 				59B7BF461C19B48C008878B2 /* じぶんノート */,
 				59B7BF5B1C19B48D008878B2 /* じぶんノートTests */,
 				59B7BF661C19B48D008878B2 /* じぶんノートUITests */,
+				59A04D591C8D13C100C75001 /* shareExtension */,
 				59B7BF451C19B48C008878B2 /* Products */,
 				547855E4740A6FB59CEE063F /* Pods */,
 				8E3C053D5C9F1907181E37B2 /* Frameworks */,
@@ -309,6 +355,7 @@
 				59B7BF441C19B48C008878B2 /* TSUBAKI.app */,
 				59B7BF581C19B48D008878B2 /* じぶんノートTests.xctest */,
 				59B7BF631C19B48D008878B2 /* じぶんノートUITests.xctest */,
+				59A04D581C8D13C000C75001 /* shareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -404,6 +451,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		59A04D571C8D13C000C75001 /* shareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59A04D631C8D13C100C75001 /* Build configuration list for PBXNativeTarget "shareExtension" */;
+			buildPhases = (
+				59A04D541C8D13C000C75001 /* Sources */,
+				59A04D551C8D13C000C75001 /* Frameworks */,
+				59A04D561C8D13C000C75001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = shareExtension;
+			productName = shareExtension;
+			productReference = 59A04D581C8D13C000C75001 /* shareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		59B7BF431C19B48C008878B2 /* じぶんノート */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59B7BF6C1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "じぶんノート" */;
@@ -416,10 +480,12 @@
 				F9643F74CFF509A619497FC8 /* Copy Pods Resources */,
 				59212E201C73529400CE845B /* ShellScript */,
 				59212E3F1C7361C300CE845B /* ShellScript */,
+				59A04D661C8D13C100C75001 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				59A04D611C8D13C100C75001 /* PBXTargetDependency */,
 			);
 			name = "じぶんノート";
 			productName = "じぶんノート";
@@ -477,9 +543,13 @@
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = BiyousiNote.inc;
 				TargetAttributes = {
+					59A04D571C8D13C000C75001 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = Z48688R4MX;
+					};
 					59B7BF431C19B48C008878B2 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 24ZH8YR4UD;
+						DevelopmentTeam = Z48688R4MX;
 					};
 					59B7BF571C19B48D008878B2 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -509,11 +579,20 @@
 				59B7BF431C19B48C008878B2 /* じぶんノート */,
 				59B7BF571C19B48D008878B2 /* じぶんノートTests */,
 				59B7BF621C19B48D008878B2 /* じぶんノートUITests */,
+				59A04D571C8D13C000C75001 /* shareExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		59A04D561C8D13C000C75001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59A04D5E1C8D13C100C75001 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59B7BF421C19B48C008878B2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -692,6 +771,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		59A04D541C8D13C000C75001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59A04D5B1C8D13C100C75001 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59B7BF401C19B48C008878B2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -754,6 +841,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		59A04D611C8D13C100C75001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59A04D571C8D13C000C75001 /* shareExtension */;
+			targetProxy = 59A04D601C8D13C100C75001 /* PBXContainerItemProxy */;
+		};
 		59B7BF5A1C19B48D008878B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 59B7BF431C19B48C008878B2 /* じぶんノート */;
@@ -767,6 +859,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		59A04D5C1C8D13C100C75001 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59A04D5D1C8D13C100C75001 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		59B7BF4B1C19B48C008878B2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -786,6 +886,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		59A04D641C8D13C100C75001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = shareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.TSUBAKI.shareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		59A04D651C8D13C100C75001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = shareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.TSUBAKI.shareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		59B7BF6A1C19B48D008878B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -879,6 +1009,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -891,7 +1022,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.TSUBAKI;
 				PRODUCT_NAME = TSUBAKI;
-				PROVISIONING_PROFILE = "1a1b5029-ff4a-4bd4-9dcd-f9f0bc36c8af";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノート-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -903,8 +1034,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: takumi kuroda (Z48688R4MX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -918,7 +1050,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.TSUBAKI;
 				PRODUCT_NAME = TSUBAKI;
-				PROVISIONING_PROFILE = "13c4d622-a44d-49f1-b886-41f4461b3e1e";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノート-Bridging-Header.h";
 			};
 			name = Release;
@@ -988,6 +1120,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		59A04D631C8D13C100C75001 /* Build configuration list for PBXNativeTarget "shareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59A04D641C8D13C100C75001 /* Debug */,
+				59A04D651C8D13C100C75001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		59B7BF3F1C19B48C008878B2 /* Build configuration list for PBXProject "じぶんノート" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

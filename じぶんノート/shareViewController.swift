@@ -9,9 +9,12 @@
 import UIKit
 import MessageUI
 
-class shareViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate{
+class shareViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,UIDocumentInteractionControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var dic:UIDocumentInteractionController?
+    
     var appDelegate:AppDelegate!
     
     override func viewDidLoad() {
@@ -125,7 +128,9 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
             
             
         case 2:
-            print("3")
+            
+            openPDFin()
+            
         default:
             print("エラー")
             
@@ -133,6 +138,23 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
         
         
     }
+    
+    func openPDFin(){
+        
+        print("PDF")
+        
+            let fileName = "シンプル1.pdf"
+            let tmpPath = NSTemporaryDirectory()
+            let filePath = (tmpPath as NSString).stringByAppendingPathComponent(fileName)
+        
+            let fileURL:NSURL = NSURL(fileURLWithPath: filePath)
+        
+            dic = UIDocumentInteractionController(URL: fileURL)
+            dic?.delegate = self
+            dic?.presentOpenInMenuFromRect(self.view.frame, inView: self.view, animated: true)
+            
+        }
+    
     
     func onClickStartMailerBth(){
         //メールを送信できるかチェック
@@ -145,6 +167,7 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
         sendMailWithPDF("ノート(PDF) by trim:\(appDelegate.dateForPDF)", message: "")
     }
     
+   
     func sendMailWithPDF(subject:String,message:String){
         
         let mailViewController = MFMailComposeViewController()
