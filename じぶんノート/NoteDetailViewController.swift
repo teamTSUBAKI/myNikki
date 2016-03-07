@@ -76,6 +76,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     var presentTopImage = 0
     
     var note:Results<(Note)>?
+    var Notes:Results<(Note)>?
     
     //タイムラインから選択されたセルのデータが入るプロパティ
     var notes:Note?
@@ -373,6 +374,13 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             DateLabels.textAlignment = NSTextAlignment.Center
             DateLabels.center = CGPointMake(self.view.bounds.width/2-30, 20)
             self.view.subviews[3].addSubview(DateLabels)
+            
+            shareButton = UIButton(frame: CGRectMake(0,0,44,44))
+            shareButton.setImage(UIImage(named:"Upload-50"), forState: .Normal)
+            shareButton.addTarget(self, action: "sharedButtonTaped", forControlEvents: .TouchUpInside)
+            shareButton.center = CGPointMake(self.view.bounds.width - 30, 20)
+            self.view.subviews[3].addSubview(shareButton)
+
 
             
             let minute = comps.minute.description
@@ -402,6 +410,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
             self.navigationController?.navigationBar.tintColor = UIColor.grayColor()
         
+            //PDFメール用に日付データを入れる
+            appDelegate?.dateForPDF = self.navigationItem.title
             
             var myTimes = note![0].timerTime
             let myTimers = note![0].timerTime
@@ -453,11 +463,11 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             print("タムライン")
             let realm = try!Realm()
             print("ノートのid\(notes?.id)")
-            var Notes:Results<(Note)>
+           
             
             Notes = realm.objects(Note).filter("id = \(notes!.id)")
             
-            if ((Notes[0].photos.count) == 0){
+            if ((Notes![0].photos.count) == 0){
                 
                 self.imageViewY.constant = 0
                 self.topImageViewHeight.constant = 0
@@ -476,20 +486,20 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                     
                     print("作動？")
                     if ind == 1{
-                        let filename = Notes[0].photos[0].filename
+                        let filename = Notes![0].photos[0].filename
                         let filePath = (path! as NSString).stringByAppendingPathComponent(filename)
                         let image = UIImage(contentsOfFile: filePath)
                         print(image)
                         topImage.image = image
                         
-                        presentTopImage = (Notes[0].photos[0].id)
+                        presentTopImage = (Notes![0].photos[0].id)
                         
                     }
                     
-                    if ind <= Notes[0].photos.count{
+                    if ind <= Notes![0].photos.count{
                         
                         let imageView:UIImageView = self.view.viewWithTag(ind) as! UIImageView
-                        let filenames = Notes[0].photos[ind-1].filename
+                        let filenames = Notes![0].photos[ind-1].filename
                         let filepaths = (path! as NSString).stringByAppendingPathComponent(filenames)
                         let images = UIImage(contentsOfFile: filepaths)
                         imageView.image = images
@@ -508,27 +518,29 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             }
             
             
-            if Notes[0].noteText.isEmpty{
+            if Notes![0].noteText.isEmpty{
                 
                 self.textView.text = "練習メニューやメモを書く．．．"
                 self.textView.textColor = UIColor.grayColor()
                 
             }else{
                 
-                self.textView.text = Notes[0].noteText
+                self.textView.text = Notes![0].noteText
             }
             
             let weekDays = ["","日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"]
             let calendar:NSCalendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day,NSCalendarUnit.Hour,NSCalendarUnit.Minute,NSCalendarUnit.Weekday]
-            let comps:NSDateComponents = calendar.components(unit, fromDate: Notes[0].createDate!)
+            let comps:NSDateComponents = calendar.components(unit, fromDate: Notes![0].createDate!)
             
             self.navigationItem.title = "\(comps.year)/\(comps.month)/\(comps.day)"
             //ナヴィゲーションのtitleの色を変更
             self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
             self.navigationController?.navigationBar.tintColor = UIColor.grayColor()
             
-            
+            //PDFメール用に日付データを入れる
+            appDelegate?.dateForPDF = self.navigationItem.title
+
             
             
             DateLabels = UILabel(frame: CGRectMake(0,0,170,44))
@@ -570,8 +582,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             
             
-            let myTime = Notes[0].timerTime
-            var myTimes = Notes[0].timerTime
+            let myTime = Notes![0].timerTime
+            var myTimes = Notes![0].timerTime
             
     
             print("mytimes:\(myTimes)")
@@ -969,95 +981,13 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         if appDelegate?.noteFlag == true{
             
-          let fileName = note![0].photos[0].filename
-          let filePath = (path! as NSString).stringByAppendingPathComponent(fileName)
-          let image = UIImage(contentsOfFile: filePath)
-          
-          let point = CGPointMake(0, 0)
-          image?.drawAtPoint(point)
+            drawPDF(note!)
             
-       
-        
-        
         }else{
             
-            let weekDay = ["","日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"]
-            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-            let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day,NSCalendarUnit.Hour,NSCalendarUnit.Minute,NSCalendarUnit.Weekday]
-            let comps:NSDateComponents = (calendar?.components(unit, fromDate: (notes?.createDate)!))!
+            drawPDF(Notes!)
             
-            if notes!.photos.isEmpty != true{
-            
-            for ind in 1...notes!.photos.count{
-            
-                //ページを定義
-                UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,610,795), nil)
-                if ind == 1{
-                 
-                    let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
-                    let rect = CGRectMake(100, 20, 300, 300)
-                    let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
-                    
-                    drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
-                }
-   
-                let fileName = notes?.photos[ind-1].filename
-                let filePath = (path! as NSString).stringByAppendingPathComponent(fileName!)
-                let image = UIImage(named: filePath)
-            
-                image?.drawInRect(CGRectMake(124, 100, 361, 482))
-            
-            
-                }
-                
-            }
-            
-            
-            UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,610,795), nil)
-            
-            //写真がない時は、ここで日付を表示したい
-            if ((notes?.photos.isEmpty) != nil){
-                print("ゆいこん")
-                let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
-                let rect = CGRectMake(100, 50, 300, 300)
-                let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
-                
-                drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
-                
-            }
-
-            let descriptionRect:CGRect = CGRectMake(100, 130, 200, 200)
-            let description:String = "ノート"
-            
-            
-            //メモの下に下線を引きたい
-            //グラフィックコンテキストをサイズ指定
-    
-            //グラフィックコンテキストを取得
-            let context:CGContextRef = UIGraphicsGetCurrentContext()!
-   
-            //ラインの幅を決める
-            CGContextSetLineWidth(context, 2.0)
-            let Color:CGColorRef = UIColor.grayColor().CGColor
-            CGContextSetStrokeColorWithColor(context, Color)
-            
-            //ラインの始点を設定
-            CGContextMoveToPoint(context, 130, 100)
-            CGContextAddLineToPoint(context, 500, 100)
-            //パスを閉じる
-            CGContextClosePath(context)
-            //パスで指定した線を描画
-            CGContextStrokePath(context)
-            
-            
-            drawString(description, rect: descriptionRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "AppleSDGothicNeo-Medium", ul: false)
-            
-            let textRect:CGRect = CGRectMake(100, -450, 320, 700)
-            drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 12, Font: "AppleSDGothicNeo-Light", ul: false)
-            
-            print("ギリギリ入る高さ\(textView.bounds.size.height)")
-            
-                    }
+        }
         
         UIGraphicsEndPDFContext()
         
@@ -1066,19 +996,103 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
     }
     
+    //写真や文字を描画する感じのメソッド
+    func drawPDF(noten:Results<(Note)>){
+        
+        let weekDay = ["","日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"]
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day,NSCalendarUnit.Hour,NSCalendarUnit.Minute,NSCalendarUnit.Weekday]
+        let comps:NSDateComponents = (calendar?.components(unit, fromDate: (noten[0].createDate)!))!
+        
+        if noten[0].photos.isEmpty != true{
+            
+            for ind in 1...noten[0].photos.count{
+                
+                //ページを定義
+                UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,610,795), nil)
+                if ind == 1{
+                    
+                    let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
+                    let rect = CGRectMake(100, 20, 300, 300)
+                    let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
+                    
+                    print("\(timerLabels.text)")
+                    if timerLabels.text != "Label"{
+                    
+                        let rects = CGRectMake(280, 20, 600, 300)
+                        drawString(timerLabels.text!, rect: rects, Color: UIColor.blackColor().CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+                    }
+                    
+                    drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+                }
+                
+                let fileName = noten[0].photos[ind-1].filename
+                let filePath = (path! as NSString).stringByAppendingPathComponent(fileName)
+                let image = UIImage(named: filePath)
+                
+                image?.drawInRect(CGRectMake(124, 100, 361, 482))
+                
+                
+            }
+            
+        }
+        
+        UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,610,795), nil)
+        
+        //写真がない時は、ここで日付を表示したい
+        if (noten[0].photos.isEmpty){
+            
+            if timerLabels.text != "Label"{
+                
+                let rects = CGRectMake(280, 50, 600, 300)
+                drawString(timerLabels.text!, rect: rects, Color: UIColor.blackColor().CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+            }
+
+            
+            let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
+            let rect = CGRectMake(100, 50, 300, 300)
+            let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
+            
+            drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+            
+        }
+        
+        let descriptionRect:CGRect = CGRectMake(100, 130, 200, 200)
+        let description:String = "ノート"
+        
+        
+        //メモの下に下線を引きたい
+        //グラフィックコンテキストをサイズ指定
+        
+        //グラフィックコンテキストを取得
+        let context:CGContextRef = UIGraphicsGetCurrentContext()!
+        
+        //ラインの幅を決める
+        CGContextSetLineWidth(context, 2.0)
+        let Color:CGColorRef = UIColor.grayColor().CGColor
+        CGContextSetStrokeColorWithColor(context, Color)
+        
+        //ラインの始点を設定
+        CGContextMoveToPoint(context, 130, 100)
+        CGContextAddLineToPoint(context, 500, 100)
+        //パスを閉じる
+        CGContextClosePath(context)
+        //パスで指定した線を描画
+        CGContextStrokePath(context)
+        
+        drawString(description, rect: descriptionRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "AppleSDGothicNeo-Medium", ul: false)
+        
+        let textRect:CGRect = CGRectMake(100, -450, 320, 700)
+        drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 12, Font: "AppleSDGothicNeo-Light", ul: false)
+        
+        print("ギリギリ入る高さ\(textView.bounds.size.height)")
+        
+    }
+    
     //pdfに文字を描画するためのメソッド
     func drawString(string:String,rect:CGRect,Color color:CGColorRef,FontSize fontSize:CGFloat,Font fontname:String,ul:Bool){
         
         //文字色やサイズを設定。
-        //フォントを設定
-        //let font:CTFontRef = CTFontCreateUIFontForLanguage(CTFontUIFontType.kCTFontSystemFontType, fontSize, nil)!
-        
-        //参考にするコード
-        /*let Font:UIFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)!
-        newAttributedText.addAttribute(NSFontAttributeName, value: Font, range: boldRange)
-        */
-        
-        
         let newAttributedText = NSMutableAttributedString(string: string)
         let Font:UIFont = UIFont(name: fontname, size: fontSize)!
         let ranges = NSRange(location: 0, length: newAttributedText.length)

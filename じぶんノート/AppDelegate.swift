@@ -62,6 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //noteDetailからタイムラインに戻るボタンを押した場合
     var noteReturn:Bool?
+    
+    //PDFメールの件名用の日付データ入れ
+    var dateForPDF:String!
 
     //初回起動時に呼ばれる
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

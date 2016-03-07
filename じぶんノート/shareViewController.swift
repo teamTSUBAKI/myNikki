@@ -12,8 +12,12 @@ import MessageUI
 class shareViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
+    var appDelegate:AppDelegate!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let closeButton = UIBarButtonItem(title: "閉じる", style:.Plain , target: self, action: "closeButtonTaped")
         self.navigationItem.rightBarButtonItem = closeButton
@@ -138,7 +142,7 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
             
         }
         
-        sendMailWithPDF("練習ノートtrimのPDFデータ", message: "今日の練習ノートです。")
+        sendMailWithPDF("ノート(PDF) by trim:\(appDelegate.dateForPDF)", message: "")
     }
     
     func sendMailWithPDF(subject:String,message:String){
