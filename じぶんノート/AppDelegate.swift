@@ -11,6 +11,7 @@ import Photos
 import Fabric
 import Crashlytics
 import SwiftyDropbox
+import RealmSwift
 
 
 @UIApplicationMain
@@ -65,6 +66,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //PDFメールの件名用の日付データ入れ
     var dateForPDF:String!
+    
+    //PDFの名前入れ：共有用
+    var nameOfPDF:String!
+    
+    //PDFメール添付用
+    var nameOfPDFForMail:String!
+    
+    //ノートディテイルで、メール添付用に写真を配列に入れる
+    var Photoes:List<Photos>!
+    
 
     //初回起動時に呼ばれる
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

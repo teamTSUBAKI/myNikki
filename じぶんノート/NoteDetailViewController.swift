@@ -98,7 +98,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        //メール添付用にシェアモーダルに送る写真入れ
+        appDelegate?.Photoes = nil
         
         self.textView.delegate = self
         
@@ -319,6 +320,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 
                 toPhotoDetailButton.hidden = false
                 noImagePhotoButton.hidden = true
+                
+                //メール添付用にシェアモーダルに送る
+                appDelegate?.Photoes = note![0].photos
         
                 for ind in 1...4{
                     
@@ -331,7 +335,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                         presentTopImage = note![0].photos[0].id
                     }
                     
-                    
+                   
                     
                     if ind <= note![0].photos.count{
                         let imageView:UIImageView = self.view.viewWithTag(ind) as! UIImageView
@@ -479,7 +483,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 
                 self.imageSize()
                 
-                
+                //メール添付用にシェアモーダルに送る
+                appDelegate?.Photoes = Notes![0].photos
                 print("写真の数\(notes?.photos.count)")
                 
                 for ind in 1...4{
@@ -956,10 +961,32 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     }
     
     func createPDFFromView(aView:UIView,saveToDocumentsWithFileName FileName:String){
-        
     
-       
-        let fileName = "シンプル1"
+        //乱数
+        let n = arc4random() % 1000 + 1
+        
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day]
+
+        let comps:NSDateComponents!
+        
+        if appDelegate?.noteFlag == true{
+        
+            comps = calendar?.components(unit, fromDate: note![0].createDate!)
+            
+        }else{
+            
+            comps = calendar?.components(unit, fromDate: Notes![0].createDate!)
+        
+        }
+
+        
+        
+        let fileName = "ノートtrim\(comps.year)年\(comps.month)月\(comps.day)日\(n)"
+        appDelegate?.nameOfPDF = fileName
+        appDelegate?.nameOfPDFForMail = "noteInTrim.\(comps.year).\(comps.month).\(comps.day).\(n)"
+        
+        
         let tmpPath:NSString = NSTemporaryDirectory()
         
      
@@ -1084,6 +1111,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         let textRect:CGRect = CGRectMake(100, -450, 320, 700)
         drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 12, Font: "AppleSDGothicNeo-Light", ul: false)
+        
+        let colors:CGColorRef = colorFromRGB.colorWithHexString("2860A3").CGColor
+        
+        drawString("Created in trim", rect: CGRectMake(222, -1070, 320, 700), Color: colors, FontSize: 12, Font: "AppleSDGothicNeo-Light", ul: false)
         
         print("ギリギリ入る高さ\(textView.bounds.size.height)")
         

@@ -15,10 +15,14 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     var dic:UIDocumentInteractionController?
     
+    var path:String?
+    
     var appDelegate:AppDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -54,7 +58,7 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
         //tmpに作成したpdfを消す。
         
         let tmpFilePath:NSString = NSTemporaryDirectory()
-        let filename = "シンプル1"
+        let filename = "\(appDelegate.nameOfPDF)"
         let fullFileName = filename.stringByAppendingString(".pdf")
         let tmpFilePaths = tmpFilePath.stringByAppendingPathComponent(fullFileName)
         
@@ -71,7 +75,7 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -89,10 +93,8 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
             switch indexPath.row{
             
             case 0:
-                cell.textLabel?.text = "メールで送る"
-            case 1:
                 cell.textLabel?.text = "PDFをメールで送る"
-            case 2:
+            case 1:
                 cell.textLabel?.text = "PDFを共有する"
             default:
                 print("エラー")
@@ -110,7 +112,7 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
         
         if section == 0{
             
-            return 3
+            return 2
         }
         
         return 0
@@ -121,13 +123,12 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         switch indexPath.row{
+    
         case 0:
-            print("メールで送る")
+            onClickPDFMailerTaped()
+            
+            
         case 1:
-            onClickStartMailerBth()
-            
-            
-        case 2:
             
             openPDFin()
             
@@ -136,14 +137,54 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
             
         }
         
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         
     }
+    
+    //PDFじゃなくて、写真を本文に貼り付けてメール送信機能を作るためのコード。途中。いずれ使うかもしれない。
+    /*
+    func onClicksStartMailerTaped(){
+        
+        if MFMailComposeViewController.canSendMail() == false{
+            print("Email send failed")
+            return
+        }
+        
+        let mailerController = MFMailComposeViewController()
+        
+        mailerController.mailComposeDelegate = self
+        mailerController.setSubject("ノート by trim:\(appDelegate.dateForPDF)")
+        
+        if appDelegate.Photoes != nil{
+        
+            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        
+            if paths.count > 0{
+                path = paths[0]
+            }
+            
+            for ind in 1...appDelegate.Photoes.count{
+                
+                let fileName = appDelegate.Photoes[ind-1].filename
+                let filePath = (path! as NSString).stringByAppendingPathComponent(fileName)
+                
+                let image = UIImage(contentsOfFile: filePath)
+                let imagedata = UIImageJPEGRepresentation(image!, 1.0)
+                mailerController.addAttachmentData(imagedata!, mimeType: "image/png", fileName: "image")
+            }
+        
+        }
+        
+        self.presentViewController(mailerController, animated: true, completion: nil)
+    }*/
+    
     
     func openPDFin(){
         
         print("PDF")
         
-            let fileName = "シンプル1.pdf"
+            let fileName = "\(appDelegate.nameOfPDF).pdf"
             let tmpPath = NSTemporaryDirectory()
             let filePath = (tmpPath as NSString).stringByAppendingPathComponent(fileName)
         
@@ -156,7 +197,7 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
         }
     
     
-    func onClickStartMailerBth(){
+    func onClickPDFMailerTaped(){
         //メールを送信できるかチェック
         if MFMailComposeViewController.canSendMail() == false{
             print("Email send Failed!")
@@ -165,6 +206,8 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
         }
         
         sendMailWithPDF("ノート(PDF) by trim:\(appDelegate.dateForPDF)", message: "")
+        
+        
     }
     
    
@@ -176,14 +219,15 @@ class shareViewController: UIViewController,UITableViewDataSource,UITableViewDel
         mailViewController.setSubject(subject)
         mailViewController.setMessageBody(message, isHTML: false)
         
-        let PDFfileName = "シンプル1.pdf"
+        let PDFfileName = "\(appDelegate.nameOfPDF).pdf"
         let tmpPath = NSTemporaryDirectory()
         let PDFfilePath = (tmpPath as NSString).stringByAppendingPathComponent(PDFfileName)
+        
         //tmpからpdfファイルを引っ張ってきたい
         let PDFfile:NSData = NSData(contentsOfFile: PDFfilePath)!
         
         //ここにtmpディレクトリから引っ張ってきたPDFデータをブチ込めばOKかな。
-        mailViewController.addAttachmentData(PDFfile, mimeType: "application/pdf", fileName: "trim.pdf")
+        mailViewController.addAttachmentData(PDFfile, mimeType: "application/pdf", fileName: "\(appDelegate.nameOfPDFForMail).pdf")
         self.presentViewController(mailViewController, animated: true, completion: nil)
         
     }
