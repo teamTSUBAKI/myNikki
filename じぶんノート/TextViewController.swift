@@ -8,12 +8,14 @@
 
 import UIKit
 import RealmSwift
+import SwiftyDropbox
 
 class TextViewController: UIViewController,UITextViewDelegate {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textViewBottomConst: NSLayoutConstraint!
     
+    var path:String?
     
         
     var appDelegate:AppDelegate?
@@ -37,22 +39,20 @@ class TextViewController: UIViewController,UITextViewDelegate {
         let OKButton = UIBarButtonItem(title: "OK", style: .Plain, target: self, action: "okButtonTaped")
         self.navigationItem.rightBarButtonItem = OKButton
         
+        //新規ノートの場合
         if appDelegate?.noteFlag == true{
             
            // self.navigationController?.setNavigationBarHidden(true, animated: false)
             
         }else{
             
-            if appDelegate?.cancelAdd == true{
-             
-               // self.navigationController?.setNavigationBarHidden(true, animated: false)
-                
-            }else{
-            
+        
+        if appDelegate?.textViewOfNoteDetail == false || appDelegate?.textViewOfNoteDetail == nil{
             let cancelButton = UIBarButtonItem(image: UIImage(named: "Delete Filled-50"), landscapeImagePhone:UIImage(named:"Delete Filled-50") , style: .Plain, target: self, action: "cancelButtonTaped")
             self.navigationItem.leftBarButtonItem = cancelButton
-            }
-            
+                }
+                
+                print("レタス")
         }
 
         
@@ -100,6 +100,7 @@ class TextViewController: UIViewController,UITextViewDelegate {
         
         //ノートディテイルからならば。
         if appDelegate?.addPhotoFlag == true{
+            print("ノートディテイル")
             let realm = try!Realm()
             let editId = appDelegate?.editNoteId
             print(editId)
@@ -118,6 +119,7 @@ class TextViewController: UIViewController,UITextViewDelegate {
         }else{
            
             //新規追加ならば（タイムライン右上ボタン、タブバーのセンターボタン）
+            print("ラブリー")
             let realm = try!Realm()
             let note = Note()
             
@@ -135,8 +137,7 @@ class TextViewController: UIViewController,UITextViewDelegate {
             
             
             note.modelName = ""
-         //   note.timerTime = ""
-            
+         
             try!realm.write({ () -> Void in
                 realm.add(note, update: true)
             })
@@ -149,20 +150,48 @@ class TextViewController: UIViewController,UITextViewDelegate {
             //新規作成→キャンセルからのコメント追加の場合
             if appDelegate?.cancelAdd == true{
                 
+                print("アーメンま")
                 self.navigationController?.popViewControllerAnimated(true)
                 appDelegate?.cancelAdd = false
                 
             }else{
+                
+                print("nannn")
             self.dismissViewControllerAnimated(false, completion: nil)
             }
 
-            
         }
         
+        uploadDropbox()
+        
+       }
+    
+    func uploadDropbox(){
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        if paths.count > 0{
+            path = paths[0]
+        }
+        
+        let documentURL = NSURL(fileURLWithPath: path!)
+        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
+        
+        if let client = Dropbox.authorizedClient{
+            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
+                
+                if let metadata = response{
+                    print("uploaded file \(metadata)")
+                }else{
+                    print(error!)
+                }
+                
+                
+            })
+            
+        }
+
         
         
-        
-               
     }
     
     func cancelButtonTaped(){
@@ -171,7 +200,10 @@ class TextViewController: UIViewController,UITextViewDelegate {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        
+        //戻る時に、addPhotoFlagをfalseにする
+        appDelegate?.addPhotoFlag = false
+        appDelegate?.textViewOfNoteDetail = false
+        appDelegate?.cancelAdd = false
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 

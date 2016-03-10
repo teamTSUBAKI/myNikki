@@ -76,6 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //ノートディテイルで、メール添付用に写真を配列に入れる
     var Photoes:List<Photos>!
     
+    //ノートディテールのテキストビューを押したフラグ
+    var textViewOfNoteDetail:Bool?
+    
 
     //初回起動時に呼ばれる
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

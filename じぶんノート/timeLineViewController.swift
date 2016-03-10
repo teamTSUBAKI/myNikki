@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import SwiftyDropbox
 
 class timeLineViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
 
@@ -40,6 +41,29 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Dropboxにログイン後、一回目のタイムライン表示のタイミングですべての写真、realmデータをdropboxに保存する
+        //Dropboxにログイン済みなら
+        if (Dropbox.authorizedClient != nil){
+            
+            let userDefaults = NSUserDefaults.standardUserDefaults()
+            let dic = ["firstAfterDropBoxLogin":true]
+            userDefaults.registerDefaults(dic)
+            
+            userDefaults.setBool(true, forKey: "firstAfterDropBoxLogin")
+            if userDefaults.boolForKey("firstAfterDropBoxLogin"){
+                print("ログイン")
+                //dropboxへすべての写真、default.realmをバックアップ
+                uploadToDropBox()
+                userDefaults.setBool(true, forKey: "firstAfterDropBoxLogin")
+
+                
+            }
+            
+            
+        }
+        
+        
         
         //テーブルビューが空の時に表示する
         emptyStatLabel = UILabel(frame: CGRectMake(0,0,300,50))
@@ -136,9 +160,6 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     override func viewWillAppear(animated: Bool) {
         self.setupYearandMonth()
         
-    
-      
-        
         let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "TimeLine")
         let builder = GAIDictionaryBuilder.createScreenView()
@@ -180,6 +201,64 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             
         }
     }
+    
+    //ドロップボックスに既存の写真、データをアップロードする
+    func uploadToDropBox(){
+        
+        print("やぁねー")
+        
+        let Paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,.UserDomainMask, true)
+        if Paths.count > 0{
+            
+            path = Paths[0]
+            
+        }
+        
+        let documetURL = NSURL(fileURLWithPath:path!)
+        
+        let realm = try!Realm()
+        let photos = realm.objects(Photos)
+        print("イノセントワールド")
+        for  photo in photos{
+            
+            let filename = photo.filename
+            let fileURLs = documetURL.URLByAppendingPathComponent(filename)
+            
+            if let client = Dropbox.authorizedClient{
+                client.files.upload(path: "/\(filename)", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURLs).response({ (response,error) -> Void in
+                    
+                    if let metaData = response{
+                    print("uploaded file \(metaData)")
+                    }else{
+                        print(error!)
+                    }
+                        
+                })
+                
+            }
+            
+            
+        }
+        
+        //その時のdefault.realmをアップロード
+        let fileURL = documetURL.URLByAppendingPathComponent("default.realm")
+        
+        if let client = Dropbox.authorizedClient{
+            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
+                
+                if let metadata = response{
+                    print("uploaded file \(metadata)")
+                }else{
+                    print(error!)
+                }
+                
+            })
+            
+        }
+        
+    }
+    
+
   
     
     
@@ -215,7 +294,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             let calendar:NSCalendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             calendar.timeZone = NSTimeZone(abbreviation: "GMT")!
             
-            print("カレンダー\(year!)")
+            print("カレンダー\(day!)")
             
             let targetDate:NSDate = calendar.dateWithEra(1, year: year!, month: month!, day: day!, hour: 0, minute: 0, second: 0, nanosecond: 0)!
             let lastTargetDate:NSDate = calendar.dateWithEra(1, year: year!, month: month!, day: day!, hour: 23, minute: 59, second: 59, nanosecond: 0)!
@@ -357,8 +436,22 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         //画像ファイルパス
         let filepath = (path! as NSString).stringByAppendingPathComponent(filename)
         //ファイルから写真を取り込む
-        let image = UIImage(contentsOfFile: filepath)
+        let image =  UIImage(contentsOfFile: filepath)
+            
         cell.Photo.image = image
+    
+        //エラーハンドリングの実装例。とりあえず、エラーハンドリングしなくてもクラッシュはしないみたいだからおいおい実装していく
+         /*   do {
+        
+                //let image = try UIImage(contentsOfFile: filepath)
+                let image = try UIImage(contentsOfFile: "yui.jpg")
+            
+                cell.Photo.image = image
+            }catch{
+                
+                print("エラーず")
+            }*/
+           
         }
         
         //ノートのコメントの一行目を取得
@@ -520,6 +613,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         return true
     }
     
+    
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         //削除の場合
         if editingStyle == .Delete{
@@ -530,8 +624,22 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             self.tableViewCells![key]![0].removeObject(note)
             
             for photo in note.photos{
+            
             let filePath = (path! as NSString).stringByAppendingPathComponent(photo.filename)
             
+            //ドロップボックスにログインしているなら、ドロップボックスからも削除。
+            if let client = Dropbox.authorizedClient{
+                    client.files.delete(path: "/\(photo.filename)").response({ (response, error) -> Void in
+                        
+                        if let metadata = response{
+                            print("delete file name:\(metadata)")
+                        }else{
+                            print(error)
+                        }
+                        
+                    })
+                }
+                
             try?NSFileManager.defaultManager().removeItemAtPath(filePath)
             
             }
@@ -544,16 +652,45 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
                 
             })
             
+            uploadRealmToDropbox()
+            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             NSNotificationCenter.defaultCenter().postNotificationName("deletePhoto", object: nil)
-            
-            
+            }
+    }
+    
+    //realmファイルを最新の状態に。
+    func uploadRealmToDropbox(){
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        if paths.count > 0{
+            path = paths[0]
+        }
+        
+        let documentURL = NSURL(fileURLWithPath: path!)
+        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
+        
+        if let client = Dropbox.authorizedClient{
+            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
+                
+                if let metadata = response{
+                    print("uploaded file \(metadata)")
+                }else{
+                    print(error!)
+                }
+                
+                
+            })
             
         }
         
+
+        
+        
     }
+   
     
-    
+       
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

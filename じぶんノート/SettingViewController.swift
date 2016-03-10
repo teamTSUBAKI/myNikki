@@ -14,8 +14,15 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
    
+    var path:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        
+                
 
         tableView.scrollEnabled = false
         tableView.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
@@ -28,7 +35,10 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
     }
+
+        
     
+
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -107,7 +117,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 1:
                 
                 cells.menuLabel.text = "バージョン"
-                cells.accessoryLabel.text = "1.0.0"
+                cells.accessoryLabel.text = "1.0.2"
                 cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
             default:
@@ -127,7 +137,19 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
                 cell.textLabel!.text = "Dropboxにバックアップする"
                 //switchボタンを作る
                 let mySwitch = UISwitch(frame: CGRectMake(0,0,20,20))
-                mySwitch.on = false
+                
+                //ログイン済みなら
+                if let _ = Dropbox.authorizedClient{
+                
+                    mySwitch.on = true
+                
+                }else{
+                
+                
+                    mySwitch.on = false
+                
+                }
+                
                 mySwitch.addTarget(self, action: "DropboxTaped:", forControlEvents: UIControlEvents.ValueChanged)
                 cell.accessoryView = mySwitch
                 
@@ -155,7 +177,9 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             Dropbox.authorizeFromController(self)
             
         }else{
-            
+           
+            //switchをオフにしたらログアウト
+            Dropbox.unlinkClient()
             
         }
         

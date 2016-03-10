@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import RealmSwift
+import SwiftyDropbox
 
 //写真ピッカー画面になったら、裏で親ビューを画面遷移させたい
 protocol modalViewControllerDelegate{
@@ -33,6 +34,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     
     var path:String?
     var data:NSData?
+    
+    var filename:String?
     
     var PhotosSavedObserver:NSObjectProtocol?
     
@@ -388,8 +391,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
             for ind in 0...selectPhots.count-1{
                 
-                let filename = NSUUID().UUIDString + ".jpg"
-                let filepath = (path! as NSString).stringByAppendingPathComponent(filename)
+                filename = NSUUID().UUIDString + ".jpg"
+                let filepath = (path! as NSString).stringByAppendingPathComponent(filename!)
                 let options = PHImageRequestOptions()
                 options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
                 options.synchronous = true
@@ -404,7 +407,9 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                         
                         let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
-                        
+                       
+                       
+
                         try!realm.write({ () -> Void in
                             
                             let photo = Photos()
@@ -419,8 +424,10 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                                 
                             }
                             
+                            
+                            
                             photo.createDate = editNote[0].createDate
-                            photo.filename = filename
+                            photo.filename = self.filename!
                             
                             if ind == self.selectPhots.count - 1{
                                 
@@ -434,6 +441,11 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                                 editNote[0].photos.append(photo)
                                 
                             }
+                            
+                            //ここでドロップボックスにアップロード
+                            self.uploadToDropBox()
+                            //ここでロップボックスにrealmデータをアップロード
+                            self.uploadRealmToDropbox()
                             
                             NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
                             
@@ -460,7 +472,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             }
             
             
-             note.createDate = NSDate()
+            note.createDate = NSDate()
             
             /*
             let date:String = "2017-5-17 23:30:12"
@@ -505,10 +517,16 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
                     self.data = UIImageJPEGRepresentation(image!, 0.8)
                     //ここに移動してみた！結果、問題は起きないけど、問題解決も出来なかった。
-                    let filename = NSUUID().UUIDString + ".jpg"
-                    let filepath = (self.path! as NSString).stringByAppendingPathComponent(filename)
+                     self.filename = NSUUID().UUIDString + ".jpg"
+                    
+                    let filepath = (self.path! as NSString).stringByAppendingPathComponent(self.filename!)
                     
                     if((self.data?.writeToFile(filepath, atomically: true)) != nil){
+                        
+                        //ここでドロップボックスに写真データをアップロード
+                        self.uploadToDropBox()
+                        //ここでロップボックスにrealmデータをアップロード
+                        self.uploadRealmToDropbox()
                         
                         let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
                         
@@ -528,7 +546,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                             }
                             
                             photo.createDate = NSDate()
-                            photo.filename = filename
+                            photo.filename = self.filename!
                             
                             //選ばれた写真の最後の一枚ならば、
                             if ind == self.selectPhots.count - 1{
@@ -554,9 +572,61 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         }
     }
     
-    
+    //写真が登録されるたびにDropboxにアップロードする
+    func uploadToDropBox(){
+        
+        let documentURL = NSURL(fileURLWithPath: path!)
+        let fileURL = documentURL.URLByAppendingPathComponent(self.filename!)
+        
+        if let client = Dropbox.authorizedClient{
+            client.files.upload(path: "/\(self.filename!)", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
+                
+                if let metadata = response{
+                    
+                    print("upload file \(metadata)")
+                }else{
+                    
+                    print(error)
+                }
+                
+            })
+            
+        }
+        
+    }
 
     
+    func uploadRealmToDropbox(){
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        if paths.count > 0{
+            path = paths[0]
+        }
+        
+        let documentURL = NSURL(fileURLWithPath: path!)
+        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
+        
+        if let client = Dropbox.authorizedClient{
+            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
+                
+                if let metadata = response{
+                    print("uploaded file \(metadata)")
+                }else{
+                    print(error!)
+                }
+                
+                
+            })
+            
+        }
+        
+
+        
+    }
+
+    
+    
+
     @IBAction func canceButton(sender: AnyObject) {
         print("キャンセル")
         appDelegate?.noPhotoButtonTaped = false

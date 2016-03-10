@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import AVFoundation
+import SwiftyDropbox
 
 class TimerViewController: UIViewController {
     
@@ -20,6 +21,8 @@ class TimerViewController: UIViewController {
     @IBOutlet weak var timerLabelMinute: UILabel!
     
     var player:AVAudioPlayer!
+    
+    var path:String?
     
 
     @IBOutlet weak var datePickerViewHeight: NSLayoutConstraint!
@@ -613,6 +616,9 @@ class TimerViewController: UIViewController {
             realm.add(note, update: true)
         })
         
+        uploadDropbox()
+        
+        
         appDelegate?.noteFlag = true
         appDelegate?.timerFlag = true
         
@@ -622,6 +628,32 @@ class TimerViewController: UIViewController {
   
         vc.viewControllers[0].performSegueWithIdentifier("toNoteDetail", sender: allTimeBySecond)
         allTimeBySecond = 0
+        
+    }
+    
+    func uploadDropbox(){
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        if paths.count > 0{
+            path = paths[0]
+        }
+        
+        let documentURL = NSURL(fileURLWithPath: path!)
+        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
+        
+        if let client = Dropbox.authorizedClient{
+            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
+                
+                if let metadata = response{
+                    print("uploaded file \(metadata)")
+                }else{
+                    print(error!)
+                }
+
+                
+            })
+            
+        }
         
     }
     

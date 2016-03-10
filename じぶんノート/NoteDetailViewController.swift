@@ -1220,14 +1220,17 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             appDelegate?.editNoteId = notes?.id
             //ノートが追加だということを知らせる。フラグ名がわかりづらいな。
             appDelegate?.addPhotoFlag = true
+            //ノートディテールのテキストビューを押したことを伝える
+            appDelegate?.textViewOfNoteDetail = true
             //ノートのテキストを送る
             appDelegate?.textData = notes?.noteText
+            
             performSegueWithIdentifier("toTextView", sender: nil)
             
             
         }else{
             
-            
+            appDelegate?.textViewOfNoteDetail = true
             appDelegate?.cancelAdd = true
             performSegueWithIdentifier("toTextView", sender: nil)
             
