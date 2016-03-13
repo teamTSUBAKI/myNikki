@@ -11,6 +11,7 @@ import RealmSwift
 import Photos
 import Fabric
 import Crashlytics
+import SwiftyDropbox
 
 
 class NoteDetailViewController: UIViewController,UITextViewDelegate{
@@ -79,7 +80,11 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     var Notes:Results<(Note)>?
     
     //タイムラインから選択されたセルのデータが入るプロパティ
+    //default.realmのデータ
     var notes:Note?
+    //unLogin.realmのデータ
+    var unLoginNote:Note?
+    
     var appDelegate:AppDelegate?
     
     //タイマーでの計測結果
@@ -1324,6 +1329,20 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             appDelegate?.noteFlag = true
             appDelegate?.noPhotoButtonTaped = true
             appDelegate?.editNoteId = note![0].id
+            
+            if Dropbox.authorizedClient == nil{
+                
+                var config = Realm.Configuration()
+                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("unlogin").URLByAppendingPathExtension("realm").path
+                
+                let realms = try!Realm(configuration: config)
+                
+                let nots = realms.objects(Note)
+                
+                appDelegate?.editNoteId
+                
+            }
+            
             self.presentViewController(cameraViewController!, animated: true, completion: nil)
             
             

@@ -595,6 +595,7 @@ class TimerViewController: UIViewController {
         setButtonEnable(false, start: true, done: false)
         
         let realm = try!Realm()
+     
         let maxNote = realm.objects(Note).sorted("id", ascending: false)
         let note = Note()
         
@@ -613,8 +614,36 @@ class TimerViewController: UIViewController {
         note.timerTime = allTimeBySecond
         
         try!realm.write({ () -> Void in
+            print("ライト兄弟")
             realm.add(note, update: true)
         })
+        
+      
+            //unlogin.realmにも保存.unlogin.realmいらないかもしれない仮説を検証する。
+          /*  var config = Realm.Configuration()
+            config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("unlogin").URLByAppendingPathExtension("realm").path
+            print("よしお")
+
+            let realms = try!Realm(configuration: config)
+          print("よしお")
+            let maxNotes = realms.objects(Note).sorted("id", ascending: false)
+            let notes = Note()
+            if maxNotes.isEmpty{
+                notes.id = 1
+            }else{
+                notes.id = maxNotes[0].id + 1
+            }
+              print("よしお")
+            notes.createDate = NSDate()
+            notes.timerTime = allTimeBySecond
+              print("よしお")
+            try!realms.write({ () -> Void in
+                realms.add(notes, update: true)
+            })*/
+            
+        
+        
+        
         
         uploadDropbox()
         

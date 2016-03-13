@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import SwiftyDropbox
+import RealmSwift
 
 class SettingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate {
 
@@ -19,11 +20,6 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
-                
-
         tableView.scrollEnabled = false
         tableView.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
         // Do any additional setup after loading the view.
@@ -34,7 +30,213 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         tracker.set(kGAIScreenName, value: "Setting")
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
+        
+        //Dropboxにログイン後、一回目のタイムライン表示のタイミングですべての写真、realmデータをdropboxに保存し、同時に復元する。
+        //Dropboxにログイン済みなら
+        if (Dropbox.authorizedClient != nil){
+            
+            let userDefaults = NSUserDefaults.standardUserDefaults()
+            let dic = ["firstAfterDropBoxLogin":true]
+            userDefaults.registerDefaults(dic)
+            
+            
+            //ログイン後、一回目ならば。
+            if userDefaults.boolForKey("firstAfterDropBoxLogin"){
+                print("ログイン")
+                //dropboxへすべての写真、default.realmをバックアップ
+                
+                downLoadFromDropbox()
+                
+                userDefaults.setBool(false, forKey: "firstAfterDropBoxLogin")
+                
+                
+            }else{
+                
+                
+                
+            }
+            
+        }else{
+            
+            
+            
+        }
+        
     }
+    
+    //ドロップボックスからdefaultと写真をダウンロード。
+    func downLoadFromDropbox(){
+        
+        if let client = Dropbox.authorizedClient{
+            
+            //ダウンロード先のURLを設定
+            let destination:(NSURL,NSHTTPURLResponse) -> NSURL = {temporaryURL,response in
+                
+                
+                let directoryURL = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains:
+                    .UserDomainMask)[0]
+                let pathComponent = "defaults.realm"
+                return directoryURL.URLByAppendingPathComponent(pathComponent)
+                
+                
+            }
+            
+            client.files.download(path: "/default.realm", destination: destination).response({ (response, error) -> Void in
+                
+                if let (metadata,url) = response{
+                    
+                    print("download \(metadata.name)")
+                    print("ダウンロード１")
+                    //defaults.realmを復元してdefault.realmに上書きする前に、default.realm（未ログイン時のデータ)をdefaults.realmにコピーしたい
+                    let realm = try!Realm()
+                    let realmNote = realm.objects(Note)
+                    
+                    var config = Realm.Configuration()
+                    config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("defaults").URLByAppendingPathExtension("realm").path
+                    
+                    let realms = try!Realm(configuration: config)
+                    let maxNote = try!realms.objects(Note).sorted("id", ascending: false)[0]
+                    let maxId = maxNote.id
+                    var not:Note!
+                    
+                    
+                    
+                    for note in realmNote{
+                        
+                        
+                        not = Note()
+                        
+                        not.id = maxId + note.id
+                        not.createDate = note.createDate
+                        not.editDate = note.editDate
+                        not.noteText = note.noteText
+                        not.modelName = note.modelName
+                        not.timerTime = note.timerTime
+                        
+                        //写真は写真で取り出して、コピーしていくやり方でうまくいくか検証.うまくコピーできた！
+                        let maxPhoto = try!realms.objects(Photos).sorted("id", ascending: false)[0]
+                        let maxPhotoID = maxPhoto.id
+                        
+                        //すべて写真を一気に入れるのではなくて、ノートごとに取り出して、入れていけばいいのではないか。
+                        for photo in note.photos{
+                            
+                            let phot = Photos()
+                            
+                            phot.id = maxPhotoID + photo.id
+                            phot.createDate = photo.createDate
+                            phot.filename = photo.filename
+                            
+                            try!realms.write({ () -> Void in
+                                
+                                not.photos.append(phot)
+                                
+                            })
+                            
+                        }
+                        
+
+                        
+                        
+                        print("フレッシュ")
+                        try!realms.write({ () -> Void in
+                            realms.add(not, update: true)
+                            
+                        })
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                    //上記のコードで、ドロップボックスからDocumenetDirectoryにdefault.realmをdefaults.realmという名前でダウンロードした(同じ名前だとダウンロードできないため)。ここでdefault.realmを削除して、defaults.realmをdefault.realmに名前変更したい。
+                    let documentDirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+                    let fileName = "defaults.realm"
+                    let fileNames = "default.realm"
+                    
+                    print("ダウンロード２")
+                    
+                    if NSFileManager.defaultManager().fileExistsAtPath("\(documentDirPath)/\(fileName)") && NSFileManager.defaultManager().fileExistsAtPath("\(documentDirPath)/\(fileNames)"){
+                        
+                        try!NSFileManager.defaultManager().removeItemAtPath("\(documentDirPath)/\(fileNames)")
+                        try!NSFileManager.defaultManager().moveItemAtPath("\(documentDirPath)/\(fileName)", toPath: "\(documentDirPath)/\(fileNames)")
+                        
+                        
+                    }
+                    
+                    self.uploadToDropBox()
+                    
+                    
+                }else{
+                    print(error)
+                }
+                
+            })
+            
+            
+        }
+        
+    }
+    
+    //ドロップボックスに既存の写真、データをアップロードする
+    func uploadToDropBox(){
+        
+        print("やぁねー")
+        
+        let Paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,.UserDomainMask, true)
+        if Paths.count > 0{
+            
+            path = Paths[0]
+            
+        }
+        
+        let documetURL = NSURL(fileURLWithPath:path!)
+        
+        let realm = try!Realm()
+        let photos = realm.objects(Photos)
+        print("イノセントワールド")
+        for  photo in photos{
+            
+            let filename = photo.filename
+            let fileURLs = documetURL.URLByAppendingPathComponent(filename)
+            
+            if let client = Dropbox.authorizedClient{
+                client.files.upload(path: "/\(filename)", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURLs).response({ (response,error) -> Void in
+                    
+                    if let metaData = response{
+                        print("uploaded file \(metaData)")
+                    }else{
+                        print(error!)
+                    }
+                    
+                })
+                
+            }
+            
+            
+        }
+        
+        //その時のdefault.realmをアップロード
+        let fileURL = documetURL.URLByAppendingPathComponent("default.realm")
+        
+        if let client = Dropbox.authorizedClient{
+            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
+                
+                if let metadata = response{
+                    print("uploaded file \(metadata)")
+                }else{
+                    print(error!)
+                }
+                
+            })
+            
+        }
+        
+    }
+    
+    
+
 
         
     

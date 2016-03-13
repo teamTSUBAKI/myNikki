@@ -62,6 +62,7 @@ class CameraViewController: UIViewController,UIGestureRecognizerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("やす")
         let tapGestureRecognizer:UIGestureRecognizer = UITapGestureRecognizer(target: self, action: "taped:")
         tapGestureRecognizer.delegate = self
         self.view.addGestureRecognizer(tapGestureRecognizer)

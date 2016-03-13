@@ -408,8 +408,6 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                         
                         let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
                        
-                       
-
                         try!realm.write({ () -> Void in
                             
                             let photo = Photos()
@@ -424,8 +422,6 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                                 
                             }
                             
-                            
-                            
                             photo.createDate = editNote[0].createDate
                             photo.filename = self.filename!
                             
@@ -435,9 +431,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                                 
                             print("頼む")
                             
-                                
                             }else{
-                                   print("頼む")
+                                   print("頼め")
                                 editNote[0].photos.append(photo)
                                 
                             }
@@ -450,11 +445,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                             NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
                             
                         })
-                        
-                        
                     }
-                    
-                    
                 })
                 
             }
@@ -490,6 +481,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 
             })
             
+   
             //画像の保存先パスを取得
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             if paths.count > 0{
@@ -503,8 +495,6 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
             for ind in 0...selectPhots.count - 1{
                 
-                // let filename = NSUUID().UUIDString + ".jpg"
-                // let filepath = (path! as! NSString).stringByAppendingPathComponent(filename)
                 let options = PHImageRequestOptions()
                 options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
                 options.networkAccessAllowed = true
@@ -561,6 +551,9 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                             
                             NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
                         })
+                        
+                    
+                        
                         
                     }
                     

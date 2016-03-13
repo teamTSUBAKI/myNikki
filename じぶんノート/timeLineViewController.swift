@@ -42,26 +42,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Dropboxにログイン後、一回目のタイムライン表示のタイミングですべての写真、realmデータをdropboxに保存する
-        //Dropboxにログイン済みなら
-        if (Dropbox.authorizedClient != nil){
-            
-            let userDefaults = NSUserDefaults.standardUserDefaults()
-            let dic = ["firstAfterDropBoxLogin":true]
-            userDefaults.registerDefaults(dic)
-            
-            userDefaults.setBool(true, forKey: "firstAfterDropBoxLogin")
-            if userDefaults.boolForKey("firstAfterDropBoxLogin"){
-                print("ログイン")
-                //dropboxへすべての写真、default.realmをバックアップ
-                uploadToDropBox()
-                userDefaults.setBool(true, forKey: "firstAfterDropBoxLogin")
 
-                
-            }
-            
-            
-        }
         
         
         
@@ -154,12 +135,44 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         self.setupYearandMonth()
         self.tableView.reloadData()
+        print("リワーズ")
         
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        /*
+        //Dropboxにログイン後、一回目のタイムライン表示のタイミングですべての写真、realmデータをdropboxに保存し、同時に復元する。
+        //Dropboxにログイン済みなら
+        if (Dropbox.authorizedClient != nil){
+            
+            let userDefaults = NSUserDefaults.standardUserDefaults()
+            let dic = ["firstAfterDropBoxLogin":true]
+            userDefaults.registerDefaults(dic)
+            
+            
+            //ログイン後、一回目ならば。
+            if userDefaults.boolForKey("firstAfterDropBoxLogin"){
+                print("ログイン")
+                //dropboxへすべての写真、default.realmをバックアップ
+                
+                downLoadFromDropbox()
+                
+                userDefaults.setBool(false, forKey: "firstAfterDropBoxLogin")
+                
+                
+            }else{
+           
+                 self.setupYearandMonth()
+            
+            }
+            
+        }else{
+
         self.setupYearandMonth()
         
+        }*/
+            
         let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "TimeLine")
         let builder = GAIDictionaryBuilder.createScreenView()
@@ -185,13 +198,18 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             
         }
 
-        
+        self.setupYearandMonth()
         self.tableView.reloadData()
+        print("リローダー")
        
 
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        
+
+        
         
         //ノートから戻るボタンで戻ってきた場合はnoteFlagを一度nilにする。
         if appDelegate!.noteReturn == true{
@@ -200,6 +218,94 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             appDelegate!.noteReturn = false
             
         }
+    }
+    
+    
+    
+    //ドロップボックスからdefaultと写真をダウンロード。
+    func downLoadFromDropbox(){
+        
+        if let client = Dropbox.authorizedClient{
+            
+            //ダウンロード先のURLを設定
+            let destination:(NSURL,NSHTTPURLResponse) -> NSURL = {temporaryURL,response in
+            
+                
+                let directoryURL = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains:
+                    .UserDomainMask)[0]
+                let pathComponent = "defaults.realm"
+                 return directoryURL.URLByAppendingPathComponent(pathComponent)
+               
+            
+            }
+            
+            client.files.download(path: "/default.realm", destination: destination).response({ (response, error) -> Void in
+                
+                if let (metadata,url) = response{
+                    
+                    print("download \(metadata.name)")
+                     print("ダウンロード１")
+                    //defaults.realmを復元してdefault.realmに上書きする前に、default.realm（未ログイン時のデータ)をdefaults.realmにコピーしたい
+                    let realm = try!Realm()
+                    let realmNote = realm.objects(Note)
+                    
+                    var config = Realm.Configuration()
+                    config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("defaults").URLByAppendingPathExtension("realm").path
+                    
+                    let realms = try!Realm(configuration: config)
+                    let maxNote = try!realms.objects(Note).sorted("id", ascending: false)[0]
+                    let maxId = maxNote.id
+                    
+                    
+                    
+                    for note in realmNote{
+                        
+                    
+                        let not = Note()
+                        
+                        not.id = maxId + note.id
+                        not.createDate = note.createDate
+                        not.editDate = note.editDate
+                        not.noteText = note.noteText
+                        not.modelName = note.modelName
+                        not.timerTime = note.timerTime
+                        print("フレッシュ")
+                        try!realms.write({ () -> Void in
+                            realms.add(not, update: true)
+                        })
+                        
+                        
+                        
+                    }
+                    
+                    
+                    //上記のコードで、ドロップボックスからDocumenetDirectoryにdefault.realmをdefaults.realmという名前でダウンロードした(同じ名前だとダウンロードできないため)。ここでdefault.realmを削除して、defaults.realmをdefault.realmに名前変更したい。
+                    let documentDirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+                    let fileName = "defaults.realm"
+                    let fileNames = "default.realm"
+                    
+                    print("ダウンロード２")
+                    
+                    if NSFileManager.defaultManager().fileExistsAtPath("\(documentDirPath)/\(fileName)") && NSFileManager.defaultManager().fileExistsAtPath("\(documentDirPath)/\(fileNames)"){
+                        
+                    try!NSFileManager.defaultManager().removeItemAtPath("\(documentDirPath)/\(fileNames)")
+                    try!NSFileManager.defaultManager().moveItemAtPath("\(documentDirPath)/\(fileName)", toPath: "\(documentDirPath)/\(fileNames)")
+                        
+                        
+                    }
+                    
+                    self.uploadToDropBox()
+                    self.setupYearandMonth()
+
+                }else{
+                    print(error)
+                }
+                
+            })
+            
+        
+    }
+        
     }
     
     //ドロップボックスに既存の写真、データをアップロードする
@@ -265,7 +371,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     //セクションヘッダーに年月を入れるための準備
     func setupYearandMonth(){
     //使用するカレンダーを選択
-        
+    print("男はつらいよ")
     let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     //NSDate形式の情報から変換するフォーマットを作る
     let dateFormattaer:NSDateFormatter = NSDateFormatter()
@@ -283,9 +389,11 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     //宣言しただけで初期化していなかったためにエラーになっていた。
     tableViewCells = [:]
     tableViewSections = []
-    
+    print("男はつらいね")
         if self.navigationController is timeLineNavigationController{
-    
+            print("男はつらいか")
+      
+            
             let realm = try!Realm()
             notes = realm.objects(Note).sorted("id", ascending: false)
             print("エントリー数\(notes?.count)")
@@ -307,11 +415,9 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         }
         
         
-    
+         print("男はつらいて")
         //帰ってきた全てのノートデータを取り出す
         for note in notes!  {
-        
-            
             
             if note.createDate != nil{
             let coms:NSDateComponents = (calendar?.components(unit, fromDate: note.createDate!))!
