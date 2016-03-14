@@ -550,8 +550,6 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             //PDFメール用に日付データを入れる
             appDelegate?.dateForPDF = self.navigationItem.title
-
-            
             
             DateLabels = UILabel(frame: CGRectMake(0,0,170,44))
             DateLabels.text = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDays[comps.weekday])"
@@ -1329,19 +1327,6 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             appDelegate?.noteFlag = true
             appDelegate?.noPhotoButtonTaped = true
             appDelegate?.editNoteId = note![0].id
-            
-            if Dropbox.authorizedClient == nil{
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("unlogin").URLByAppendingPathExtension("realm").path
-                
-                let realms = try!Realm(configuration: config)
-                
-                let nots = realms.objects(Note)
-                
-                appDelegate?.editNoteId
-                
-            }
             
             self.presentViewController(cameraViewController!, animated: true, completion: nil)
             
