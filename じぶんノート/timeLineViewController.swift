@@ -152,7 +152,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             let dic = ["firstAfterDropBoxLogin":true]
             userDefaults.registerDefaults(dic)
             
-        
+            
             if userDefaults.boolForKey("firstAfterDropBoxLogin"){
                 print("ログイン")
                 //dropboxへすべての写真、default.realmをバックアップ
@@ -335,8 +335,22 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
                             self.userDefaults.setBool(true, forKey: "downloadRealmFile")
                             print("エレガンス")
                         }
+                    
+                    print("ムッシュー")
+                    //merged.realmをアップロード
+                    let documetURL = NSURL(fileURLWithPath:self.path!)
+                    let fileURL = documetURL.URLByAppendingPathComponent("merged.realm")
+                    client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
                         
-                        print("ムッシュー")
+                        if let metadata = response{
+                            print("uploaded file \(metadata)")
+                            
+                        }else{
+                            print(error!)
+                        }
+                        
+                    })
+
                     
                         var configes = Realm.Configuration()
                         configes.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
