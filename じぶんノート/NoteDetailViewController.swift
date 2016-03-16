@@ -19,6 +19,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     var path:String?
     var asset:PHFetchResult!
     
+    let userDefault = NSUserDefaults()
+    
     //共有などを行うためのボタン
     var shareButton:UIButton!
     
@@ -244,6 +246,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         //新規ノートの場合
         if appDelegate?.noteFlag == true{
+            
+            
             let realm = try!Realm()
             let note = realm.objects(Note).sorted("id", ascending: false)
             
@@ -300,9 +304,22 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         if appDelegate?.noteFlag == true{
             
             //最後のデータをrealmから取り出して表示
-            let realm = try!Realm()
+            if userDefault.boolForKey("downloadRealmFile"){
+                var config = Realm.Configuration()
+                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
+                
+            let realm = try!Realm(configuration: config)
             note = realm.objects(Note).sorted("id", ascending: false)
-            
+            }else{
+                var config = Realm.Configuration()
+                
+                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("local").URLByAppendingPathExtension("realm").path
+                
+                let realm = try!Realm(configuration: config)
+                note = realm.objects(Note).sorted("id", ascending: false)
+                
+                
+            }
             
             if note![0].photos.count == 0{
                 
@@ -470,7 +487,25 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         }else if self.appDelegate?.noteFlag == false{
             //遷移元がタイムラインの時
             print("タムライン")
-            let realm = try!Realm()
+            
+            let realm:Realm!
+            if userDefault.boolForKey("downloadRealmFile"){
+                var config = Realm.Configuration()
+                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
+                
+                
+                realm = try!Realm(configuration: config)
+            
+            }else{
+                
+                var config = Realm.Configuration()
+                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("local").URLByAppendingPathExtension("realm").path
+                
+                
+                realm = try!Realm(configuration: config)
+                
+            }
+            
             print("ノートのid\(notes?.id)")
            
             

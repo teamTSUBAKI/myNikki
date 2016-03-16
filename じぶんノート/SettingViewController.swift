@@ -15,7 +15,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
     
-    
+    let userDefaults = NSUserDefaults()
     
    
     var path:String?
@@ -176,9 +176,9 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             
         }else{
-     
+            print("ログアウト")
             Dropbox.unlinkClient()
-            
+            userDefaults.setBool(true, forKey: "firstAfterDropBoxLogin")
             
         }
     }

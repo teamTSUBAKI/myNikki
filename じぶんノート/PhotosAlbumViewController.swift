@@ -23,6 +23,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     //モーダルデリゲートを使うためのプロパティを準備
     var delegate:modalViewControllerDelegate! = nil
     
+    let userDefaults = NSUserDefaults()
+    
     @IBOutlet weak var nonSelectedView: UIView!
     
     //選択された写真のインデックスパスを入れる配列
@@ -52,6 +54,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         super.viewDidLoad()
         
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        
         
      
         //最初はdoneボタンを無効に
@@ -368,7 +371,19 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     
     func dataSave(){
     
-        let realm = try!Realm()
+        var config:Realm.Configuration!
+        if userDefaults.boolForKey("downloadRealmFile"){
+        
+            config = Realm.Configuration()
+            config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
+        }else{
+            
+            config = Realm.Configuration()
+            config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("local").URLByAppendingPathExtension("realm").path
+            
+        }
+        
+        let realm = try!Realm(configuration: config)
         let maxNote = realm.objects(Note).sorted("id", ascending: false)
         let note = Note()
         
@@ -596,9 +611,22 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             path = paths[0]
         }
         
-        let documentURL = NSURL(fileURLWithPath: path!)
-        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
         
+        let documentURL = NSURL(fileURLWithPath: path!)
+        
+        let fileURL:NSURL!
+        
+        if userDefaults.boolForKey("downloadRealmFile"){
+        
+             fileURL = documentURL.URLByAppendingPathComponent("merged.realm")
+        
+            
+        }else{
+            
+             fileURL = documentURL.URLByAppendingPathComponent("local.realm")
+
+        }
+            
         if let client = Dropbox.authorizedClient{
             client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
                 
