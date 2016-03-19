@@ -17,8 +17,13 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     let userDefaults = NSUserDefaults()
     
+    var loginTapedNotificationObserver:NSObjectProtocol?
+    
+    var loginNoticationObserber:NSObjectProtocol!
    
     var path:String?
+    
+    var mySwitch:UISwitch?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +38,13 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         tracker.set(kGAIScreenName, value: "Setting")
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
+
+        
+        NSNotificationCenter.defaultCenter().addObserverForName("login", object: nil, queue: nil, usingBlock: {(notification)in
+        
+            self.mySwitch!.on = true
+        
+        })
         
        
     }
@@ -133,21 +145,21 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 1:
                 cell.textLabel!.text = "Dropboxにバックアップする"
                 //switchボタンを作る
-                let mySwitch = UISwitch(frame: CGRectMake(0,0,20,20))
+                mySwitch = UISwitch(frame: CGRectMake(0,0,20,20))
                 
                 //ログイン済みなら
                 if let _ = Dropbox.authorizedClient{
                 
-                    mySwitch.on = true
+                    mySwitch!.on = true
                 
                 }else{
                 
                 
-                    mySwitch.on = false
+                    mySwitch!.on = false
                 
                 }
                 
-                mySwitch.addTarget(self, action: "DropboxTaped:", forControlEvents: UIControlEvents.ValueChanged)
+                mySwitch!.addTarget(self, action: "DropboxTaped:", forControlEvents: UIControlEvents.ValueChanged)
                 cell.accessoryView = mySwitch
                 
             default:
@@ -172,6 +184,8 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             //ログイン画面を表示する
             Dropbox.authorizeFromController(self)
+            
+            
         
             
             
@@ -181,6 +195,11 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             userDefaults.setBool(true, forKey: "firstAfterDropBoxLogin")
             
         }
+        
+        mySwitch?.on = false
+    
+        
+        
     }
     
     
@@ -234,8 +253,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-   
-    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

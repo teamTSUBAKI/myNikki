@@ -304,7 +304,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         if appDelegate?.noteFlag == true{
             
             //最後のデータをrealmから取り出して表示
-            if userDefault.boolForKey("downloadRealmFile"){
+            let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
+            if NSFileManager.defaultManager().fileExistsAtPath(merged){
                 var config = Realm.Configuration()
                 config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
                 
@@ -313,7 +314,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             }else{
                 var config = Realm.Configuration()
                 
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("local").URLByAppendingPathExtension("realm").path
+                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
                 
                 let realm = try!Realm(configuration: config)
                 note = realm.objects(Note).sorted("id", ascending: false)
@@ -489,7 +490,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             print("タムライン")
             
             let realm:Realm!
-            if userDefault.boolForKey("downloadRealmFile"){
+            
+            let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
+            
+            if NSFileManager.defaultManager().fileExistsAtPath(merged){
                 var config = Realm.Configuration()
                 config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
                 
@@ -499,7 +503,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             }else{
                 
                 var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("local").URLByAppendingPathExtension("realm").path
+                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
                 
                 
                 realm = try!Realm(configuration: config)
