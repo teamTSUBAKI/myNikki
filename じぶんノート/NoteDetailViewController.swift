@@ -11,7 +11,7 @@ import RealmSwift
 import Photos
 import Fabric
 import Crashlytics
-import SwiftyDropbox
+
 
 
 class NoteDetailViewController: UIViewController,UITextViewDelegate{
@@ -84,8 +84,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     //タイムラインから選択されたセルのデータが入るプロパティ
     //default.realmのデータ
     var notes:Note?
-    //unLogin.realmのデータ
-    var unLoginNote:Note?
+
     
     var appDelegate:AppDelegate?
     
@@ -304,23 +303,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         if appDelegate?.noteFlag == true{
             
             //最後のデータをrealmから取り出して表示
-            let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
-            if NSFileManager.defaultManager().fileExistsAtPath(merged){
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
-                
-            let realm = try!Realm(configuration: config)
+            let realm = try!Realm()
             note = realm.objects(Note).sorted("id", ascending: false)
-            }else{
-                var config = Realm.Configuration()
-                
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
-                
-                let realm = try!Realm(configuration: config)
-                note = realm.objects(Note).sorted("id", ascending: false)
-                
-                
-            }
             
             if note![0].photos.count == 0{
                 
@@ -489,27 +473,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             //遷移元がタイムラインの時
             print("タムライン")
             
-            let realm:Realm!
-            
-            let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
-            
-            if NSFileManager.defaultManager().fileExistsAtPath(merged){
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
-                
-                
-                realm = try!Realm(configuration: config)
-            
-            }else{
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
-                
-                
-                realm = try!Realm(configuration: config)
-                
-            }
-            
+            let realm = try!Realm()
             print("ノートのid\(notes?.id)")
            
             

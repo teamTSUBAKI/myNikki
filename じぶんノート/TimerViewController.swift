@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 import AVFoundation
-import SwiftyDropbox
+
 
 class TimerViewController: UIViewController {
     
@@ -425,7 +425,7 @@ class TimerViewController: UIViewController {
         let dateFormatter:NSDateFormatter = NSDateFormatter()
         
         print("数\(countDown?.characters.count)")
-        if countDown?.characters.count == 6 || countDown?.characters.count == 8  {
+        if countDown?.characters.count == 6 || countDown?.characters.count == 7 || countDown?.characters.count == 8  {
         
             dateFormatter.dateFormat = "HH:mm:ss"
         
@@ -436,7 +436,7 @@ class TimerViewController: UIViewController {
         }
         
         let dateFormat:NSDateFormatter = NSDateFormatter()
-        if countUps?.characters.count == 6 || countUps?.characters.count == 8{
+        if countUps?.characters.count == 6 || countUps?.characters.count == 7 || countUps?.characters.count == 8{
             
             dateFormat.dateFormat = "HH:mm:ss"
             
@@ -479,8 +479,10 @@ class TimerViewController: UIViewController {
 
             if coms.hour == 00{
                 
+                timerLabel.hidden = true
+                timerLabelMinute.hidden = false
                 timerLabelMinute.text = String(format: "%02d:%02d", coms.minute,coms.second)
-                timerLabelMinuteX.constant = CGFloat(screenWidth / Double(2))-100
+                timerLabelMinuteX.constant = CGFloat(screenWidth / Double(2))-90
          
                 timerLabelMinute.font = UIFont(name: "AppleSDGothicNeo-Thin", size:74.0)
                 timerLabelMinute.textColor = UIColor.redColor()
@@ -488,10 +490,13 @@ class TimerViewController: UIViewController {
                 countUps = String(format: "%02d:%02d",coms.minute,coms.second)
             }else{
                 
+                timerLabelMinute.hidden = true
+                timerLabel.hidden = false
                 timerLabel.text = String(format: "%d:%02d:%02d",coms.hour,coms.minute,coms.second)
-                timerLabelX.constant = CGFloat(screenWidth / Double(2))-120
-           
-                timerLabel.font = UIFont(name: "AppleSDGothicNeo-Thin", size:74.0)
+                timerLabelX.constant = CGFloat(screenWidth / Double(2))-110
+                
+                
+                timerLabel.font = UIFont(name: "AppleSDGothicNeo-Thin", size:63.0)
                 timerLabel.textColor = UIColor.redColor()
                 countUps = String(format: "%02d:%02d:%02d",coms.hour,coms.minute,coms.second)
 
@@ -510,17 +515,20 @@ class TimerViewController: UIViewController {
            
             if coms.hour == 00{
             
+                timerLabel.hidden = true
+                timerLabelMinute.hidden = false
                 timerLabelMinute.text = String(format: "%02d:%02d", coms.minute,coms.second)
-                timerLabelMinuteX.constant = CGFloat(screenWidth / Double(2))-100
+                timerLabelMinuteX.constant = CGFloat(screenWidth / Double(2))-90
     
                 timerLabelMinute.font = UIFont(name: "AppleSDGothicNeo-Thin", size:74.0)
                 countDown = String(format: "%02d:%02d", coms.minute,coms.second)
             }else{
              
+                timerLabel.hidden = false
                 timerLabel.text = String(format: "%d:%02d:%02d",coms.hour,coms.minute,coms.second)
-                 timerLabelX.constant = CGFloat(screenWidth / Double(2))-120
+                 timerLabelX.constant = CGFloat(screenWidth / Double(2))-107
        
-                timerLabel.font = UIFont(name: "AppleSDGothicNeo-Thin", size:74.0)
+                timerLabel.font = UIFont(name: "AppleSDGothicNeo-Thin", size:63.0)
                 
                 countDown = String(format: "%02d:%02d:%02d",coms.hour,coms.minute,coms.second)
                 
@@ -618,35 +626,6 @@ class TimerViewController: UIViewController {
             realm.add(note, update: true)
         })
         
-      
-            //unlogin.realmにも保存.unlogin.realmいらないかもしれない仮説を検証する。
-          /*  var config = Realm.Configuration()
-            config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("unlogin").URLByAppendingPathExtension("realm").path
-            print("よしお")
-
-            let realms = try!Realm(configuration: config)
-          print("よしお")
-            let maxNotes = realms.objects(Note).sorted("id", ascending: false)
-            let notes = Note()
-            if maxNotes.isEmpty{
-                notes.id = 1
-            }else{
-                notes.id = maxNotes[0].id + 1
-            }
-              print("よしお")
-            notes.createDate = NSDate()
-            notes.timerTime = allTimeBySecond
-              print("よしお")
-            try!realms.write({ () -> Void in
-                realms.add(notes, update: true)
-            })*/
-            
-        
-        
-        
-        
-        uploadDropbox()
-        
         
         appDelegate?.noteFlag = true
         appDelegate?.timerFlag = true
@@ -660,31 +639,6 @@ class TimerViewController: UIViewController {
         
     }
     
-    func uploadDropbox(){
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        if paths.count > 0{
-            path = paths[0]
-        }
-        
-        let documentURL = NSURL(fileURLWithPath: path!)
-        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
-        
-        if let client = Dropbox.authorizedClient{
-            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
-                
-                if let metadata = response{
-                    print("uploaded file \(metadata)")
-                }else{
-                    print(error!)
-                }
-
-                
-            })
-            
-        }
-        
-    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toNoteDetail"{

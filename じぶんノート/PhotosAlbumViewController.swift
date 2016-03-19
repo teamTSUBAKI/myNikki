@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 import RealmSwift
-import SwiftyDropbox
+
 
 //写真ピッカー画面になったら、裏で親ビューを画面遷移させたい
 protocol modalViewControllerDelegate{
@@ -375,30 +375,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         if paths.count > 0{
             path = paths[0]
         }
-        let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
-        
-        if Dropbox.authorizedClient == nil && NSFileManager.defaultManager().fileExistsAtPath(merged){
-         
-            defaultRealmUpdatea()
-            
-        }
-     
-        var config:Realm.Configuration!
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(merged){
-        
-            config = Realm.Configuration()
-            config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
-            print("まーじに登録")
-        }else{
-            
-            config = Realm.Configuration()
-            config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
-            print("defaultに登録")
-            
-        }
-        
-        let realm = try!Realm(configuration: config)
+       
+        let realm = try!Realm()
         let maxNote = realm.objects(Note).sorted("id", ascending: false)
         let note = Note()
         
@@ -472,12 +450,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                                 
                             }
                             
-                            //ここでドロップボックスにアップロード
-                            self.uploadToDropBox()
-                            //ここでロップボックスにrealmデータをアップロード
-                            self.uploadRealmToDropbox()
-                            
-                            NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
+                    NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
                             
                         })
                     }
@@ -550,10 +523,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     if((self.data?.writeToFile(filepath, atomically: true)) != nil){
                         
-                        //ここでドロップボックスに写真データをアップロード
-                        self.uploadToDropBox()
-                        //ここでロップボックスにrealmデータをアップロード
-                        self.uploadRealmToDropbox()
+                
                         
                         let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
                         
@@ -602,283 +572,6 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         }
     }
     
-    func defaultRealmUpdatea(){
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        if paths.count > 0{
-            path = paths[0]
-        }
-        
-        var config:Realm.Configuration!
-        config = Realm.Configuration()
-        config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
-            print("defaultに登録")
-        
-        let realm = try!Realm(configuration: config)
-        let maxNote = realm.objects(Note).sorted("id", ascending: false)
-        let note = Note()
-        
-        
-        
-        //写真の追加だったら
-        if appDelegate?.addPhotoFlag == true{
-            
-            print("ここが怪しい\(appDelegate?.editNoteId)")
-            let editNoteIds:Int = (appDelegate?.editNoteId)!
-            let editNote = realm.objects(Note).filter("id = \(editNoteIds)")
-            print("バッハ２")
-            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            
-            if paths.count > 0{
-                
-                path = paths[0]
-                
-            }else{
-                //エラー処理
-            }
-            
-            for ind in 0...selectPhots.count-1{
-                
-                filename = NSUUID().UUIDString + ".jpg"
-                let filepath = (path! as NSString).stringByAppendingPathComponent(filename!)
-                let options = PHImageRequestOptions()
-                options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
-                options.synchronous = true
-                
-                let asset = selectPhots[ind]
-                print("アセット\(asset)")
-                let manager = PHImageManager()
-                manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
-                    
-                    self.data = UIImageJPEGRepresentation(image!, 0.8)
-                    if ((self.data?.writeToFile(filepath, atomically: true)) != nil){
-                        
-                        
-                        let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
-                        
-                        
-                        try!realm.write({ () -> Void in
-                            
-                            let photo = Photos()
-                            
-                            
-                            if maxPhoto.isEmpty{
-                                
-                                photo.id = 1
-                                
-                                
-                            }else{
-                                
-                                photo.id = maxPhoto[0].id + 1
-                                
-                            }
-                            
-                            photo.createDate = editNote[0].createDate
-                            photo.filename = self.filename!
-                            
-                            if ind == self.selectPhots.count - 1{
-                                
-                                editNote[0].photos.append(photo)
-                                
-                                print("頼む")
-                                
-                            }else{
-                                print("頼め")
-                                editNote[0].photos.append(photo)
-                                
-                            }
-                            
-                
-                            
-                        })
-                    }
-                })
-                
-            }
-            
-            
-            
-        }else{
-            //新規のノートの追加。
-            
-            if maxNote.isEmpty{
-                note.id = 1
-            }else{
-                
-                note.id = maxNote[0].id + 1
-            }
-            
-            
-            note.createDate = NSDate()
-            
-            /*
-            let date:String = "2017-5-17 23:30:12"
-            let dateformatter:NSDateFormatter = NSDateFormatter()
-            dateformatter.locale = NSLocale(localeIdentifier: "ja")
-            dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-            let changeDate = dateformatter.dateFromString(date)
-            note.createDate = changeDate
-            */
-            
-            
-            try!realm.write({ () -> Void in
-                
-                realm.add(note, update: true)
-                
-            })
-            
-            
-            
-            
-            //画像の保存先パスを取得
-            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            if paths.count > 0{
-                path = paths[0]
-            }else{
-                
-                //エラー処理
-            }
-            
-            
-            
-            for ind in 0...selectPhots.count - 1{
-                
-                let options = PHImageRequestOptions()
-                options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
-                options.networkAccessAllowed = true
-                options.synchronous = true
-                
-                print("選択されたフォト\(selectPhots)")
-                let asset = selectPhots[ind]
-                print("選択されたアセット\(asset)")
-                let manager = PHImageManager()
-                manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
-                    self.data = UIImageJPEGRepresentation(image!, 0.8)
-                    //ここに移動してみた！結果、問題は起きないけど、問題解決も出来なかった。
-                    self.filename = NSUUID().UUIDString + ".jpg"
-                    
-                    let filepath = (self.path! as NSString).stringByAppendingPathComponent(self.filename!)
-                    
-                    if((self.data?.writeToFile(filepath, atomically: true)) != nil){
-                        
-                       
-                        let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
-                        
-                        try!realm.write({ () -> Void in
-                            
-                            let photo = Photos()
-                            
-                            
-                            if maxPhoto.isEmpty{
-                                
-                                photo.id = 1
-                                
-                            }else{
-                                print("idをつける\(maxPhoto[0].id + 1)")
-                                photo.id = maxPhoto[0].id + 1
-                                
-                            }
-                            
-                            photo.createDate = NSDate()
-                            photo.filename = self.filename!
-                            
-                            //選ばれた写真の最後の一枚ならば、
-                            if ind == self.selectPhots.count - 1{
-                                print("最後の一枚\(photo)")
-                                note.photos.append(photo)
-                                
-                            }else{
-                                print("最後の一枚じゃない\(photo)")
-                                note.photos.append(photo)
-                                
-                            }
-                            
-                            NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
-                        })
-                        
-                        
-                        
-                        
-                    }
-                    
-                    
-                })
-                
-            }
-            
-        }
-
-    
-        
-        
-    }
-    
-    //写真が登録されるたびにDropboxにアップロードする
-    func uploadToDropBox(){
-        
-        let documentURL = NSURL(fileURLWithPath: path!)
-        let fileURL = documentURL.URLByAppendingPathComponent(self.filename!)
-        
-        if let client = Dropbox.authorizedClient{
-            client.files.upload(path: "/\(self.filename!)", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
-                
-                if let metadata = response{
-                    
-                    print("upload file \(metadata)")
-                }else{
-                    
-                    print(error)
-                }
-                
-            })
-            
-        }
-        
-    }
-
-    
-    func uploadRealmToDropbox(){
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        if paths.count > 0{
-            path = paths[0]
-        }
-        
-        
-        let documentURL = NSURL(fileURLWithPath: path!)
-        
-        let fileURL:NSURL!
-        let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
-        print("どうなる\(NSFileManager.defaultManager().fileExistsAtPath(merged))")
-        if NSFileManager.defaultManager().fileExistsAtPath(merged){
-        
-             fileURL = documentURL.URLByAppendingPathComponent("merged.realm")
-         print("さらい")
-            
-        }else{
-            
-             fileURL = documentURL.URLByAppendingPathComponent("default.realm")
-        print("空い")
-        }
-            
-        if let client = Dropbox.authorizedClient{
-            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
-                
-                if let metadata = response{
-                    print("uploaded file \(metadata)")
-                }else{
-                    print(error!)
-                }
-                
-                
-            })
-            
-        }
-        
-
-        
-    }
-
     
     
 

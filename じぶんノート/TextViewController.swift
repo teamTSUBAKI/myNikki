@@ -8,7 +8,7 @@
 
 import UIKit
 import RealmSwift
-import SwiftyDropbox
+
 
 class TextViewController: UIViewController,UITextViewDelegate {
 
@@ -162,42 +162,20 @@ class TextViewController: UIViewController,UITextViewDelegate {
 
         }
         
-        uploadDropbox()
         
        }
     
-    func uploadDropbox(){
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        if paths.count > 0{
-            path = paths[0]
-        }
-        
-        let documentURL = NSURL(fileURLWithPath: path!)
-        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
-        
-        if let client = Dropbox.authorizedClient{
-            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
-                
-                if let metadata = response{
-                    print("uploaded file \(metadata)")
-                }else{
-                    print(error!)
-                }
-                
-                
-            })
-            
-        }
-
-        
-        
-    }
     
-    func cancelButtonTaped(){
+    
+    
+    
+       func cancelButtonTaped(){
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
+    
     
     override func viewWillDisappear(animated: Bool) {
         //戻る時に、addPhotoFlagをfalseにする

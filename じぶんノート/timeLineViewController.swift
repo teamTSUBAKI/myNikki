@@ -8,7 +8,7 @@
 
 import UIKit
 import RealmSwift
-import SwiftyDropbox
+
 
 class timeLineViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
 
@@ -221,26 +221,11 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     print("男はつらいね")
         if self.navigationController is timeLineNavigationController{
             print("男はつらいか")
-            
-            let realm:Realm!
-            
-            let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
-            if NSFileManager.defaultManager().fileExistsAtPath(merged){
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
-            
-                realm = try!Realm(configuration: config)
-                notes = realm.objects(Note).sorted("id", ascending: false)
-                print("エントリー数\(notes?.count)")
-            }else{
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
-                
-                realm = try!Realm(configuration: config)
-                notes = realm.objects(Note).sorted("id", ascending: false)
-            }
+           
+            let realm = try!Realm()
+            notes = realm.objects(Note).sorted("id", ascending: false)
+      
+      
     
         
         }else if self.navigationController is CalendarViewNavigationController{
@@ -252,25 +237,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             let targetDate:NSDate = calendar.dateWithEra(1, year: year!, month: month!, day: day!, hour: 0, minute: 0, second: 0, nanosecond: 0)!
             let lastTargetDate:NSDate = calendar.dateWithEra(1, year: year!, month: month!, day: day!, hour: 23, minute: 59, second: 59, nanosecond: 0)!
             
-            let realm:Realm!
-            
-            if userDefaults.boolForKey("downloadRealmFile"){
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
-                
-                realm = try!Realm(configuration: config)
-                notes = realm.objects(Note).sorted("id", ascending: false)
-                print("エントリー数\(notes?.count)")
-            }else{
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
-                
-                realm = try!Realm(configuration: config)
-                notes = realm.objects(Note).sorted("id", ascending: false)
-            }
-
+            let realm = try!Realm()
             
             let predicate = NSPredicate(format: "createDate BETWEEN {%@,%@}", targetDate,lastTargetDate)
             notes = realm.objects(Note).filter(predicate).sorted("id",ascending: false)
@@ -587,29 +554,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         //削除の場合
         if editingStyle == .Delete{
             
-            let realm:Realm!
+            let realm = try!Realm()
             
-            
-            let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
-            
-            if NSFileManager.defaultManager().fileExistsAtPath(merged){
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("merged").URLByAppendingPathExtension("realm").path
-                
-                realm = try!Realm(configuration: config)
-                
-                notes = realm.objects(Note).sorted("id", ascending: false)
-                print("エントリー数\(notes?.count)")
-            }else{
-                
-                var config = Realm.Configuration()
-                config.path = NSURL.fileURLWithPath(config.path!).URLByDeletingLastPathComponent?.URLByAppendingPathComponent("default").URLByAppendingPathExtension("realm").path
-                
-                realm = try!Realm(configuration: config)
-                notes = realm.objects(Note).sorted("id", ascending: false)
-            }
-
             let key = tableViewSections[indexPath.section] as! NSString
             let note:Note = self.tableViewCells![key]![0][indexPath.row] as! Note
             
@@ -619,19 +565,6 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             
             let filePath = (path! as NSString).stringByAppendingPathComponent(photo.filename)
             
-            //ドロップボックスにログインしているなら、ドロップボックスからも削除。
-            if let client = Dropbox.authorizedClient{
-                    client.files.delete(path: "/\(photo.filename)").response({ (response, error) -> Void in
-                        
-                        if let metadata = response{
-                            print("delete file name:\(metadata)")
-                        }else{
-                            print(error)
-                        }
-                        
-                    })
-                }
-                
             try?NSFileManager.defaultManager().removeItemAtPath(filePath)
             
             }
@@ -644,56 +577,14 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
                 
             })
             
-            uploadRealmToDropbox()
+            
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             NSNotificationCenter.defaultCenter().postNotificationName("deletePhoto", object: nil)
             }
     }
     
-    //realmファイルを最新の状態に。
-    func uploadRealmToDropbox(){
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        if paths.count > 0{
-            path = paths[0]
-        }
-        
-        let documentURL = NSURL(fileURLWithPath: path!)
-        
-        let fileURL:NSURL!
-        let merged = (path! as NSString).stringByAppendingPathComponent("merged.realm")
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(merged){
-        
-            fileURL = documentURL.URLByAppendingPathComponent("merged.realm")
-        
-        }else{
-            
-            fileURL = documentURL.URLByAppendingPathExtension("default.realm")
-        
-        }
-            
-        if let client = Dropbox.authorizedClient{
-            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
-                
-                if let metadata = response{
-                    print("uploaded file \(metadata)")
-                }else{
-                    print(error!)
-                }
-                
-                
-            })
-            
-        }
-        
-
-        
-        
-    }
-   
-    
+       
        
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -70,30 +70,10 @@ class PhotoDetailViewController: UIViewController,UIScrollViewDelegate {
         
         let filepath = (path! as NSString).stringByAppendingPathComponent(deletePhoto[0].filename)
         
-        if let client = Dropbox.authorizedClient{
-            
-            client.files.delete(path: "/\(deletePhoto[0].filename)").response({ (response, error) -> Void in
-                
-                if let metadata = response{
-                    
-                    print("delete file name:\(metadata)")
-                    
-                }else{
-                    
-                    print(error)
-                }
-                
-            })
-            
-        }
         
-        //ここでrealmデータをドロップボックスにアップロード
-        uploadRealmToDrpbox()
-        
-        print(deletePhoto)
-        
+
         do{
-        try?NSFileManager.defaultManager().removeItemAtPath(filepath)
+        try NSFileManager.defaultManager().removeItemAtPath(filepath)
         }catch{
             print("エラー")
             
@@ -112,35 +92,7 @@ class PhotoDetailViewController: UIViewController,UIScrollViewDelegate {
         
     }
     
-    func uploadRealmToDrpbox(){
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        if paths.count > 0{
-            path = paths[0]
-        }
-        
-        let documentURL = NSURL(fileURLWithPath: path!)
-        let fileURL = documentURL.URLByAppendingPathComponent("default.realm")
-        
-        if let client = Dropbox.authorizedClient{
-            client.files.upload(path: "/default.realm", mode: Files.WriteMode.Overwrite, autorename: true, clientModified: NSDate(), mute: false, body: fileURL).response({ (response, error) -> Void in
-                
-                if let metadata = response{
-                    print("uploaded file \(metadata)")
-                }else{
-                    print(error!)
-                }
-                
-                
-            })
-            
-        }
-
-        
-        
-    }
-    
-    
+       
     
     func cancelButtonTaped(){
     

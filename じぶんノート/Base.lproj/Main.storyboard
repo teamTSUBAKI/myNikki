@@ -1079,9 +1079,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGV-4L-OBN">
-                                                    <rect key="frame" x="8" y="11" width="80" height="21"/>
+                                                    <rect key="frame" x="8" y="11" width="200" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="52b-ci-xdv"/>
+                                                        <constraint firstAttribute="width" constant="200" id="MHu-F9-XsH"/>
                                                         <constraint firstAttribute="height" constant="21" id="RYC-EY-yIu"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1166,12 +1166,13 @@
                                         <date key="date" timeIntervalSinceReferenceDate="475895163.38085699">
                                             <!--2016-01-31 01:06:03 +0000-->
                                         </date>
+                                        <locale key="locale" localeIdentifier="ja_JP"/>
                                     </datePicker>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYk-lo-AA7">
                                         <rect key="frame" x="20" y="68" width="280" height="65"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="280" id="sFf-hQ-aAf"/>
                                             <constraint firstAttribute="height" constant="65" id="sc2-pZ-ouW"/>
-                                            <constraint firstAttribute="width" constant="280" id="swT-zj-WKd"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1364,7 +1365,7 @@
         <image name="Time-52" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mEw-Mn-heq"/>
         <segue reference="emV-uU-IHD"/>
+        <segue reference="D5X-eB-cd8"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -40,11 +40,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         tracker.send(builder.build() as [NSObject:AnyObject])
 
         
-        NSNotificationCenter.defaultCenter().addObserverForName("login", object: nil, queue: nil, usingBlock: {(notification)in
-        
-            self.mySwitch!.on = true
-        
-        })
+     
         
        
     }
@@ -89,7 +85,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 0:
             return 2
         case 1:
-            return 2
+            return 1
         default:
             return 0
         }
@@ -142,25 +138,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 0:
                 cell.textLabel?.text = "フィードバック・改善要望を送る"
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            case 1:
-                cell.textLabel!.text = "Dropboxにバックアップする"
-                //switchボタンを作る
-                mySwitch = UISwitch(frame: CGRectMake(0,0,20,20))
-                
-                //ログイン済みなら
-                if let _ = Dropbox.authorizedClient{
-                
-                    mySwitch!.on = true
-                
-                }else{
-                
-                
-                    mySwitch!.on = false
-                
-                }
-                
-                mySwitch!.addTarget(self, action: "DropboxTaped:", forControlEvents: UIControlEvents.ValueChanged)
-                cell.accessoryView = mySwitch
+
                 
             default:
                 cell.textLabel?.text = "エラー"
@@ -172,38 +150,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         
     }
     
-    func DropboxTaped(sender:UISwitch){
-        
-        if sender.on{
-            
-            //ログイン済みなら
-            if let _ = Dropbox.authorizedClient{
-                //すでにログイン済みの場合、クラッシュしてしまうのでログアウトする
-                Dropbox.unlinkClient()
-            }
-            
-            //ログイン画面を表示する
-            Dropbox.authorizeFromController(self)
-            
-            
-        
-            
-            
-        }else{
-            print("ログアウト")
-            Dropbox.unlinkClient()
-            userDefaults.setBool(true, forKey: "firstAfterDropBoxLogin")
-            
-        }
-        
-        mySwitch?.on = false
     
-        
-        
-    }
-    
-    
-
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
