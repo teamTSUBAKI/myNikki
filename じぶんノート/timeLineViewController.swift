@@ -45,6 +45,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         let dic = ["downloadRealmFile":false]
         userDefaults.registerDefaults(dic)
         
@@ -85,11 +87,21 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
         self.navigationController?.navigationBar.tintColor = UIColor.grayColor()
         
-        let textButton = UIBarButtonItem(title: "メモを書く", style: .Plain, target: self, action: "textButtonTaped")
-     
         
         
-        self.navigationItem.rightBarButtonItem = textButton
+        if self.navigationController is timeLineNavigationController{
+            
+            let textButton = UIBarButtonItem(title: "メモを書く", style: .Plain, target: self, action: "textButtonTaped")
+            
+            self.navigationItem.rightBarButtonItem = textButton
+            
+            self.navigationItem.title = "TimeLine"
+        }else if self.navigationController is CalendarViewNavigationController{
+            
+            self.navigationItem.title = "\(month!)月\(day!)日ノート一覧"
+            
+        }
+        
         
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         
@@ -511,7 +523,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         navigation.viewControllers = [textViewControllers]
         self.presentViewController(navigation, animated: false, completion: {()->Void in
             
-            let vc:UINavigationController = self.tabBarController?.viewControllers![1] as! UINavigationController
+            let vc:UINavigationController = self.tabBarController?.viewControllers![0] as! UINavigationController
             self.tabBarController!.selectedViewController = vc
             vc.popViewControllerAnimated(false)
             vc.viewControllers[0].performSegueWithIdentifier("toNoteDetail", sender: nil)

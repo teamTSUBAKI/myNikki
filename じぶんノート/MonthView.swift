@@ -31,7 +31,8 @@ class MonthView: UIView {
     }
 
     func setUpDays(year:Int,month:Int){
-        let subViews:[UIView] = self.subviews 
+        let subViews:[UIView] = self.subviews
+        
         for view in subViews{
             //よくわからないけど、おそらくMonthviewが持つviewがDayViewと被っているならば、重複しないように取り除いている感じだと思う。
             if view.isKindOfClass(DayView){
@@ -60,7 +61,7 @@ class MonthView: UIView {
             calendar.timeZone = NSTimeZone(abbreviation: "GMT")!
             //表示されている月の１日目をtargetDateにする。
             let targetDate:NSDate = calendar.dateWithEra(1, year:year , month: month, day: 1, hour: 0, minute: 0, second: 0, nanosecond: 0)!
-            let lastTargetDate:NSDate = calendar.dateWithEra(1, year: year, month: month, day: lastDay!, hour: 0, minute: 0, second: 0, nanosecond: 0)!
+            let lastTargetDate:NSDate = calendar.dateWithEra(1, year: year, month: month, day: lastDay!, hour: 23, minute: 59, second: 59, nanosecond: 0)!
             
             
             let predicate = NSPredicate(format: "createDate BETWEEN {%@,%@}",targetDate,lastTargetDate)

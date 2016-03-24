@@ -129,6 +129,15 @@ public class Object: RLMObjectBase {
     public final var className: String { return "" }
     #endif
 
+    /**
+    WARNING: This is an internal helper method not intended for public use.
+    :nodoc:
+    */
+    public override class func objectUtilClass(isSwift: Bool) -> AnyClass {
+        return ObjectUtil.self
+    }
+
+
     // MARK: Object Customization
 
     /**
@@ -221,9 +230,14 @@ public class Object: RLMObjectBase {
 
     // MARK: Equatable
 
-    /// Returns whether both objects are equal.
-    /// Objects are considered equal when they are both from the same Realm
-    /// and point to the same underlying object in the database.
+    /**
+    Returns whether both objects are equal.
+
+    Objects are considered equal when they are both from the same Realm and point to the same
+    underlying object in the database.
+
+    - parameter object: Object to compare for equality.
+    */
     public override func isEqual(object: AnyObject?) -> Bool {
         return RLMObjectBaseAreEqual(self as RLMObjectBase?, object as? RLMObjectBase)
     }
@@ -308,6 +322,10 @@ public final class DynamicObject: Object {
 /// Internal class. Do not use directly.
 @objc(RealmSwiftObjectUtil)
 public class ObjectUtil: NSObject {
+    @objc private class func swiftVersion() -> NSString {
+        return swiftLanguageVersion
+    }
+
     @objc private class func ignoredPropertiesForClass(type: AnyClass) -> NSArray? {
         if let type = type as? Object.Type {
             return type.ignoredProperties() as NSArray?
@@ -341,12 +359,14 @@ public class ObjectUtil: NSObject {
         optional.object = object
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     @objc private class func getOptionalProperties(object: AnyObject) -> NSDictionary {
         let children = Mirror(reflecting: object).children
-        return children.reduce([String: AnyObject]()) { (var properties: [String:AnyObject], prop: Mirror.Child) in
+        return children.reduce([String: AnyObject]()) { ( properties: [String:AnyObject], prop: Mirror.Child) in
             guard let name = prop.label else { return properties }
             let mirror = Mirror(reflecting: prop.value)
             let type = mirror.subjectType
+            var properties = properties
             if type is Optional<String>.Type || type is Optional<NSString>.Type {
                 properties[name] = Int(PropertyType.String.rawValue)
             } else if type is Optional<NSDate>.Type {

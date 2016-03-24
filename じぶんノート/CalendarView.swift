@@ -95,8 +95,7 @@ class CalendarView: UIView,UIScrollViewDelegate {
         
         scrollView.backgroundColor = UIColor.clearColor()
         scrollView.contentSize = CGSizeMake(frame.size.width*3.0,frame.size.height)
-        print(frame.size.height)
-        
+        print("よこす\(frame.size.width * 3.0)")
         scrollView.contentOffset = CGPointMake(frame.size.width, 0.0)
         scrollView.delegate = self
         scrollView.pagingEnabled = true
@@ -109,6 +108,9 @@ class CalendarView: UIView,UIScrollViewDelegate {
         //今月
         currentMonthView = MonthView(frame: CGRectMake(frame.size.width, 0, frame.size.width, frame.size.height), year: currentYear, month: currentMonth)
     
+        print("カレンダー今年\(currentYear)")
+         print("カレンダー今月\(currentMonth)")
+        
         //翌月
         var ret = self.getNextYearAndMonth()
         nextMonthView = MonthView(frame: CGRectMake(frame.size.width * 2.0, 0, frame.size.width, frame.size.height), year: ret.year, month: ret.month)
@@ -125,7 +127,7 @@ class CalendarView: UIView,UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+        print("スクロールず")
         let pos:CGFloat = scrollView.contentOffset.x / scrollView.bounds.width
         var deff:CGFloat = pos - 1.0
         

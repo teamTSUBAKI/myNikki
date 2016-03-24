@@ -10,7 +10,6 @@ import UIKit
 import Photos
 import Fabric
 import Crashlytics
-import SwiftyDropbox
 import RealmSwift
 
 

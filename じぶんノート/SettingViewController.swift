@@ -8,7 +8,6 @@
 
 import UIKit
 import MessageUI
-import SwiftyDropbox
 import RealmSwift
 
 class SettingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate {

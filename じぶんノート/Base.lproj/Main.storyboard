@@ -46,7 +46,7 @@
                             <constraint firstItem="OYe-4P-UbJ" firstAttribute="top" secondItem="Vz5-lJ-bMF" secondAttribute="top" id="ukG-hb-B6n"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="フォトカレンダー" id="bBF-Gq-Cpp"/>
+                    <navigationItem key="navigationItem" title="カレンダー" id="bBF-Gq-Cpp"/>
                     <connections>
                         <outlet property="viewContainer" destination="bTG-zn-kA7" id="deb-zb-OFC"/>
                         <outlet property="viewContainerHeight" destination="TH1-lL-Tga" id="Euz-To-pRx"/>
@@ -941,16 +941,67 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="v52-gj-LNU" kind="relationship" relationship="viewControllers" id="hdv-aH-ZiL"/>
                         <segue destination="p4a-QF-OXx" kind="relationship" relationship="viewControllers" id="R1x-Di-Nkc"/>
-                        <segue destination="nkt-Mm-M2S" kind="relationship" relationship="viewControllers" id="7qj-9W-yGv"/>
+                        <segue destination="v52-gj-LNU" kind="relationship" relationship="viewControllers" id="hdv-aH-ZiL"/>
+                        <segue destination="nkt-Mm-M2S" kind="relationship" relationship="viewControllers" id="CUo-uv-l9s"/>
+                        <segue destination="zI1-gb-1YC" kind="relationship" relationship="viewControllers" id="2Mp-bl-FW7"/>
                         <segue destination="Hs4-w4-rpV" kind="relationship" relationship="viewControllers" id="bhw-5W-LVX"/>
-                        <segue destination="c4z-TI-1Fv" kind="relationship" relationship="viewControllers" id="nmt-AI-bTa"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5kA-OG-wYL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="300" y="507"/>
+        </scene>
+        <!--アルバム-->
+        <scene sceneID="Unf-uM-dpV">
+            <objects>
+                <viewController id="hc9-mi-FKy" customClass="AlbumViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Sq8-yJ-B5K"/>
+                        <viewControllerLayoutGuide type="bottom" id="jsa-V2-oeb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JjA-21-QCh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gX7-cG-xeY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IqZ-XI-BVD">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="500" id="8UE-jk-Kaj"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="IqZ-XI-BVD" secondAttribute="trailing" id="3nf-t6-qrA"/>
+                                    <constraint firstAttribute="bottom" secondItem="IqZ-XI-BVD" secondAttribute="bottom" id="7Vb-v6-jZm"/>
+                                    <constraint firstItem="IqZ-XI-BVD" firstAttribute="leading" secondItem="gX7-cG-xeY" secondAttribute="leading" id="D0S-9v-0vG"/>
+                                    <constraint firstItem="IqZ-XI-BVD" firstAttribute="top" secondItem="gX7-cG-xeY" secondAttribute="top" id="N5k-Ju-0w6"/>
+                                    <constraint firstItem="IqZ-XI-BVD" firstAttribute="width" secondItem="gX7-cG-xeY" secondAttribute="width" id="Oeh-E6-6wL"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gX7-cG-xeY" firstAttribute="leading" secondItem="JjA-21-QCh" secondAttribute="leading" id="9YQ-ih-YjX"/>
+                            <constraint firstItem="gX7-cG-xeY" firstAttribute="height" secondItem="JjA-21-QCh" secondAttribute="height" id="byI-5W-zJ2"/>
+                            <constraint firstItem="gX7-cG-xeY" firstAttribute="width" secondItem="JjA-21-QCh" secondAttribute="width" id="kxu-GM-JL0"/>
+                            <constraint firstAttribute="trailing" secondItem="gX7-cG-xeY" secondAttribute="trailing" id="r1r-Zw-Qct"/>
+                            <constraint firstItem="gX7-cG-xeY" firstAttribute="top" secondItem="JjA-21-QCh" secondAttribute="top" id="tah-kF-FJL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="アルバム" id="63z-4e-6k3"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="viewContainer" destination="IqZ-XI-BVD" id="nYp-aK-Dxz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uSR-tB-1tj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1202" y="1704"/>
         </scene>
         <!--タイムライン-->
         <scene sceneID="Y2g-6f-FG2">
@@ -1021,7 +1072,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qsc-t2-3pX">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qsc-t2-3pX">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1124,7 +1175,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sT-f8-WY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1196" y="1533"/>
+            <point key="canvasLocation" x="1844" y="1428"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="39y-pp-IUG">
@@ -1144,7 +1195,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zFy-1d-AC9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="434" y="2212"/>
+            <point key="canvasLocation" x="393" y="1109"/>
         </scene>
         <!--タイマー-->
         <scene sceneID="de7-bE-SeQ">
@@ -1302,6 +1353,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="c4z-TI-1Fv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="その他" image="More-52" id="EJ6-sV-dZv"/>
                     <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zFz-as-zKL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1313,7 +1365,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdQ-WF-3N6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="664" y="1533"/>
+            <point key="canvasLocation" x="88" y="1170"/>
         </scene>
         <!--Walk Trough View Controller-->
         <scene sceneID="xJg-dj-I5J">
@@ -1335,7 +1387,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8XC-YR-Xz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-146" y="1030"/>
+            <point key="canvasLocation" x="-492" y="986"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="teu-PY-8ER">
@@ -1356,16 +1408,36 @@
             </objects>
             <point key="canvasLocation" x="2731" y="-488"/>
         </scene>
+        <!--アルバム-->
+        <scene sceneID="Qbs-ym-yp1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zI1-gb-1YC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="アルバム" image="Picture-48 (1)" id="uPU-KH-L6e"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0vO-I9-wdF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hc9-mi-FKy" kind="relationship" relationship="rootViewController" id="g93-0o-fXd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KtM-Jf-Sob" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="670" y="1704"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Calendar-48" width="24" height="24"/>
         <image name="Camera Filled-50" width="25" height="25"/>
         <image name="Menu Filled-50" width="25" height="25"/>
         <image name="More-52" width="26" height="26"/>
+        <image name="Picture-48 (1)" width="24" height="24"/>
         <image name="Time-52" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="emV-uU-IHD"/>
+        <segue reference="IO0-xH-RKa"/>
         <segue reference="D5X-eB-cd8"/>
     </inferredMetricsTieBreakers>
 </document>

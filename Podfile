@@ -7,7 +7,7 @@ target 'じぶんノート' do
 
 pod 'RealmSwift'
 pod 'Google/Analytics', '~> 1.0.0'
-pod 'SwiftyDropbox'
+
 
 end
 
@@ -15,7 +15,7 @@ target 'じぶんノートTests' do
 
 pod 'RealmSwift'
 pod 'Google/Analytics', '~> 1.0.0'
-pod 'SwiftyDropbox'
+
 
 end
 
@@ -23,7 +23,7 @@ target 'じぶんノートUITests' do
 
 pod 'RealmSwift'
 pod 'Google/Analytics', '~> 1.0.0'
-pod 'SwiftyDropbox'
+
 
 end
 

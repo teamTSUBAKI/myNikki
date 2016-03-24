@@ -26,7 +26,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
         let userDefaults = NSUserDefaults.standardUserDefaults()
         if userDefaults.boolForKey("firstLunch"){
             print("呼ぶ")
-            self.selectedIndex = 1
+            self.selectedIndex = 0
             userDefaults.setBool(false, forKey: "firstLunch")
             
         }
@@ -110,7 +110,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
                 self.appdelegate?.tabBarCamera = true
                 self.presentViewController(CameraViewControllers!, animated: true, completion:{()->Void in
                     
-                    let vc:UINavigationController = self.viewControllers![1] as! UINavigationController
+                    let vc:UINavigationController = self.viewControllers![0] as! UINavigationController
                     self.selectedViewController = vc
                     vc.popToRootViewControllerAnimated(false)
                     vc.viewControllers[0].performSegueWithIdentifier("toNoteDetail", sender: nil)
@@ -133,7 +133,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
                         self.appdelegate?.tabBarCamera = true
                         self.presentViewController(CameraViewControllers!, animated: true, completion:{()->Void in
                             
-                            let vc:UINavigationController = self.viewControllers![1] as! UINavigationController
+                            let vc:UINavigationController = self.viewControllers![0] as! UINavigationController
                             self.selectedViewController = vc
                             vc.popToRootViewControllerAnimated(false)
                             vc.viewControllers[0].performSegueWithIdentifier("toNoteDetail", sender: nil)
@@ -171,7 +171,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
             self.presentViewController(navigation, animated: false, completion:{()->Void in
             
              
-                let vc:UINavigationController = self.viewControllers![1] as! UINavigationController
+                let vc:UINavigationController = self.viewControllers![0] as! UINavigationController
                 self.selectedViewController = vc
                 vc.popToRootViewControllerAnimated(false)
             
@@ -189,7 +189,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
            navigation.viewControllers = [textViewControllers]
             self.presentViewController(navigation, animated: false, completion: {()->Void in
                 
-                let vc:UINavigationController = self.viewControllers![1] as! UINavigationController
+                let vc:UINavigationController = self.viewControllers![0] as! UINavigationController
                 self.selectedViewController = vc
                 vc.popViewControllerAnimated(false)
                 vc.viewControllers[0].performSegueWithIdentifier("toNoteDetail", sender: nil)

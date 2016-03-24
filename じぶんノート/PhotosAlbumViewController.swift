@@ -362,7 +362,9 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 
                 
             }
-            
+        
+        print("通る")
+        appDelegate?.tabBarCamera = false
         
      
         
@@ -471,16 +473,17 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             }
             
             
-            note.createDate = NSDate()
+            //元に戻し済み。大丈夫な状態。
+            //note.createDate = NSDate()
             
-            /*
-            let date:String = "2017-5-17 23:30:12"
+        
+            let date:String = "2016-4-1 23:30:12"
             let dateformatter:NSDateFormatter = NSDateFormatter()
             dateformatter.locale = NSLocale(localeIdentifier: "ja")
             dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
             let changeDate = dateformatter.dateFromString(date)
             note.createDate = changeDate
-            */
+            
             
             
             try!realm.write({ () -> Void in
@@ -577,6 +580,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
 
     @IBAction func canceButton(sender: AnyObject) {
         print("キャンセル")
+        appDelegate?.tabBarCamera = false
+        
         appDelegate?.noPhotoButtonTaped = false
         if appDelegate?.textOrCameraFlag == true{
        

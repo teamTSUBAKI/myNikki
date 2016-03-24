@@ -494,6 +494,7 @@ class CameraViewController: UIViewController,UIGestureRecognizerDelegate{
         appDelegate?.tabBarCamera = false
         appDelegate?.cameraViewFlag = false
         appDelegate?.noPhotoButtonTaped = false
+        appDelegate?.addPhotoFlag = false
         self.dismissViewControllerAnimated(true, completion: nil)
         
         

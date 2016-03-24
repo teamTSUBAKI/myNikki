@@ -8,7 +8,7 @@
 
 import UIKit
 import RealmSwift
-import SwiftyDropbox
+
 
 class PhotoDetailViewController: UIViewController,UIScrollViewDelegate {
 

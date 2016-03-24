@@ -110,7 +110,7 @@ class TimerViewController: UIViewController {
         //スタートボタン以外は押せない
         self.setButtonEnable(false, start: true, done: false)
         
-        self.addNotification()
+ 
        
         //スタートしてからのしてから経過秒
         allTimeBySecond = 0
@@ -153,6 +153,9 @@ class TimerViewController: UIViewController {
         tracker.set(kGAIScreenName, value: "Timer")
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
+        
+       
+        
     }
     
     
@@ -179,6 +182,7 @@ class TimerViewController: UIViewController {
     func addNotification(){
         
         //通知の登録
+        print("通知登録")
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: UIApplicationDidBecomeActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
@@ -186,11 +190,12 @@ class TimerViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+       
         //自動ロックされない状態を解除する
         UIApplication.sharedApplication().idleTimerDisabled = false
         
     }
+    
     
     func didBecomeActive(){
         
@@ -276,6 +281,7 @@ class TimerViewController: UIViewController {
     
     func didEnterBackground(){
         
+        print("ナツメグ")
         if countDownNow == true {
         self.countDownsAtBackground = countDowns
         print("にチェ\(self.countDownsAtBackground)")
@@ -288,6 +294,7 @@ class TimerViewController: UIViewController {
             if !countUp{
 
                 setNotification()
+                print("セット")
             }
         }
         
@@ -298,6 +305,8 @@ class TimerViewController: UIViewController {
         //すべてのボタンを押せるようにする
         setButtonEnable(true, start: true, done: true)
         
+        
+        
         //カウント中に押されたら、一時停止
         if countDownNow{
             
@@ -307,20 +316,23 @@ class TimerViewController: UIViewController {
             restartFlag = true
             
         }else{
+            //スタートを押した時にnotificationを設定
+             self.addNotification()
+            
             //スタートボタンを押されたら、タイマーを生成
             //一秒間間隔でtickTimerメソッドを呼ぶ。fire()はタイマー開始
             countDownNow = true
             
             datePicker.hidden = true
             
-            if datePicker.countDownDuration >= 3600{
+           /* if datePicker.countDownDuration >= 3600{
                 timerLabel.hidden = false
                 timerLabelMinute.hidden = true
             }else{
                 
                 timerLabelMinute.hidden = false
                 timerLabel.hidden = true
-            }
+            }*/
             
             
             stopRestartButton.setTitle("一時停止", forState: .Normal)
@@ -349,7 +361,7 @@ class TimerViewController: UIViewController {
                         
                     }else{
                         
-                        if timerLabel.text == "Label"{
+                        if timerLabel.hidden{
                         
                             countUps = timerLabelMinute.text
                         
@@ -368,7 +380,7 @@ class TimerViewController: UIViewController {
                         
                     }else{
                         
-                        if timerLabel.text == "Label"{
+                        if timerLabel.hidden{
                         
                             countDown = timerLabelMinute.text
                         
@@ -577,6 +589,9 @@ class TimerViewController: UIViewController {
     }
     
     func doneButtonTaped(){
+        
+        //notificationを解放
+         NSNotificationCenter.defaultCenter().removeObserver(self)
      
         tmr?.invalidate()
         
@@ -630,7 +645,7 @@ class TimerViewController: UIViewController {
         appDelegate?.noteFlag = true
         appDelegate?.timerFlag = true
         
-        let vc:UINavigationController = self.tabBarController?.viewControllers![1] as! UINavigationController
+        let vc:UINavigationController = self.tabBarController?.viewControllers![0] as! UINavigationController
         self.tabBarController?.selectedViewController = vc
         vc.popToRootViewControllerAnimated(false)
   
@@ -653,6 +668,9 @@ class TimerViewController: UIViewController {
     }
     
     func resetButtonTaped(){
+        
+        //notificationを解放
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     
        tmr?.invalidate()
        timerLabel.hidden = true
@@ -689,6 +707,8 @@ class TimerViewController: UIViewController {
         self.doneButton.enabled = done
         
     }
+    
+    
     
     
 

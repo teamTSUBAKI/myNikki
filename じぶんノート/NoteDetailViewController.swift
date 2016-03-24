@@ -205,7 +205,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
         }
         
-        let Font:UIFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)!
+        let Font:UIFont = UIFont(name: "HiraKakuProN-W6", size: 20)!
         newAttributedText.addAttribute(NSFontAttributeName, value: Font, range: boldRange)
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -1045,18 +1045,28 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 UIGraphicsBeginPDFPageWithInfo(CGRectMake(0,0,610,795), nil)
                 if ind == 1{
                     
-                    let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
-                    let rect = CGRectMake(100, 20, 300, 300)
+                    let minute = String(comps.minute)
+                    var day = ""
+                    if minute.characters.count == 2{
+                    
+                        day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
+                        
+                    }else{
+                        
+                        day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):0\(comps.minute)"
+                    }
+                    
+                    let rect = CGRectMake(90, 20, 400, 300)
                     let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
                     
                     print("\(timerLabels.text)")
                     if timerLabels.text != "Label"{
                     
-                        let rects = CGRectMake(280, 20, 600, 300)
-                        drawString(timerLabels.text!, rect: rects, Color: UIColor.blackColor().CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+                        let rects = CGRectMake(300, 20, 300, 300)
+                        drawString(timerLabels.text!, rect: rects, Color: color.CGColor, FontSize: 14, Font: "HiraKakuProN-W6", ul: false)
                     }
                     
-                    drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+                    drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "HiraKakuProN-W6", ul: false)
                 }
                 
                 let fileName = noten[0].photos[ind-1].filename
@@ -1075,18 +1085,27 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         //写真がない時は、ここで日付を表示したい
         if (noten[0].photos.isEmpty){
             
+            let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
             if timerLabels.text != "Label"{
                 
-                let rects = CGRectMake(280, 50, 600, 300)
-                drawString(timerLabels.text!, rect: rects, Color: UIColor.blackColor().CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+                let rects = CGRectMake(300, 50, 600, 300)
+                drawString(timerLabels.text!, rect: rects, Color: color.CGColor, FontSize: 14, Font: "HiraKakuProN-W3", ul: false)
             }
-
             
-            let day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
+            let minute = String(comps.minute)
+            var day = ""
+            if minute.characters.count == 2{
+            
+                day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):\(comps.minute)"
+            }else{
+                
+                day = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDay[comps.weekday])\(comps.hour):0\(comps.minute)"
+                
+            }
             let rect = CGRectMake(100, 50, 300, 300)
-            let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
+      
             
-            drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "AppleSDGothicNeo-Light", ul: false)
+            drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "HiraKakuProN-W3", ul: false)
             
         }
         
@@ -1113,14 +1132,14 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         //パスで指定した線を描画
         CGContextStrokePath(context)
         
-        drawString(description, rect: descriptionRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "AppleSDGothicNeo-Medium", ul: false)
+        drawString(description, rect: descriptionRect, Color: UIColor.blackColor().CGColor, FontSize: 24, Font: "HiraKakuProN-W6", ul: false)
         
         let textRect:CGRect = CGRectMake(100, -450, 320, 700)
-        drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 12, Font: "AppleSDGothicNeo-Light", ul: false)
+        drawString(textView.text, rect: textRect, Color: UIColor.blackColor().CGColor, FontSize: 12, Font: "HiraKakuProN-W3", ul: false)
         
         let colors:CGColorRef = colorFromRGB.colorWithHexString("2860A3").CGColor
         
-        drawString("Created in trim", rect: CGRectMake(222, -1070, 320, 700), Color: colors, FontSize: 12, Font: "AppleSDGothicNeo-Light", ul: false)
+        drawString("Created in trim", rect: CGRectMake(222, -1070, 320, 700), Color: colors, FontSize: 12, Font: "HiraKakuProN-W3", ul: false)
         
         print("ギリギリ入る高さ\(textView.bounds.size.height)")
         
@@ -1350,6 +1369,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                     self.appDelegate?.noPhotoButtonTaped = true
                     self.appDelegate?.noteFlag = true
                     self.appDelegate?.editNoteId = self.note![0].id
+                    
                     self.presentViewController(cameraViewController!, animated: true, completion: nil)
                     
                     
