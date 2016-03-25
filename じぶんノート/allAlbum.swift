@@ -18,6 +18,9 @@ class allAlbum: UIView,UIScrollViewDelegate{
     var currentMonthAlbum:monthAlbum!
     var nextMonthAlbum:monthAlbum!
     
+    var Notes:Results<(Note)>!
+    var photoes:[String]!
+    
     var startPoint:CGPoint!
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,12 +55,63 @@ class allAlbum: UIView,UIScrollViewDelegate{
         
 
         
+            let realm = try!Realm()
+        
+            while 1 > 0{
+                print("yui")
+         
+                
+                let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+                calendar?.timeZone = NSTimeZone(abbreviation: "GMT")!
+                
+                let startTarget:NSDate = (calendar?.dateWithEra(1, year: currentYear, month: currentMonth, day: 1, hour: 0, minute: 0, second: 0, nanosecond: 0))!
+                
+                let lastDay = self.getLastDay(currentYear,month: currentMonth)
+                
+                let lastTarget = calendar?.dateWithEra(1, year: currentYear, month: currentMonth, day: lastDay!, hour: 23, minute:59  , second: 59, nanosecond: 59)
+                
+                let predicate = NSPredicate(format: "createDate BETWEEN {%@,%@}", startTarget,lastTarget!)
+                
+                Notes = realm.objects(Note).filter(predicate).sorted("id", ascending: false)
+                photoes = []
+
+                
+                if Notes.count > 0{
+            
+                    for ind in 1...Notes.count {
+                
+                    let Photo = Notes[ind-1].photos
+                    print(Photo)
+                
+                    for photo in Photo{
+                        print(photo.filename)
+                        photoes.append(photo.filename)
+                    
+                        }
+                
+                    }
+                }
+                
+                    if photoes.count != 0{
+                    currentMonthAlbum = monthAlbum(frame: CGRectMake(frame.size.width,0,frame.size.width,500),year:currentYear,month:currentMonth)
+                    print("今年\(currentYear)")
+                    print("今月\(currentMonth)")
+                    print(currentMonthAlbum)
+                    break
+                }else{
+                    
+                    print("角田")
+                    
+                    currentMonth--
+                    
+                }
+                
+                
+            
+        }
         
         
-        currentMonthAlbum = monthAlbum(frame: CGRectMake(frame.size.width,0,frame.size.width,500),year:currentYear,month:currentMonth)
-        print("今年\(currentYear)")
-        print("今月\(currentMonth)")
-        print(currentMonthAlbum)
+    
         
         //翌月
         var ret = self.getNextYearMonth()
@@ -185,6 +239,30 @@ class allAlbum: UIView,UIScrollViewDelegate{
         return (prev_Year,prev_Month)
     }
     
+    func getLastDay(var year:Int,var month:Int) -> Int?{
+        
+        let dateForMatter = NSDateFormatter()
+        dateForMatter.dateFormat = "yyyy/MM/dd"
+        
+        if month == 12{
+            month = 0
+            year++
+            
+        }
+        
+        let targetDate:NSDate? = dateForMatter.dateFromString(String(format: "%04d/%02d/1", year,month + 1))!
+        
+        if targetDate != nil{
+            
+            let orgDate = NSDate(timeInterval:(24 * 60 * 60) * (-1) , sinceDate: targetDate!)
+            let str = dateForMatter.stringFromDate(orgDate)
+            
+            return Int((str as! NSString).lastPathComponent)!
+        }
+        return nil
+    }
+    
+
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
