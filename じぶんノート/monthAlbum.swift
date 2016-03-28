@@ -97,11 +97,9 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         myCollectionView.dataSource = self
         myCollectionView.delegate = self
         
-        let yearAndMonthLabel = UILabel(frame: CGRectMake(frame.size.width/2-10,8,frame.size.width,30))
-        yearAndMonthLabel.text = "2016/3"
-        self.addSubview(yearAndMonthLabel)
+    
         
-       self.addSubview(myCollectionView)
+        self.addSubview(myCollectionView)
        
         
         
