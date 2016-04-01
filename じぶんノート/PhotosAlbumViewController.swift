@@ -408,11 +408,14 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 let options = PHImageRequestOptions()
                 options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
                 options.synchronous = true
+                options.networkAccessAllowed = true
                 
                 let asset = selectPhots[ind]
                 print("アセット\(asset)")
                 let manager = PHImageManager()
                 manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+                    
+                    print("インフォ\(info)")
                     
                     self.data = UIImageJPEGRepresentation(image!, 0.8)
                     if ((self.data?.writeToFile(filepath, atomically: true)) != nil){
@@ -474,16 +477,17 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
             
             //元に戻し済み。大丈夫な状態。
-            //note.createDate = NSDate()
+            note.createDate = NSDate()
             
         
-            let date:String = "2016-1-5 23:30:12"
+            /*
+            let date:String = "2016-3-20 23:35:12"
             let dateformatter:NSDateFormatter = NSDateFormatter()
             dateformatter.locale = NSLocale(localeIdentifier: "ja")
             dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
             let changeDate = dateformatter.dateFromString(date)
             note.createDate = changeDate
-            
+            */
             
             
             try!realm.write({ () -> Void in

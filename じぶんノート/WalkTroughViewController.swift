@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Photos
 
 class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
 
-    
+    var appdelegate:AppDelegate!
+    var asset:PHFetchResult?
   
     let screenHeight = Double(UIScreen.mainScreen().bounds.size.height)
     var titleLabel:UILabel!
@@ -18,8 +20,8 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
     var descriptionTextView:UITextView!
     var scrollView:UIScrollView!
     var pageControll:UIPageControl!
-    let pageNum = 5
-    let pageImage:[Int:String] = [2:"4-inch (iPhone 5) - Screenshot 2",1:"4-inch (iPhone 5) - Screenshot 1",3:"4-inch (iPhone 5) - Screenshot 3",4:"4-inch (iPhone 5) - Screenshot 4"]
+    let pageNum = 6
+    let pageImage:[Int:String] = [2:"4-inch (iPhone 5) - Screenshot 3",1:"4-inch (iPhone 5) - Screenshot 1",3:"4-inch (iPhone 5) - Screenshot 5",4:"4-inch (iPhone 5) - Screenshot 2",5:"4-inch (iPhone 5) - Screenshot 4"]
     var startButton:UIButton!
     var viewContainer:UIView!
     
@@ -28,6 +30,8 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         
        print("ギットハブテスト")
 
+        getAllPhotos()
+        
         self.view.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
         
         self.scrollView = UIScrollView(frame: self.view.bounds)
@@ -118,17 +122,18 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
                 subTextLabel.textAlignment = NSTextAlignment.Center
                 subTextLabel.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2-125)
                 
-                
+                /*
                 descriptionTextView = UITextView(frame: CGRectMake(0,0, 290, 200))
                 descriptionTextView.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2)
                 descriptionTextView.editable = false
-                descriptionTextView.text = "『成長を「見える化」して、仕事をもっと楽しく』"
+                descriptionTextView.text = "『成長を記録して、』"
                 descriptionTextView.textColor = UIColor.whiteColor()
                 descriptionTextView.font = UIFont(name: "TimesNewRomanPS-ItalicMT", size: 20)
                 descriptionTextView.textAlignment = NSTextAlignment.Center
                 descriptionTextView.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
                 
                 self.scrollView.addSubview(descriptionTextView)
+                */
                 self.scrollView.addSubview(subTextLabel)
                 self.scrollView.addSubview(titleLabel)
                 
@@ -150,12 +155,12 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageProgress = Double(scrollView.contentOffset.x / scrollView.bounds.width)
         self.pageControll.currentPage = Int(round(pageProgress))
-        if self.pageControll.currentPage == 4{
+        if self.pageControll.currentPage == 5{
             
             startButton.backgroundColor = colorFromRGB.colorWithHexString("4169e1")
             
         }
-        print(self.pageControll.currentPage)
+        
     }
 
     func startButtontaped(){
@@ -163,6 +168,28 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         performSegueWithIdentifier("toStart", sender: nil)
         
     }
+    
+    func getAllPhotos(){
+        
+        
+        print("写真を入れたよ")
+        appdelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        
+        appdelegate?.photosAssets = []
+        
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        
+        asset = PHAsset.fetchAssetsWithMediaType(.Image, options: options)
+        asset?.enumerateObjectsUsingBlock({(asset,index,stop) -> Void in
+            
+            self.appdelegate?.photosAssets.append(asset as! PHAsset)
+            
+        })
+        
+        
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -21,6 +21,8 @@ class allAlbum: UIView,UIScrollViewDelegate{
     var yearAndMonthLabel:UILabel!
     
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     
     required init?(coder aDecoder: NSCoder) {
         
@@ -30,17 +32,28 @@ class allAlbum: UIView,UIScrollViewDelegate{
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+   
+        
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
         
+       
+        if appDelegate.nowYear == nil{
         let dateString:String = dateFormatter.stringFromDate(NSDate())
         var dates:[String] = dateString.componentsSeparatedByString("/")
         currentYear = Int(dates[0])!
         currentMonth = Int(dates[1])!
-        
-        yearAndMonthLabel = UILabel(frame: CGRectMake(0,8,frame.size.width,30))
+        }else{
+            currentYear = appDelegate.nowYear
+            currentMonth = appDelegate.nowMonth
+            
+        }
+            
+        yearAndMonthLabel = UILabel(frame: CGRectMake(0,4,frame.size.width,30))
         yearAndMonthLabel.textAlignment = NSTextAlignment.Center
         yearAndMonthLabel.text = "\(currentYear)/\(currentMonth)"
+        yearAndMonthLabel.textColor = UIColor.grayColor()
+        yearAndMonthLabel.font = UIFont(name: "HiraKakuProN-W6", size: 17)
         self.addSubview(yearAndMonthLabel)
         
         
@@ -63,9 +76,9 @@ class allAlbum: UIView,UIScrollViewDelegate{
         
         
         currentMonthAlbum = monthAlbum(frame: CGRectMake(frame.size.width,0,frame.size.width,500),year:currentYear,month:currentMonth)
-        print("今年\(currentYear)")
-        print("今月\(currentMonth)")
-        print(currentMonthAlbum)
+       
+    
+
         
         //翌月
         var ret = self.getNextYearMonth()
@@ -83,7 +96,7 @@ class allAlbum: UIView,UIScrollViewDelegate{
     
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        print("スクロール")
+      
         
         
         let pos:CGFloat = scrollView.contentOffset.x / scrollView.bounds.width
@@ -120,6 +133,9 @@ class allAlbum: UIView,UIScrollViewDelegate{
         
         yearAndMonthLabel.text = "\(currentYear)/\(currentMonth)"
         
+        appDelegate.nowYear = currentYear
+        appDelegate.nowMonth = currentMonth
+        
         let ret = getNextYearMonth()
         nextMonthAlbum.PhotoSet(ret.year, month: ret.month)
         
@@ -146,9 +162,12 @@ class allAlbum: UIView,UIScrollViewDelegate{
         
         yearAndMonthLabel.text = "\(currentYear)/\(currentMonth)"
         
+        appDelegate.nowYear = currentYear
+        appDelegate.nowMonth = currentMonth
+        
         let ret = getPrevYearMonth()
         prevMonthAlbum.PhotoSet(ret.year, month:ret.month )
-        print("次のデータ\(ret.year)年\(ret.month)月")
+        
         
         self.resetContentOffSet()
         

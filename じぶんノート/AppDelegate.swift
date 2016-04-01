@@ -78,7 +78,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //ノートディテールのテキストビューを押したフラグ
     var textViewOfNoteDetail:Bool?
     
+    //アルバムから来た時のフラグ
+    var albumFrag:Bool!
     
+    //アルバムで表示中の年月を保存
+    var nowYear:Int!
+    var nowMonth:Int!
+    
+    //カレンダーで表示中の年月を保存
+    var nowYearsForCal:Int!
+    var nowMonthsForCal:Int!
     
 
     //初回起動時に呼ばれる
@@ -87,11 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
-        
-        
-        
         Fabric.with([Crashlytics.self])
-        
         
         //グーグルアナリティクス
         var configureError:NSError?
@@ -101,9 +106,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var gai = GAI.sharedInstance()
         gai.trackUncaughtExceptions = true
         gai.logger.logLevel = GAILogLevel.Verbose
-        
-        
-        
         
         //UserDefaultsにtrueを保存
         let dic = ["firstLunch":true]

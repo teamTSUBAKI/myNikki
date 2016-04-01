@@ -92,7 +92,9 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         if self.navigationController is timeLineNavigationController{
             
             let textButton = UIBarButtonItem(title: "メモを書く", style: .Plain, target: self, action: "textButtonTaped")
+            let settingButton = UIBarButtonItem(image: UIImage(named: "More-52"), style: .Plain, target: self, action: "settingButtonTaped")
             
+            self.navigationItem.leftBarButtonItem = settingButton
             self.navigationItem.rightBarButtonItem = textButton
             
             self.navigationItem.title = "TimeLine"
@@ -261,6 +263,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         //帰ってきた全てのノートデータを取り出す
         for note in notes!  {
             
+            
             if note.createDate != nil{
             let coms:NSDateComponents = (calendar?.components(unit, fromDate: note.createDate!))!
              year = coms.year
@@ -313,8 +316,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         //キーでノートデータ配列のデータ数を数える。
     
         print("セルの数：\(self.tableViewCells![key]![0].count)")
+
         
-      
         
         
         return self.tableViewCells![key]![0].count
@@ -361,7 +364,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             cell.titleLabeX.constant = 10
             cell.bodyLabelX.constant = 10
             cell.timerX.constant = 10
-            cell.timerLabel.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
+            cell.timerLabel.backgroundColor = colorFromRGB.colorWithHexString("a1d8e6")
             cell.timerLabel.textColor = UIColor.whiteColor()
             cell.timerLabel.layer.cornerRadius = 5
             cell.timerLabel.layer.masksToBounds = true
@@ -373,7 +376,9 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             cell.titleLabeX.constant = 115
             cell.bodyLabelX.constant = 115
             cell.timerX.constant = 115
-            cell.timerLabel.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
+           
+            cell.timerLabel.backgroundColor = colorFromRGB.colorWithHexString("a1d8e6")
+
             cell.timerLabel.textColor = UIColor.whiteColor()
             cell.timerLabel.layer.cornerRadius = 5
             cell.timerLabel.layer.masksToBounds = true
@@ -462,6 +467,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         //スクショ撮影用
         /*
+        if indexPath.section == 0{
         if indexPath.row == 0{
             cell.timerLabel.hidden = false
             cell.timerLabel.text = "タイム：1時間35分"
@@ -477,23 +483,23 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         if indexPath.row == 2{
             cell.timerLabel.hidden = false
             cell.timerLabel.text = "タイム：1時間11分"
+        
+        }
         }
         
-        if indexPath.row == 3{
+        if indexPath.section == 1{
+        if indexPath.row == 0{
             cell.timerLabel.hidden = false
             cell.timerLabel.text = "タイム：1時間21分"
         }
 
-        if indexPath.row == 4{
+        if indexPath.row == 1{
             cell.timerLabel.hidden = false
             cell.timerLabel.text = "タイム：1時間15分"
         }
         
-        if indexPath.row == 5{
-            cell.timerLabel.hidden = false
-            cell.timerLabel.text = "タイム：1時間2分"
+        
         }*/
-
 
         
         
@@ -538,6 +544,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         //セルの選択状態を解除
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         appDelegate?.noteFlag = false
+        appDelegate?.albumFlag = false
         //画面遷移
         performSegueWithIdentifier("toNoteDetail", sender: indexPath)
         
@@ -594,6 +601,16 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             NSNotificationCenter.defaultCenter().postNotificationName("deletePhoto", object: nil)
             }
+    }
+    
+    func settingButtonTaped(){
+        
+        let settingVC:SettingViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Setting")as! SettingViewController
+        let navigation = UINavigationController()
+        navigation.viewControllers = [settingVC]
+        
+        presentViewController(navigation, animated: true, completion: nil)
+        
     }
     
        

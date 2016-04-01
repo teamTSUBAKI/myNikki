@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sth-2h-ZAX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sth-2h-ZAX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--カレンダー-->
@@ -55,7 +55,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kx0-nq-kAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1271" y="819"/>
+            <point key="canvasLocation" x="1646" y="895"/>
         </scene>
         <!--TimeLine-->
         <scene sceneID="icS-eX-4zo">
@@ -208,7 +208,7 @@
                             <constraint firstAttribute="trailing" secondItem="S4u-6S-igx" secondAttribute="trailing" id="oV7-3f-sGQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="TimeLine" id="MA2-mp-Jrc"/>
+                    <navigationItem key="navigationItem" title="TimeLine" id="ZFS-wd-Xe3"/>
                     <connections>
                         <outlet property="tableView" destination="S4u-6S-igx" id="P51-pg-j14"/>
                         <segue destination="8ya-KY-tGU" kind="show" identifier="toNoteDetail" id="mEw-Mn-heq"/>
@@ -491,7 +491,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="130" id="UwP-KH-Z9F"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dsW-8d-N4m">
@@ -997,6 +997,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="viewContainer" destination="IqZ-XI-BVD" id="nYp-aK-Dxz"/>
+                        <segue destination="8ya-KY-tGU" kind="show" identifier="Note" id="hFh-hE-Vvr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uSR-tB-1tj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1060,10 +1061,10 @@
             </objects>
             <point key="canvasLocation" x="786" y="856"/>
         </scene>
-        <!--Setting View Controller-->
+        <!--設定-->
         <scene sceneID="OCQ-kE-5Hf">
             <objects>
-                <viewController id="L3d-Py-sPy" customClass="SettingViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Setting" id="L3d-Py-sPy" customClass="SettingViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dBh-VY-GOu"/>
                         <viewControllerLayoutGuide type="bottom" id="bP1-PC-C11"/>
@@ -1167,7 +1168,7 @@
                             <constraint firstItem="Qsc-t2-3pX" firstAttribute="leading" secondItem="oMQ-hc-blJ" secondAttribute="leading" id="dZe-Ri-pTG"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="lPT-QX-5LB"/>
+                    <navigationItem key="navigationItem" title="設定" id="axz-wb-sfZ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="Qsc-t2-3pX" id="QJH-TV-KZa"/>
@@ -1365,7 +1366,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdQ-WF-3N6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="88" y="1170"/>
+            <point key="canvasLocation" x="-56" y="1168"/>
         </scene>
         <!--Walk Trough View Controller-->
         <scene sceneID="xJg-dj-I5J">
@@ -1411,7 +1412,7 @@
         <!--アルバム-->
         <scene sceneID="Qbs-ym-yp1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zI1-gb-1YC" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zI1-gb-1YC" customClass="albumNavigationViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="アルバム" image="Picture-48 (1)" id="uPU-KH-L6e"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0vO-I9-wdF">
@@ -1437,7 +1438,7 @@
         <image name="Time-52" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IO0-xH-RKa"/>
-        <segue reference="D5X-eB-cd8"/>
+        <segue reference="emV-uU-IHD"/>
+        <segue reference="mEw-Mn-heq"/>
     </inferredMetricsTieBreakers>
 </document>

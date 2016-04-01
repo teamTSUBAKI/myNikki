@@ -60,6 +60,8 @@
 		59B7BF681C19B48D008878B2 /* ________UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF671C19B48D008878B2 /* ________UITests.swift */; };
 		59B7BF781C19B5C1008878B2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF771C19B5C1008878B2 /* TabBarController.swift */; };
 		59B7BF7A1C1AFAC2008878B2 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF791C1AFAC2008878B2 /* CameraViewController.swift */; };
+		59D7EACB1CA90ACB001DE841 /* AlbumCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7EACA1CA90ACB001DE841 /* AlbumCollectionReusableView.swift */; };
+		59D7EACD1CAA4E2F001DE841 /* albumNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7EACC1CAA4E2F001DE841 /* albumNavigationViewController.swift */; };
 		59E44BD61C2110D7005AF7F3 /* PhotosAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E44BD51C2110D7005AF7F3 /* PhotosAlbumViewController.swift */; };
 		59E44BD81C211124005AF7F3 /* photosAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E44BD71C211124005AF7F3 /* photosAlbumCollectionViewCell.swift */; };
 		59E44BDA1C2111F7005AF7F3 /* CameraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E44BD91C2111F7005AF7F3 /* CameraCollectionViewCell.swift */; };
@@ -157,6 +159,8 @@
 		59B7BF691C19B48D008878B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59B7BF771C19B5C1008878B2 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		59B7BF791C1AFAC2008878B2 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		59D7EACA1CA90ACB001DE841 /* AlbumCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionReusableView.swift; sourceTree = "<group>"; };
+		59D7EACC1CAA4E2F001DE841 /* albumNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = albumNavigationViewController.swift; sourceTree = "<group>"; };
 		59E44BD51C2110D7005AF7F3 /* PhotosAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosAlbumViewController.swift; sourceTree = "<group>"; };
 		59E44BD71C211124005AF7F3 /* photosAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = photosAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		59E44BD91C2111F7005AF7F3 /* CameraCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -253,6 +257,8 @@
 				592D2B5B1CA1136C0030AFD3 /* allAlbum.swift */,
 				592D2B151CA039D30030AFD3 /* monthAlbum.swift */,
 				592D2B191CA0E7660030AFD3 /* AlbumCollectionViewCell.swift */,
+				59D7EACA1CA90ACB001DE841 /* AlbumCollectionReusableView.swift */,
+				59D7EACC1CAA4E2F001DE841 /* albumNavigationViewController.swift */,
 			);
 			name = Album;
 			sourceTree = "<group>";
@@ -741,6 +747,7 @@
 				592D2B1A1CA0E7660030AFD3 /* AlbumCollectionViewCell.swift in Sources */,
 				59F23BF71C3E466800E78103 /* PhotoDetailViewController.swift in Sources */,
 				593E999B1C66348D005465D6 /* SettingTableViewCell.swift in Sources */,
+				59D7EACB1CA90ACB001DE841 /* AlbumCollectionReusableView.swift in Sources */,
 				595E86CA1C5511A70048BEF5 /* SEManager.swift in Sources */,
 				593E99A81C69905D005465D6 /* WalkTroughViewController.swift in Sources */,
 				59F610F51C47751900BBD25A /* MonthView.swift in Sources */,
@@ -749,6 +756,7 @@
 				591A6FA11C4FBC4500416A22 /* TimerViewController.swift in Sources */,
 				59F610F91C47D52500BBD25A /* CalendarView.swift in Sources */,
 				593E999D1C671C5D005465D6 /* SettingOtherTableViewCell.swift in Sources */,
+				59D7EACD1CAA4E2F001DE841 /* albumNavigationViewController.swift in Sources */,
 				592D2B5C1CA1136C0030AFD3 /* allAlbum.swift in Sources */,
 				592302D31C4733DC00558322 /* CalendarViewController.swift in Sources */,
 				594A5F871C301E6C002CB673 /* timeLineViewController.swift in Sources */,

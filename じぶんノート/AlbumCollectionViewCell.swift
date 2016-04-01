@@ -22,7 +22,10 @@ class AlbumCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         PhotoView = UIImageView(frame: CGRectMake(0,0,frame.width,frame.height))
+        PhotoView.contentMode = UIViewContentMode.ScaleAspectFill
+        PhotoView.clipsToBounds = true
         self.contentView.addSubview(PhotoView)
+        
         
     }
     

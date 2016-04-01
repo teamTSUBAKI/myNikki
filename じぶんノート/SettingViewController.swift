@@ -27,6 +27,14 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
+        self.navigationController?.navigationBar.tintColor = UIColor.grayColor()
+        
+        let closeButton:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Delete Filled-50"), style: .Plain, target: self, action: "closeButtontaped")
+        self.navigationItem.leftBarButtonItem = closeButton
+        
+        
+        
         tableView.scrollEnabled = false
         tableView.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
         // Do any additional setup after loading the view.
@@ -84,7 +92,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 0:
             return 2
         case 1:
-            return 1
+            return 2
         default:
             return 0
         }
@@ -121,7 +129,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 1:
                 
                 cells.menuLabel.text = "バージョン"
-                cells.accessoryLabel.text = "1.0.2"
+                cells.accessoryLabel.text = "1.0.3"
                 cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
             default:
@@ -138,6 +146,9 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
                 cell.textLabel?.text = "フィードバック・改善要望を送る"
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
 
+            case 1:
+                cell.textLabel?.text = "App Storeで評価する"
+                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
                 
             default:
                 cell.textLabel?.text = "エラー"
@@ -177,6 +188,13 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
                 self.presentViewController(mailController, animated: true, completion: nil)
             }
             
+            if indexPath.row == 1{
+                
+                let url:NSURL = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1080560434&pageNumber=0&sortOrdering=2&mt=8")!
+                UIApplication.sharedApplication().openURL(url)
+                
+            }
+            
         }
         
     }
@@ -199,6 +217,11 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func closeButtontaped(){
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        
+    }
 
 
     override func didReceiveMemoryWarning() {

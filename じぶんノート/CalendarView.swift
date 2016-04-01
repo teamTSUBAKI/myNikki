@@ -35,6 +35,8 @@ class CalendarView: UIView,UIScrollViewDelegate {
     var yearAndMonthView:UIView!
     var yearAndManthLabel:UILabel!
     
+    var appDelegatae = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     required init?(coder aDecoder: NSCoder) {
          fatalError("init(coder:) has not been implemented")
     }
@@ -42,13 +44,21 @@ class CalendarView: UIView,UIScrollViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
       
+        if appDelegatae.nowYearsForCal == nil{
         let dateForMatter:NSDateFormatter = NSDateFormatter()
         dateForMatter.dateFormat = "yyyy/MM/dd"
         let dateString:String = dateForMatter.stringFromDate(NSDate())
         var dates:[String] = dateString.componentsSeparatedByString("/")
         currentYear = Int(dates[0])!
         currentMonth = Int(dates[1])!
-        
+    
+        }else{
+    
+            currentYear = appDelegatae.nowYearsForCal
+            currentMonth = appDelegatae.nowMonthsForCal
+    
+         }
+    
         photoCountView = UIView(frame: CGRectMake(0,0,frame.size.width,40))
         photoCountView.backgroundColor = UIColor.clearColor()
         
@@ -165,6 +175,8 @@ class CalendarView: UIView,UIScrollViewDelegate {
         
         yearAndManthLabel.text = "\(currentYear)"+"/"+"\(currentMonth)"
         
+        appDelegatae.nowYearsForCal = currentYear
+        appDelegatae.nowMonthsForCal = currentMonth
         
         let realm = try!Realm()
         
@@ -205,6 +217,9 @@ class CalendarView: UIView,UIScrollViewDelegate {
         prevMonthView.setUpDays(ret.year, month: ret.month)
         
         yearAndManthLabel.text = "\(currentYear)"+"/"+"\(currentMonth)"
+        
+        appDelegatae.nowYearsForCal = currentYear
+        appDelegatae.nowMonthsForCal = currentMonth
         
         let realm = try!Realm()
         

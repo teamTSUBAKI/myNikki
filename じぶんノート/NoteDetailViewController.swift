@@ -24,6 +24,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     //共有などを行うためのボタン
     var shareButton:UIButton!
     
+    var centerButton:UIButton!
+    
     @IBOutlet weak var topImage: UIImageView!
     
     @IBOutlet weak var noImagePhotoButtonHeight: NSLayoutConstraint!
@@ -85,6 +87,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     //default.realmのデータ
     var notes:Note?
 
+    //アルバムから来た時の選択された写真の名前,ID入れ
+    var photoNamaes:String!
+    var photoIds:Int!
     
     var appDelegate:AppDelegate?
     
@@ -109,9 +114,11 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         self.textView.delegate = self
         
-        print("タイマーの結果\(allTime)")
         
-
+        
+        
+        
+        
         
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
@@ -129,6 +136,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         self.tabBarController?.tabBar.hidden = true
         self.tabBarController?.view.subviews[2].hidden = true
         
+        
+        
         view1.backgroundColor = colorFromRGB.colorWithHexString("d3d3d3")
         view2.backgroundColor = colorFromRGB.colorWithHexString("d3d3d3")
         view3.backgroundColor = colorFromRGB.colorWithHexString("d3d3d3")
@@ -145,10 +154,11 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             path = paths[0]
             
         }
-        
-        self.photoSet()
+         self.photoSet()
         //textviewの一行目を太字にしたい
-        self.hightFirstLineInTextView(self.textView)
+     //   self.hightFirstLineInTextView(self.textView)
+
+       
         
         
         // Do any additional setup after loading the view.
@@ -157,6 +167,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
         self.tabBarController?.view.subviews[2].hidden = true
+        centerButton = self.tabBarController?.view.subviews[3] as! UIButton
+        centerButton.enabled = false
+        
+        
         self.textView.textContainerInset = UIEdgeInsetsMake(18, 8, 0, 8)
         
         let tracker = GAI.sharedInstance().defaultTracker
@@ -167,8 +181,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         //とりあえず最初は隠しておいて、状況に応じて表示する
         noImagePhotoButton.hidden = true
         timerLabels.hidden = true
-        
-        
+        self.photoSet()
+        self.hightFirstLineInTextView(textView)
         
         
     }
@@ -179,23 +193,28 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         textViewConst.constant = sizeThatShouldFitTheConst.height+60
         textButtonConst.constant = sizeThatShouldFitTheConst.height+60
         allViewContainerConst.constant = (topImageViewContainerHeight.constant - 50) + sizeThatShouldFitTheConst.height+60
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         
-        print("呼ばれる")
         
-        self.photoSet()
-        self.hightFirstLineInTextView(textView)
- 
+        
+        //self.photoSet()
+        //self.hightFirstLineInTextView(textView)
+     
         
     }
     //一行目を太字にしたい
     func hightFirstLineInTextView(textViews:UITextView){
-        let textAsNSString = textViews.text as NSString
+        
+        let textAsNSString = textView.text as NSString
         let lineBreakRange = textAsNSString.rangeOfString("\n")
         
-        let newAttributedText = NSMutableAttributedString(attributedString: textViews.attributedText)
+        let newAttributedText = NSMutableAttributedString(attributedString: textView.attributedText)
+        
+        
+        
         let boldRange:NSRange!
         if lineBreakRange.location < textAsNSString.length{
             boldRange = NSRange(location: 0, length: lineBreakRange.location)
@@ -204,13 +223,19 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             boldRange = NSRange(location: 0, length: textAsNSString.length)
             
         }
+      
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 15
+        paragraphStyle.lineSpacing = 6
         
-        let Font:UIFont = UIFont(name: "HiraKakuProN-W6", size: 20)!
+    
+        newAttributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: boldRange)
+        
+        let Font:UIFont = UIFont(name: "HiraKakuProN-W6", size: 21)!
         newAttributedText.addAttribute(NSFontAttributeName, value: Font, range: boldRange)
         
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 15
-        newAttributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: boldRange)
+        
+        
         
         textViews.attributedText = newAttributedText
         
@@ -219,7 +244,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     func getAllPhotos(){
         
         
-        print("写真を入れたよ")
+        
         
         
         appDelegate?.photosAssets = []
@@ -269,13 +294,13 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             appDelegate?.addPhotoFlag = true
             appDelegate?.editNoteId = notes?.id
             
-            print("愛")
+            
             let realm = try!Realm()
             let Notes = realm.objects(Note).filter("id = \(notes!.id)")
             
-            print("写真の数を送信\(Notes[0].photos.count)")
+            
             appDelegate?.photosCount = Notes[0].photos.count
-            print("写真の数を送信なんだよ\(appDelegate?.photosCount)")
+            
             
             
             let PhotosAlbum = self.storyboard?.instantiateViewControllerWithIdentifier("photos")
@@ -299,7 +324,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     func photoSet(){
         
         //遷移元が新規ノート作成画面の時
-        print("ノートフラグ\(appDelegate?.noteFlag)")
+        
         if appDelegate?.noteFlag == true{
             
             //最後のデータをrealmから取り出して表示
@@ -318,7 +343,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 toPhotoDetailButton.hidden = true
                 noImagePhotoButton.hidden = false
                 
-                print("よ")
+                
                 
             }else{
                 
@@ -370,8 +395,6 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 
                 textView.text = note![0].noteText
                 
-                
-                
             }
             
             let weekDays = ["","日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"]
@@ -379,7 +402,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day,NSCalendarUnit.Hour,NSCalendarUnit.Minute,NSCalendarUnit.Weekday]
             let comps:NSDateComponents = calendar.components(unit, fromDate: note![0].createDate!)
             
-            DateLabels = UILabel(frame: CGRectMake(0,0,170,44))
+            DateLabels = UILabel(frame: CGRectMake(0,0,180,44))
             DateLabels.text = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDays[comps.weekday])"
             DateLabels.textColor = UIColor.whiteColor()
             DateLabels.textAlignment = NSTextAlignment.Center
@@ -471,10 +494,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
         }else if self.appDelegate?.noteFlag == false{
             //遷移元がタイムラインの時
-            print("タムライン")
+            
             
             let realm = try!Realm()
-            print("ノートのid\(notes?.id)")
+            
            
             
             Notes = realm.objects(Note).filter("id = \(notes!.id)")
@@ -493,30 +516,50 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 
                 //メール添付用にシェアモーダルに送る
                 appDelegate?.Photoes = Notes![0].photos
-                print("写真の数\(notes?.photos.count)")
+                
                 
                 for ind in 1...4{
                     
-                    print("作動？")
+                    
                     if ind == 1{
+                        
+                        if appDelegate?.albumFlag == false{
+                            
+                        
                         let filename = Notes![0].photos[0].filename
                         let filePath = (path! as NSString).stringByAppendingPathComponent(filename)
                         let image = UIImage(contentsOfFile: filePath)
-                        print(image)
+                        
                         topImage.image = image
                         
                         presentTopImage = (Notes![0].photos[0].id)
+                            
+                        
+                        }else if appDelegate?.albumFlag == true{
+                            
+                            let filename = photoNamaes
+                            let filepath = (path as! NSString).stringByAppendingPathComponent(filename)
+                            let image = UIImage(contentsOfFile: filepath)
+                            topImage.image = image
+                            
+                            presentTopImage = photoIds
+                         
+                            
+                            
+                        }
                         
                     }
                     
                     if ind <= Notes![0].photos.count{
                         
+                 
                         let imageView:UIImageView = self.view.viewWithTag(ind) as! UIImageView
                         let filenames = Notes![0].photos[ind-1].filename
                         let filepaths = (path! as NSString).stringByAppendingPathComponent(filenames)
                         let images = UIImage(contentsOfFile: filepaths)
                         imageView.image = images
-                   
+                        
+                            
                     }else{
                         
                         let imageView:UIImageView = self.view.viewWithTag(ind) as! UIImageView
@@ -554,7 +597,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             //PDFメール用に日付データを入れる
             appDelegate?.dateForPDF = self.navigationItem.title
             
-            DateLabels = UILabel(frame: CGRectMake(0,0,170,44))
+            DateLabels = UILabel(frame: CGRectMake(0,0,180,44))
             DateLabels.text = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDays[comps.weekday])"
             DateLabels.textColor = UIColor.whiteColor()
             DateLabels.textAlignment = NSTextAlignment.Center
@@ -597,7 +640,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             var myTimes = Notes![0].timerTime
             
     
-            print("mytimes:\(myTimes)")
+            
             
             let hours = myTimes / 3600
             myTimes -= hours * 3600
@@ -620,7 +663,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 timerLabels.layer.cornerRadius = 5
 
             }else if myTime >= 1{
-                print("ゆいこ")
+                
                 
                 timerLabels.hidden = false
                 timerLabels.textColor = UIColor.whiteColor()
@@ -631,15 +674,13 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
             }else if myTime == 0{
                 
-                print("ナッシング")
+                
                 timerLabels.hidden = true
             }
             
             
             
-            print(hours)
-            print(minutes)
-            print(seconds)
+           
             
             
         }else{
@@ -648,7 +689,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 appDelegate?.timerFlag = false
                 noImagePhotoButton.hidden = false
                 
-                print("ゆい")
+                
                 self.imageViewY.constant = 0
                 self.topImageViewHeight.constant = 0
                 self.topImageViewContainerHeight.constant = 200
@@ -1001,7 +1042,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         let pdfFileName = tmpPath.stringByAppendingPathComponent(fullname)
         
         let PDFSize = CGRectMake(0, 0, 610, 795)
-        print(aView.bounds)
+        
         
         UIGraphicsBeginPDFContextToFile(pdfFileName,PDFSize, nil)
         
@@ -1059,7 +1100,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                     let rect = CGRectMake(90, 20, 400, 300)
                     let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
                     
-                    print("\(timerLabels.text)")
+                    
                     if timerLabels.text != "Label"{
                     
                         let rects = CGRectMake(300, 20, 300, 300)
@@ -1141,7 +1182,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         drawString("Created in trim", rect: CGRectMake(222, -1070, 320, 700), Color: colors, FontSize: 12, Font: "HiraKakuProN-W3", ul: false)
         
-        print("ギリギリ入る高さ\(textView.bounds.size.height)")
+       
         
     }
     
@@ -1186,7 +1227,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         //coreTextは左下隅から上に向かって描画されるため、反転処理を行う
         CGContextTranslateCTM(currentContext,50, 400)
         
-        print("高さ\(self.view.bounds.height)")
+      
         CGContextScaleCTM(currentContext, 1.0, -1.0)
         
         //フレームを描画する
@@ -1271,6 +1312,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         self.tabBarController?.tabBar.hidden = false
         self.tabBarController?.view.subviews[2].hidden = false
         
+        appDelegate?.albumFlag = false
+        centerButton.enabled = true
         
         //タイムラインに戻るボタンが押されたら
         let viewControllers = self.navigationController?.viewControllers
@@ -1358,7 +1401,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             break;
         case AVAuthorizationStatus.NotDetermined:
             //まだ確認されていない場合、許可を求めるダイアログを表示
-            print("やぁ")
+            
             AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { (granted) -> Void in
                 
                 if granted{

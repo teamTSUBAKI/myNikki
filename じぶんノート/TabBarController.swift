@@ -55,7 +55,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
         asset?.enumerateObjectsUsingBlock({(asset,index,stop) -> Void in
         
             self.appdelegate?.photosAssets.append(asset as! PHAsset)
-        
+            
         })
         
         
@@ -72,6 +72,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
         centerButton?.backgroundColor = UIColor(red: 0, green: 0.7098, blue: 0.8667, alpha: 1.0)
         centerButton?.layer.cornerRadius = 5
         centerButton?.layer.masksToBounds = true
+        centerButton!.tag = 1
         centerButton!.setImage(centerButtonImage, forState: .Normal)
         //centerButton!.setBackgroundImage(centerHighLightButtonImage, forState: .Highlighted)
         
@@ -166,7 +167,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
             let navigation = UINavigationController()
             navigation.viewControllers = [PhotoAlbumControllers]
             
-            
+         
             
             self.presentViewController(navigation, animated: false, completion:{()->Void in
             

@@ -9,13 +9,28 @@
 import UIKit
 import RealmSwift
 
+protocol toNoteDetailDelegate{
+    
+    func photoSelected(select:Photos)
+    
+}
+
 class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
 
     var myCollectionView:UICollectionView!
+    
+    var screenHeight = Double(UIScreen.mainScreen().bounds.size.height)
+    
     var noPhotoLabel:UILabel!
-
+    var noPhotoImage:UIImageView!
+    
     var Notes:Results<(Note)>!
-    var photoes:[String]!
+    
+    var delegate:toNoteDetailDelegate! = nil
+    
+    var sectionHeding:NSString!
+    var sections:NSMutableArray = []
+    var collectionViewCells:[NSString:[NSMutableArray]]?
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -24,20 +39,34 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     init(frame: CGRect,year:Int,month:Int) {
         super.init(frame: frame)
         
+        noPhotoImage = UIImageView(frame: CGRectMake(0, 0, 100, 100))
+        noPhotoImage.image = UIImage(named: "Sleeping in Bed-104")
+        noPhotoImage.center = CGPointMake(frame.size.width / 2, frame.size.height / 2 - 100)
+        self.addSubview(noPhotoImage)
+        
+        noPhotoLabel = UILabel(frame: CGRectMake(0,0,frame.size.width,30))
+        noPhotoLabel.text = "写真がありません"
+        noPhotoLabel.center = CGPointMake(frame.size.width / 2, frame.size.height / 2 )
+        noPhotoLabel.textAlignment = NSTextAlignment.Center
+        self.addSubview(noPhotoLabel)
+        
         self.PhotoSet(year,month: month)
     }
     
     func PhotoSet(year:Int,month:Int){
         //realmから写真データを引っ張ってきたい。
     
-        print("写真セット")
+      
         let realm = try!Realm()
         
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
         calendar?.timeZone = NSTimeZone(abbreviation: "GMT")!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        dateFormatter.dateFormat = "MM/dd"
         
         //月の１日目
-        print("\(year)月\(month)日")
+       
         let startTarget:NSDate = (calendar?.dateWithEra(1, year: year, month: month, day: 1, hour: 0, minute: 0, second: 0, nanosecond: 0))!
         
         let lastDay = self.getLastDay(year,month: month)
@@ -47,80 +76,153 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         let predicate = NSPredicate(format: "createDate BETWEEN {%@,%@}", startTarget,lastTarget!)
         
         Notes = realm.objects(Note).filter(predicate).sorted("id", ascending: false)
-        photoes = []
+        sections = []
+        let PhotoBox:NSMutableArray = []
         
-        print("ノート数\(Notes.count)")
+     
         
         if myCollectionView != nil{
             myCollectionView.removeFromSuperview()
         }
         
+        
+        let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day]
+        var day:Int!
+        var month:Int!
+        var preDay = -1
+        
+        collectionViewCells = [:]
+        var collectionViewCellsForSection:NSMutableArray = []
    
-        if Notes.count > 0{
-        for ind in 1...Notes.count {
+        //ノートから写真を取り出して、日付毎に分けていく
+        for note in Notes{
             
-               let Photo = Notes[ind-1].photos
-                print(Photo)
+            if note.createDate != nil{
             
-               for photo in Photo{
-                print(photo.filename)
-                photoes.append(photo.filename)
+                let comps = calendar?.components(unit, fromDate: note.createDate!)
+                
+                day = comps?.day
+                month = comps?.month
+                
+                if (day != preDay && note.photos.count > 0){
+                    
+                    sectionHeding = "\(month)月\(day)日"
+                    
+                    //sctionsと言う配列に日付を入れる
+                    sections.addObject(sectionHeding)
+                    
+                    //初期化
+                    collectionViewCellsForSection = []
+                    collectionViewCells!["\(sectionHeding)"] = [collectionViewCellsForSection]
+                    
+                    preDay = day
+                    
+                }
+                
             
-               }
-        
-        
+                
+                    for photo in note.photos{
+                
+                    collectionViewCellsForSection.addObject(photo)
+                    PhotoBox.addObject(photo)
+                        
+                    }
+                
             }
+            
         }
         
+       
+  
         
         //コレクションビューのレイアウトを生成
         let layout = UICollectionViewFlowLayout()
         
+        switch screenHeight{
+        case 736:
+            //セルの一つ一つの大きさ
+            layout.itemSize = CGSizeMake(frame.size.width / 2 - 0.8,frame.size.width / 2-4)
+            
+            //セルのマージン
+            layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+            layout.minimumInteritemSpacing = 0.4
+            layout.minimumLineSpacing = 1.0
+
+        
+        default:
         //セルの一つ一つの大きさ
-        layout.itemSize = CGSizeMake(frame.size.width / 2-5,frame.size.width / 2-4)
+        layout.itemSize = CGSizeMake(frame.size.width / 2 - 0.4,frame.size.width / 2-4)
         
         //セルのマージン
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        layout.minimumInteritemSpacing = 0.2
+        layout.minimumLineSpacing = 1.0
+        }
         
         //セクションごとのヘッダーサイズ
-        layout.headerReferenceSize = CGSizeMake(100, 0)
+        layout.headerReferenceSize = CGSizeMake(100, 30)
         
-        //コレクションビューの高さは、写真数/2*セルの高さでいけるかな
-        let collectionHeight = CGFloat(photoes.count) * (frame.size.width / 2 - 4)
-        print("コレクションビューの高さ\(collectionHeight)")
-        myCollectionView = UICollectionView(frame: CGRectMake(0, 40, frame.size.width, 550), collectionViewLayout: layout)
+    
+        switch screenHeight{
+        case 480:
+        
+            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 330), collectionViewLayout: layout)
+        
+        case 568:
+            
+            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 420), collectionViewLayout: layout)
+        
+        case 667:
+        
+            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 520), collectionViewLayout: layout)
+        
+        case 736:
+        
+            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 590), collectionViewLayout: layout)
+        
+        default:
+           print("エラー")
+            
+        
+        }
+        
         myCollectionView.backgroundColor = UIColor.clearColor()
         
         //セルのクラスを登録
         myCollectionView.registerClass(AlbumCollectionViewCell.self, forCellWithReuseIdentifier: "myCell")
+        myCollectionView.registerClass(AlbumCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "section")
         
         myCollectionView.dataSource = self
         myCollectionView.delegate = self
         
-    
+        //今月、写真があるかどうか？
         
-        self.addSubview(myCollectionView)
+        
+        if PhotoBox.count > 0{
+        
+            noPhotoImage.hidden = true
+            noPhotoLabel.hidden = true
+            self.addSubview(myCollectionView)
+        
+        }else{
+            
+            noPhotoLabel.hidden = false
+            noPhotoImage.hidden = false
+            
        
+        }
         
         
     
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("呼ばれましたーーーー")
+     
+        let key:NSString = sections[section] as! NSString
+      
         
-        var res = 0
-        switch (section){
-        case 0:
-            res = photoes.count
-            break
-        default:
-            res = 0
-            break
-        }
-        
-        print(res)
-        return res
+     
+        return collectionViewCells![key]![0].count
         
     }
     
@@ -136,15 +238,64 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
             path = paths[0]
         }
         
-        let filePath = (path as NSString).stringByAppendingPathComponent(photoes[indexPath.row])
+        let key:NSString = sections[indexPath.section] as! NSString
+        let photo:Photos = collectionViewCells![key]![0][indexPath.row] as! Photos
+        
+        let filePath = (path as NSString).stringByAppendingPathComponent(photo.filename)
         
         let image = UIImage(contentsOfFile: filePath)
-        print("used\(image!)")
+       
         cell.PhotoView.image = image
     
         return cell
         
     }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        
+        return sections.count
+        
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        
+    
+        
+        if kind == UICollectionElementKindSectionHeader{
+   
+            let headerView:AlbumCollectionReusableView = myCollectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "section", forIndexPath: indexPath) as! AlbumCollectionReusableView
+        
+            if headerView.subviews.count == 0{
+                headerView.addSubview(UILabel(frame: CGRectMake(0,0,frame.size.width,30)))
+            }
+        
+        let dateLabel:UILabel = headerView.subviews[0] as! UILabel
+        dateLabel.frame = CGRectMake(0, 3, frame.size.width, 30)
+        
+        dateLabel.textAlignment = NSTextAlignment.Center
+        dateLabel.text = sections[indexPath.section] as? String
+        dateLabel.textColor = UIColor.grayColor()
+        dateLabel.font = UIFont(name: "HiraKakuProN-W3", size: 18)
+            
+              return headerView
+        
+        }
+        
+        return UICollectionReusableView()
+      
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let key = sections[indexPath.section] as! NSString
+        let photo:Photos = collectionViewCells![key]![0][indexPath.row] as! Photos
+       
+        self.delegate.photoSelected(photo)
+        
+    }
+    
     
     func getLastDay(var year:Int,var month:Int) -> Int?{
         

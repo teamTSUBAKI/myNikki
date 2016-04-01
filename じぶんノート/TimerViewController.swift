@@ -169,8 +169,8 @@ class TimerViewController: UIViewController {
         myNotification.soundName = UILocalNotificationDefaultSoundName
         
         let setTime:Double = Double(datePicker.countDownDuration) - Double(allTimeBySecond!)
-        print("セットされた時間\(Double(datePicker.countDownDuration))")
-        print("経過秒\(allTimeBySecond)")
+        
+        
         
         myNotification.fireDate = NSDate(timeIntervalSinceNow: setTime)
         UIApplication.sharedApplication().scheduleLocalNotification(myNotification)
@@ -281,10 +281,10 @@ class TimerViewController: UIViewController {
     
     func didEnterBackground(){
         
-        print("ナツメグ")
+        
         if countDownNow == true {
         self.countDownsAtBackground = countDowns
-        print("にチェ\(self.countDownsAtBackground)")
+        
         tmr?.invalidate()
         countDownNow = false
         restartFlag = true
@@ -294,7 +294,7 @@ class TimerViewController: UIViewController {
             if !countUp{
 
                 setNotification()
-                print("セット")
+                
             }
         }
         
@@ -418,7 +418,7 @@ class TimerViewController: UIViewController {
                 
             }
             
-        print("初期値\(countDown)")
+        
             tmr = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector:"tickTimer" , userInfo: nil, repeats: true)
             tmr?.fire()
             
@@ -432,11 +432,11 @@ class TimerViewController: UIViewController {
         
   
         allTimeBySecond!++
-        print("作業時間\(allTimeBySecond)")
+        
         
         let dateFormatter:NSDateFormatter = NSDateFormatter()
         
-        print("数\(countDown?.characters.count)")
+        
         if countDown?.characters.count == 6 || countDown?.characters.count == 7 || countDown?.characters.count == 8  {
         
             dateFormatter.dateFormat = "HH:mm:ss"
@@ -462,17 +462,17 @@ class TimerViewController: UIViewController {
             
         //スタートボタンが押されて、タイマーが起動してからの時間を計る。
         let allStopWatchDate = allDateFormatter.dateFromString(allCountUps!)
-        print("開始\(allStopWatchDate)")
+        
         let allStopWatch = NSDate(timeInterval: 1, sinceDate: allStopWatchDate!)
         let allTime = allDateFormatter.stringFromDate(allStopWatch)
         
         allCountUps = allTime
         
-        print("全体のタイム\(allTime)")
+        
         
         //datePickerの時間を日付型に変換
-        print(dateFormatter.dateFormat)
-        print("どうした？\(countDown)")
+        
+        
         let countDownDate = dateFormatter.dateFromString(countDown!)
         
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -498,7 +498,7 @@ class TimerViewController: UIViewController {
          
                 timerLabelMinute.font = UIFont(name: "AppleSDGothicNeo-Thin", size:74.0)
                 timerLabelMinute.textColor = UIColor.redColor()
-                print("タイムズ\(timerLabel.text)")
+            
                 countUps = String(format: "%02d:%02d",coms.minute,coms.second)
             }else{
                 
@@ -522,7 +522,7 @@ class TimerViewController: UIViewController {
         }else{
             
              countDowns = NSDate(timeInterval: -1.0, sinceDate: countDownDate!)
-            print(countDownDate!)
+            
             let coms:NSDateComponents = (calendar?.components(unit, fromDate:countDowns))!
            
             if coms.hour == 00{
@@ -637,7 +637,7 @@ class TimerViewController: UIViewController {
         note.timerTime = allTimeBySecond
         
         try!realm.write({ () -> Void in
-            print("ライト兄弟")
+            
             realm.add(note, update: true)
         })
         
