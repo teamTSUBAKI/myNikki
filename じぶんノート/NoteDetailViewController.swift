@@ -114,12 +114,6 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         self.textView.delegate = self
         
-        
-        
-        
-        
-        
-        
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
         appDelegate?.photosCount = 0
@@ -236,9 +230,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         
         
-        
+        if textViews.text != "練習メニューやメモを書く．．．"{
         textViews.attributedText = newAttributedText
-        
+        }
+   
     }
     
     func getAllPhotos(){
