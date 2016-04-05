@@ -120,15 +120,15 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("photosCell", forIndexPath: indexPath) as! photosAlbumCollectionViewCell
             
-            let options = PHImageRequestOptions()
-            options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
-            options.synchronous = true
+            
             
             let asset = appDelegate?.photosAssets[indexPath.row-1]
+            
             let manager:PHImageManager = PHImageManager()
-            manager.requestImageForAsset(asset!, targetSize: CGSizeMake((self.view.bounds.size.width-4)/3, (self.view.bounds.size.height-4)/3), contentMode: PHImageContentMode.AspectFill, options: options, resultHandler:{(image,info)->Void in
+            manager.requestImageForAsset(asset!, targetSize: CGSizeMake((self.view.bounds.size.width-4)/3, (self.view.bounds.size.height-4)/3), contentMode: PHImageContentMode.AspectFill, options: nil, resultHandler:{(image,info)->Void in
                 
                 if image != nil{
+                    
                     cell.imageView.image = image
                 }
             })
@@ -161,7 +161,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 numberLabelView.hidden = true
                 numberLabel.hidden = true
                 
-                print("送られてきた写真は\(appDelegate?.photosCount)で、選択中の写真は\(selectIndexPath.count)")
+                
                 if selectIndexPath.count == 4 - ((appDelegate?.photosCount))!{
                     
                     nonSelectedView.hidden = false
@@ -194,7 +194,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 break;
             case AVAuthorizationStatus.NotDetermined:
                 //まだ確認されていない場合、許可を求めるダイアログを表示
-                print("やす")
+                
                 AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { (granted) -> Void in
                     
                     if granted{
@@ -387,10 +387,10 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         //写真の追加だったら
         if appDelegate?.addPhotoFlag == true{
             
-            print("ここが怪しい\(appDelegate?.editNoteId)")
+            
             let editNoteIds:Int = (appDelegate?.editNoteId)!
             let editNote = realm.objects(Note).filter("id = \(editNoteIds)")
-            print("バッハ２")
+            
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             
             if paths.count > 0{
@@ -411,11 +411,11 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 options.networkAccessAllowed = true
                 
                 let asset = selectPhots[ind]
-                print("アセット\(asset)")
+                
                 let manager = PHImageManager()
                 manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
                     
-                    print("インフォ\(info)")
+                    
                     
                     self.data = UIImageJPEGRepresentation(image!, 0.8)
                     if ((self.data?.writeToFile(filepath, atomically: true)) != nil){
@@ -447,10 +447,10 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                                 
                                 editNote[0].photos.append(photo)
                                 
-                            print("頼む")
+                            
                             
                             }else{
-                                   print("頼め")
+                                
                                 editNote[0].photos.append(photo)
                                 
                             }
@@ -467,7 +467,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
         }else{
             //新規のノートの追加。
-            print("なんで")
+            
             if maxNote.isEmpty{
                 note.id = 1
             }else{
@@ -517,11 +517,13 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 options.networkAccessAllowed = true
                 options.synchronous = true
                 
-                print("選択されたフォト\(selectPhots)")
+                
                 let asset = selectPhots[ind]
-                print("選択されたアセット\(asset)")
+                
                 let manager = PHImageManager()
                 manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+                   
+                    
                     self.data = UIImageJPEGRepresentation(image!, 0.8)
                     //ここに移動してみた！結果、問題は起きないけど、問題解決も出来なかった。
                      self.filename = NSUUID().UUIDString + ".jpg"
@@ -544,7 +546,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                                 photo.id = 1
                                 
                             }else{
-                                print("idをつける\(maxPhoto[0].id + 1)")
+                                
                                 photo.id = maxPhoto[0].id + 1
                                 
                             }
@@ -554,11 +556,11 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                             
                             //選ばれた写真の最後の一枚ならば、
                             if ind == self.selectPhots.count - 1{
-                                print("最後の一枚\(photo)")
+                                
                                 note.photos.append(photo)
                             
                             }else{
-                                print("最後の一枚じゃない\(photo)")
+                                
                                 note.photos.append(photo)
                                 
                             }
@@ -583,7 +585,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     
 
     @IBAction func canceButton(sender: AnyObject) {
-        print("キャンセル")
+        
         appDelegate?.tabBarCamera = false
         
         appDelegate?.noPhotoButtonTaped = false
@@ -593,13 +595,13 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             appDelegate?.addPhotoFlag = false
             appDelegate?.textOrCameraFlag = false
             appDelegate?.cameraViewFlag = false
-                   print("キャンスる")
+            
           
         }else{
             
             appDelegate?.addPhotoFlag = false
             self.dismissViewControllerAnimated(true, completion: nil)
-            print("キャンス")
+            
         
             
         }

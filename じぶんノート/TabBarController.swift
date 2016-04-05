@@ -43,7 +43,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
     func getAllPhotos(){
         
         
-        print("写真を入れたよ")
+        print("絶対零度")
         appdelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
         appdelegate?.photosAssets = []

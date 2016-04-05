@@ -30,7 +30,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         
        print("ギットハブテスト")
 
-        getAllPhotos()
+       // getAllPhotos()
         
         self.view.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
         
@@ -164,6 +164,10 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
     }
 
     func startButtontaped(){
+        getAllPhotos()
+       /* PHPhotoLibrary.requestAuthorization { (info) in
+            print("許可くん\(info)")
+        }*/
         
         performSegueWithIdentifier("toStart", sender: nil)
         
@@ -176,6 +180,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         appdelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
         appdelegate?.photosAssets = []
+        var pho = [PHAsset]()
         
         let options = PHFetchOptions()
         options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
@@ -183,8 +188,8 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         asset = PHAsset.fetchAssetsWithMediaType(.Image, options: options)
         asset?.enumerateObjectsUsingBlock({(asset,index,stop) -> Void in
             
-            self.appdelegate?.photosAssets.append(asset as! PHAsset)
-            
+            //self.appdelegate?.photosAssets.append(asset as! PHAsset)
+            pho.append(asset as! PHAsset)
         })
         
         

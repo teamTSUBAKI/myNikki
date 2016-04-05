@@ -366,13 +366,20 @@ class CameraViewController: UIViewController,UIGestureRecognizerDelegate{
             //ビデオ出力から画像を非同期で取得
             output?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: {(imageDataBuffer,error) -> Void in
             //取得画像のimageDataBufferをjpegに変換
+                if ((error == nil)){
+                if CMSampleBufferIsValid(imageDataBuffer){
                 let imagedata:NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataBuffer)
                 //jpegからUIImageを生成
                  self.image = UIImage(data: imagedata)!
                 
                 self.onCompleteTakePhotos(self.image)
-           
-                
+                }else{
+                    print("エラーリング")
+                }
+                }else{
+                    print("エラーリスト")
+                }
+                    
             })
             
         }
