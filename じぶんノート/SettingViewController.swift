@@ -46,15 +46,11 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
 
-        
-     
-        
-       
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return 2
+        return 3
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -92,6 +88,8 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 0:
             return 2
         case 1:
+            return 1
+        case 2:
             return 2
         default:
             return 0
@@ -106,6 +104,8 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 0:
             return 44
         case 1:
+            return 44
+        case 2:
             return 44
      
         default:
@@ -132,6 +132,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
                 cells.accessoryLabel.text = "1.0.3"
                 cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
+                
             default:
                 cell.textLabel?.text = "エラー"
             }
@@ -140,6 +141,18 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
         
         if indexPath.section == 1{
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "リマインダー"
+                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            default:
+                print("エラー")
+            }
+            
+            
+        }
+        
+        if indexPath.section == 2{
             
             switch indexPath.row{
             case 0:
@@ -165,6 +178,16 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 1{
+            if indexPath.row == 0{
+                
+                performSegueWithIdentifier("toReminder", sender: nil)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                
+            }
+            
+        }
+        
+        if indexPath.section == 2{
             
             if indexPath.row == 0{
                 

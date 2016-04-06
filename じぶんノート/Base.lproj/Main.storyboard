@@ -1172,11 +1172,88 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="Qsc-t2-3pX" id="QJH-TV-KZa"/>
+                        <segue destination="lo2-og-hlU" kind="show" identifier="toReminder" id="emX-S3-UJN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sT-f8-WY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1844" y="1428"/>
+        </scene>
+        <!--リマインダー-->
+        <scene sceneID="b6j-4c-Lbd">
+            <objects>
+                <viewController id="lo2-og-hlU" customClass="ReminderViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9n5-uc-D30"/>
+                        <viewControllerLayoutGuide type="bottom" id="fCF-LQ-BOV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s3c-Bn-t3N">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="noj-oe-Go5">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" id="N4W-Oa-a6x" customClass="ReminderTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N4W-Oa-a6x" id="dnO-bf-AnN">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addRemider" id="wRV-9b-9ue" customClass="AddReminderTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="136" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wRV-9b-9ue" id="HZY-qt-c84">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pcr-CH-ZjR">
+                                                    <rect key="frame" x="0.0" y="11" width="200" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="opr-li-j1F"/>
+                                                        <constraint firstAttribute="height" constant="21" id="zkT-D1-kJT"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pcr-CH-ZjR" firstAttribute="leading" secondItem="HZY-qt-c84" secondAttribute="leading" id="ARa-qT-Z1R"/>
+                                                <constraint firstItem="pcr-CH-ZjR" firstAttribute="centerY" secondItem="HZY-qt-c84" secondAttribute="centerY" id="aAg-yu-Tsv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addRemiderLabel" destination="pcr-CH-ZjR" id="f5H-aY-QpB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="lo2-og-hlU" id="rAI-Va-9Ha"/>
+                                    <outlet property="delegate" destination="lo2-og-hlU" id="cHT-am-BbL"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="noj-oe-Go5" secondAttribute="trailing" id="2R7-Nr-NGt"/>
+                            <constraint firstItem="noj-oe-Go5" firstAttribute="top" secondItem="s3c-Bn-t3N" secondAttribute="top" id="I72-GB-0yV"/>
+                            <constraint firstItem="noj-oe-Go5" firstAttribute="leading" secondItem="s3c-Bn-t3N" secondAttribute="leading" id="My3-1k-fZg"/>
+                            <constraint firstItem="fCF-LQ-BOV" firstAttribute="top" secondItem="noj-oe-Go5" secondAttribute="bottom" id="gHy-xQ-3mw"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="リマインダー" id="g3T-KR-VMr"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="noj-oe-Go5" id="FV3-3d-4yq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hrd-A5-98Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2300" y="1423"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="39y-pp-IUG">
