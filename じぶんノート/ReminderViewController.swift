@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ReminderViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
@@ -24,25 +25,116 @@ class ReminderViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return 44
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        return remind.count + 1
+        
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //便宜的に、まずはadd reminderボタンだけを作り、realmに記録することをつくる。
         //常に小さく作り始める
-        return 1
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        if remind.count == 0{
+            
+            return 1
+            
+        }else{
+            
+            if section < remind.count{
+                return 2
+            }
+            
+            if section == remind.count {
+                return 1
+            }
+            
+        }
+        
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        let cells:ReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! ReminderTableViewCell
+        
         let cell:AddReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("addRemider") as! AddReminderTableViewCell
         
-        if indexPath.row == 0{
+        if indexPath.section < remind.count{
+          
+            if indexPath.row == 0{
+                
+                print("リマ")
+                cells.textLabel?.text = "Time"
+                
+            }
             
-          cell.addRemiderLabel.text = "リマインダーを追加する"
+            if indexPath.row == 1{
+                print("リマいん")
+                cells.textLabel?.text = "繰り返し"
+            }
+            
+            return cells
+        }
+        
+        if indexPath.section == remind.count{
+        
+            
+            if indexPath.row == 0{
+            print("リマい")
+            cell.addRemiderLabel.text = "リマインダーを追加する"
             return cell
+        
+            }
         }
         
         return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.row == 0{
+            
+            print(indexPath.section)
+            
+            let realm = try!Realm()
+            
+            let reminder = Reminder()
+            
+            let remind = realm.objects(Reminder).sorted("id", ascending: false)
+            
+            if remind.isEmpty{
+                
+                reminder.id = 1
+            
+            }else{
+             
+                reminder.id = remind[0].id + 1
+                
+            }
+            
+            reminder.createDate = NSDate()
+            reminder.Time = NSDate()
+            
+            reminder.repitition = 0
+            
+            try!realm.write({ 
+                
+                realm.add(reminder, update: true)
+            })
+            
+            tableView.reloadData()
+        }
         
     }
     
@@ -53,15 +145,34 @@ class ReminderViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+    
         let View = UIView()
         
-        View.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
-        //View.backgroundColor = UIColor.redColor()
+        if section == remind.count{
+    
+         View.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
+         //View.backgroundColor = UIColor.redColor()
         return View
+        }
+        
+       return nil
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 100
+        
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        if section == remind.count{
+            
+            return 100
+        }
+        
+        return 0
+
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -94,6 +94,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        //realmのマイグレーション
+        let config = Realm.Configuration(
+        
+            schemaVersion:1,
+            
+            migrationBlock:{migration,oldShemaVersion in
+            
+            
+                if (oldShemaVersion < 1){
+                    //何もする必要なし
+                    
+                    
+                }
+            
+            })
+        
+        //デフォルトRealmに新しい設定を適用
+        Realm.Configuration.defaultConfiguration = config
+    
+    
+    
+    
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         Fabric.with([Crashlytics.self])

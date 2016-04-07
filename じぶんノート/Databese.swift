@@ -37,5 +37,21 @@ class Photos:Object{
         return linkingObjects(Note.self, forProperty:"photos")
     }
     
+}
+
+
+class Reminder:Object{
+    dynamic var id = 0
+    dynamic var createDate:NSDate?
+    dynamic var editDate:NSDate?
+    //タイムは仮にintにしておく
+    dynamic var Time:NSDate?
+    //繰り返しの設定
+    dynamic var repitition = 0
+
+    override class func primaryKey() -> String{
+        return "id"
+    }
+    
     
 }
