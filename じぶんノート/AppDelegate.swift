@@ -103,9 +103,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil,"Error congiguring Google services:\(configureError)")
         
-        var gai = GAI.sharedInstance()
+        let gai = GAI.sharedInstance()
         gai.trackUncaughtExceptions = true
         gai.logger.logLevel = GAILogLevel.Verbose
+        gai.dryRun = true
         
         //UserDefaultsにtrueを保存
         let dic = ["firstLunch":true]
