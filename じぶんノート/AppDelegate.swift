@@ -108,6 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         gai.logger.logLevel = GAILogLevel.Verbose
         gai.dryRun = true
         
+        
         //UserDefaultsにtrueを保存
         let dic = ["firstLunch":true]
         userDefaults.registerDefaults(dic)
