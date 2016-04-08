@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		135267A653184E148DFBABC1 /* Pods_______.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC3191886A025E2F6D25156 /* Pods_______.framework */; };
-		5905542A1CB401CB009E6EE2 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590554291CB401CB009E6EE2 /* ReminderViewController.swift */; };
-		5905542C1CB50D71009E6EE2 /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905542B1CB50D71009E6EE2 /* ReminderTableViewCell.swift */; };
-		5905542E1CB51432009E6EE2 /* AddReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905542D1CB51432009E6EE2 /* AddReminderTableViewCell.swift */; };
 		590F367E1C5B3B610083537F /* ColorFromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F367D1C5B3B610083537F /* ColorFromRGB.swift */; };
 		591A6FA11C4FBC4500416A22 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A6FA01C4FBC4500416A22 /* TimerViewController.swift */; };
 		59212E421C7361DE00CE845B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59212E401C7361DE00CE845B /* Fabric.framework */; };
@@ -109,9 +106,6 @@
 /* Begin PBXFileReference section */
 		14273FAF4E9F3BF1587789D3 /* Pods_________Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_________Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4128C10FC6955AED5343A92D /* Pods-じぶんノート.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-じぶんノート.release.xcconfig"; path = "Pods/Target Support Files/Pods-じぶんノート/Pods-じぶんノート.release.xcconfig"; sourceTree = "<group>"; };
-		590554291CB401CB009E6EE2 /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
-		5905542B1CB50D71009E6EE2 /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
-		5905542D1CB51432009E6EE2 /* AddReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminderTableViewCell.swift; sourceTree = "<group>"; };
 		590F367D1C5B3B610083537F /* ColorFromRGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromRGB.swift; sourceTree = "<group>"; };
 		591A6FA01C4FBC4500416A22 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		59212E401C7361DE00CE845B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -275,9 +269,6 @@
 				593E99981C663155005465D6 /* SettingViewController.swift */,
 				593E999A1C66348D005465D6 /* SettingTableViewCell.swift */,
 				593E999C1C671C5D005465D6 /* SettingOtherTableViewCell.swift */,
-				590554291CB401CB009E6EE2 /* ReminderViewController.swift */,
-				5905542B1CB50D71009E6EE2 /* ReminderTableViewCell.swift */,
-				5905542D1CB51432009E6EE2 /* AddReminderTableViewCell.swift */,
 			);
 			name = setting;
 			sourceTree = "<group>";
@@ -747,7 +738,6 @@
 			files = (
 				594A5F911C360E4B002CB673 /* timeLineNavigationController.swift in Sources */,
 				594A5F971C365AF1002CB673 /* NoteDetailViewController.swift in Sources */,
-				5905542A1CB401CB009E6EE2 /* ReminderViewController.swift in Sources */,
 				59B7BF781C19B5C1008878B2 /* TabBarController.swift in Sources */,
 				59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */,
 				59B7BF7A1C1AFAC2008878B2 /* CameraViewController.swift in Sources */,
@@ -769,7 +759,6 @@
 				59D7EACD1CAA4E2F001DE841 /* albumNavigationViewController.swift in Sources */,
 				592D2B5C1CA1136C0030AFD3 /* allAlbum.swift in Sources */,
 				592302D31C4733DC00558322 /* CalendarViewController.swift in Sources */,
-				5905542E1CB51432009E6EE2 /* AddReminderTableViewCell.swift in Sources */,
 				594A5F871C301E6C002CB673 /* timeLineViewController.swift in Sources */,
 				59E44BDA1C2111F7005AF7F3 /* CameraCollectionViewCell.swift in Sources */,
 				59E44BD81C211124005AF7F3 /* photosAlbumCollectionViewCell.swift in Sources */,
@@ -777,7 +766,6 @@
 				59E44BD61C2110D7005AF7F3 /* PhotosAlbumViewController.swift in Sources */,
 				593E99991C663155005465D6 /* SettingViewController.swift in Sources */,
 				594A5F931C360E79002CB673 /* CalendarViewNavigationController.swift in Sources */,
-				5905542C1CB50D71009E6EE2 /* ReminderTableViewCell.swift in Sources */,
 				594A5F791C2D483D002CB673 /* Databese.swift in Sources */,
 				594A5F3C1C2B98B0002CB673 /* TextViewController.swift in Sources */,
 				59F610F71C47761900BBD25A /* DayView.swift in Sources */,
