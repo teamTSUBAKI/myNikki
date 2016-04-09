@@ -46,7 +46,7 @@ class Reminder:Object{
     dynamic var editDate:NSDate?
     //タイムは仮にintにしておく
     dynamic var Time:NSDate?
-    //繰り返しの設定
+    //0はオフ、1はオン。
     dynamic var repitition = 0
 
     override class func primaryKey() -> String{

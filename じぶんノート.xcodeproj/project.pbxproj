@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		135267A653184E148DFBABC1 /* Pods_______.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC3191886A025E2F6D25156 /* Pods_______.framework */; };
+		590554321CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590554311CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift */; };
+		590554341CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590554331CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift */; };
 		590F367E1C5B3B610083537F /* ColorFromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F367D1C5B3B610083537F /* ColorFromRGB.swift */; };
 		591A6FA11C4FBC4500416A22 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A6FA01C4FBC4500416A22 /* TimerViewController.swift */; };
 		59212E421C7361DE00CE845B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59212E401C7361DE00CE845B /* Fabric.framework */; };
@@ -106,6 +108,8 @@
 /* Begin PBXFileReference section */
 		14273FAF4E9F3BF1587789D3 /* Pods_________Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_________Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4128C10FC6955AED5343A92D /* Pods-じぶんノート.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-じぶんノート.release.xcconfig"; path = "Pods/Target Support Files/Pods-じぶんノート/Pods-じぶんノート.release.xcconfig"; sourceTree = "<group>"; };
+		590554311CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingReminderTableViewCell.swift; sourceTree = "<group>"; };
+		590554331CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderDatePickerViewController.swift; sourceTree = "<group>"; };
 		590F367D1C5B3B610083537F /* ColorFromRGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromRGB.swift; sourceTree = "<group>"; };
 		591A6FA01C4FBC4500416A22 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		59212E401C7361DE00CE845B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -269,6 +273,8 @@
 				593E99981C663155005465D6 /* SettingViewController.swift */,
 				593E999A1C66348D005465D6 /* SettingTableViewCell.swift */,
 				593E999C1C671C5D005465D6 /* SettingOtherTableViewCell.swift */,
+				590554311CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift */,
+				590554331CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift */,
 			);
 			name = setting;
 			sourceTree = "<group>";
@@ -742,6 +748,7 @@
 				59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */,
 				59B7BF7A1C1AFAC2008878B2 /* CameraViewController.swift in Sources */,
 				59A04D531C8AABAD00C75001 /* shareTableViewCell.swift in Sources */,
+				590554321CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift in Sources */,
 				592D2B161CA039D30030AFD3 /* monthAlbum.swift in Sources */,
 				59A04D511C8AA9CF00C75001 /* shareViewController.swift in Sources */,
 				592D2B1A1CA0E7660030AFD3 /* AlbumCollectionViewCell.swift in Sources */,
@@ -757,6 +764,7 @@
 				59F610F91C47D52500BBD25A /* CalendarView.swift in Sources */,
 				593E999D1C671C5D005465D6 /* SettingOtherTableViewCell.swift in Sources */,
 				59D7EACD1CAA4E2F001DE841 /* albumNavigationViewController.swift in Sources */,
+				590554341CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift in Sources */,
 				592D2B5C1CA1136C0030AFD3 /* allAlbum.swift in Sources */,
 				592302D31C4733DC00558322 /* CalendarViewController.swift in Sources */,
 				594A5F871C301E6C002CB673 /* timeLineViewController.swift in Sources */,

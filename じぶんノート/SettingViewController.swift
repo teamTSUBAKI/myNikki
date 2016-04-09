@@ -24,6 +24,11 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     var mySwitch:UISwitch?
     
+    var calendar:NSCalendar?
+
+    var unit:NSCalendarUnit?
+    var comps:NSDateComponents?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,10 +38,36 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         let closeButton:UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Delete Filled-50"), style: .Plain, target: self, action: "closeButtontaped")
         self.navigationItem.leftBarButtonItem = closeButton
         
-        
-        
         tableView.scrollEnabled = false
         tableView.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
+        
+        //最初に設定を開いた時に、realmにreminderを設定してしまう。
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        if remind.isEmpty{
+            
+            let reminder = Reminder()
+            reminder.id = 1
+            reminder.createDate = NSDate()
+            
+            let now = NSDate()
+            calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)
+            unit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day]
+            comps = calendar?.components(unit!, fromDate: now)
+            
+            comps?.calendar = calendar
+            comps?.hour = 21
+            comps?.minute = 00
+            
+            reminder.Time = comps?.date
+            reminder.repitition = 0
+            
+            try!realm.write({ 
+                realm.add(reminder, update: true)
+            })
+        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -45,6 +76,8 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         tracker.set(kGAIScreenName, value: "Setting")
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
+        
+        tableView.reloadData()
 
     }
     
@@ -119,6 +152,11 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         let cell:SettingTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingCell") as! SettingTableViewCell
         let cells:SettingOtherTableViewCell = tableView.dequeueReusableCellWithIdentifier("other")
         as! SettingOtherTableViewCell
+        let celler:SettingReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell") as! SettingReminderTableViewCell
+        
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
         if indexPath.section == 0{
             
             switch indexPath.row{
@@ -144,12 +182,53 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             switch indexPath.row {
             case 0:
                 cell.textLabel?.text = "リマインダー"
-                let mySwitch = UISwitch(frame:CGRectMake(0,0,20,20))
+                mySwitch = UISwitch(frame:CGRectMake(0,0,20,20))
+                mySwitch?.addTarget(self, action: #selector(SettingViewController.remindTaped), forControlEvents: .TouchUpInside)
+                
+                if remind.isEmpty || remind[0].repitition == 0{
+                    mySwitch!.on = false
+                
+                }else{
+                
+                    mySwitch!.on = true
+                
+                }
+                
+                
                 cell.accessoryView = mySwitch
+                
+                cell.selectionStyle = .None
+                
             case 1:
-                cell.textLabel?.text = "お知らせの時間"
-                cell.detailTextLabel?.text = "21:00"
-                cell.accessoryType = .DisclosureIndicator
+                
+                celler.remindLabel.text = "お知らせの時間"
+                
+                if remind.isEmpty{
+                celler.remindTimelabel.text = "21:00"
+                }else{
+                    
+                    let time:NSDate = remind[0].Time!
+                    print("ここ\(time)")
+                    calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)!
+                    unit = [NSCalendarUnit.Hour,NSCalendarUnit.Minute]
+                    comps = calendar?.components(unit!, fromDate: time)
+                    let hour = (comps?.hour)!
+                    let minute = (comps?.minute)!
+                    
+                    if minute <= 9{
+                    
+                        celler.remindTimelabel.text = "\(hour):0\(minute)"
+                    
+                    }else{
+                      
+                        celler.remindTimelabel.text = "\(hour):\(minute)"
+                        
+                    }
+                }
+                celler.selectionStyle = .None
+                celler.accessoryType = .DisclosureIndicator
+                
+                return celler
             default:
                 print("エラー")
             }
@@ -178,12 +257,61 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         
     }
     
+    func remindTaped(){
+        
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        let remainder = Reminder()
+        remainder.id = 1
+        
+        //リマインダーボタンを初めて押した、もしくはオフの状態ならば
+        if remind.isEmpty || remind[0].repitition == 0{
+            
+            //リマインダーボタンをオンに
+            remainder.repitition = 1
+            
+            if remind.isEmpty{
+                
+                let now = NSDate()
+                calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)!
+                
+                unit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day]
+                comps = calendar!.components(unit!, fromDate: now)
+                
+                comps!.calendar = calendar
+                comps!.hour = 21
+                comps!.minute = 00
+                
+                remainder.Time = comps!.date
+                
+                
+            }else{
+                remainder.Time = remind[0].Time
+                
+            }
+            
+        }else{
+            //オンならばオフにする
+            remainder.repitition = 0
+            remainder.Time = remind[0].Time
+            
+        }
+        
+        try!realm.write({ 
+            realm.add(remainder, update: true)
+        })
+        
+        tableView.reloadData()
+    }
+    
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 1{
             
+            performSegueWithIdentifier("datePicker", sender: nil)
             
         }
         
@@ -245,6 +373,8 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+
 
 
     override func didReceiveMemoryWarning() {

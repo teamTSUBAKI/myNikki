@@ -1091,13 +1091,13 @@
                                                         <constraint firstAttribute="width" constant="70" id="bkA-4Q-zNP"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c49-hK-JJO">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c49-hK-JJO">
                                                     <rect key="frame" x="86" y="25" width="94" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="94" id="Ocm-ne-O7i"/>
                                                         <constraint firstAttribute="height" constant="44" id="dJe-ao-wgu"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1121,11 +1121,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ex-mI-il0">
-                                                    <rect key="frame" x="270" y="11" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ex-mI-il0">
+                                                    <rect key="frame" x="252" y="11" width="60" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="42" id="ctr-ag-S4u"/>
                                                         <constraint firstAttribute="height" constant="21" id="tsj-nu-W1d"/>
+                                                        <constraint firstAttribute="width" constant="60" id="woj-Ll-byK"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1154,6 +1154,46 @@
                                             <outlet property="menuLabel" destination="A70-Yr-ao9" id="xge-pj-Uaq"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" id="TJ5-NC-GvQ" customClass="SettingReminderTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="216" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TJ5-NC-GvQ" id="ini-oU-CkN">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MF4-w4-PQ3">
+                                                    <rect key="frame" x="17" y="11" width="160" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="160" id="nIz-tz-gcj"/>
+                                                        <constraint firstAttribute="height" constant="21" id="ty2-br-oGD"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMY-hA-g4L">
+                                                    <rect key="frame" x="236" y="11" width="80" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="10o-lT-kG6"/>
+                                                        <constraint firstAttribute="height" constant="21" id="TY6-tR-1kK"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MF4-w4-PQ3" firstAttribute="centerY" secondItem="ini-oU-CkN" secondAttribute="centerY" id="EVf-UC-XzK"/>
+                                                <constraint firstAttribute="trailing" secondItem="BMY-hA-g4L" secondAttribute="trailing" constant="4" id="dR2-Wp-Lj9"/>
+                                                <constraint firstItem="BMY-hA-g4L" firstAttribute="centerY" secondItem="ini-oU-CkN" secondAttribute="centerY" id="kkS-Kv-FQd"/>
+                                                <constraint firstItem="MF4-w4-PQ3" firstAttribute="leading" secondItem="ini-oU-CkN" secondAttribute="leading" constant="17" id="rIz-Z5-Boc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="remindLabel" destination="MF4-w4-PQ3" id="fiR-3F-ITm"/>
+                                            <outlet property="remindTimelabel" destination="BMY-hA-g4L" id="Rec-pW-Cga"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="L3d-Py-sPy" id="dgE-Tb-pnA"/>
@@ -1173,11 +1213,53 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="Qsc-t2-3pX" id="QJH-TV-KZa"/>
+                        <segue destination="m9G-Av-Y16" kind="show" identifier="datePicker" id="KwG-H7-rId"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sT-f8-WY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1844" y="1428"/>
+        </scene>
+        <!--Time-->
+        <scene sceneID="WT3-gW-shW">
+            <objects>
+                <viewController id="m9G-Av-Y16" customClass="ReminderDatePickerViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UvL-yB-x00"/>
+                        <viewControllerLayoutGuide type="bottom" id="4lF-MX-xH9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mCH-Fl-RGw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="YRe-Qj-6Ei">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="Qlf-tm-YmR"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="481885526.04813498">
+                                    <!--2016-04-09 09:05:26 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="YRe-Qj-6Ei" secondAttribute="trailing" id="ARj-9O-X0k"/>
+                            <constraint firstItem="YRe-Qj-6Ei" firstAttribute="top" secondItem="mCH-Fl-RGw" secondAttribute="top" id="YgM-Fa-no4"/>
+                            <constraint firstItem="YRe-Qj-6Ei" firstAttribute="leading" secondItem="mCH-Fl-RGw" secondAttribute="leading" id="ztP-vm-uNw"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Time" id="Hgx-WY-hW7"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="datePicker" destination="YRe-Qj-6Ei" id="5FK-wd-iYZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UrK-JC-KKA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2245" y="1435"/>
         </scene>
         <!--リマインダー-->
         <scene sceneID="b6j-4c-Lbd">
@@ -1269,7 +1351,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hrd-A5-98Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2456" y="1428"/>
+            <point key="canvasLocation" x="2649" y="1428"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="39y-pp-IUG">
