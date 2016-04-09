@@ -1083,7 +1083,36 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w4e-oY-DBt" id="v3O-F2-YJs">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Eg-M2-LO8">
+                                                    <rect key="frame" x="8" y="4" width="70" height="70"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="70" id="A4g-YZ-Vph"/>
+                                                        <constraint firstAttribute="width" constant="70" id="bkA-4Q-zNP"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c49-hK-JJO">
+                                                    <rect key="frame" x="86" y="25" width="94" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="94" id="Ocm-ne-O7i"/>
+                                                        <constraint firstAttribute="height" constant="44" id="dJe-ao-wgu"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="c49-hK-JJO" firstAttribute="leading" secondItem="3Eg-M2-LO8" secondAttribute="trailing" constant="8" id="CnC-RO-1TE"/>
+                                                <constraint firstItem="c49-hK-JJO" firstAttribute="top" secondItem="v3O-F2-YJs" secondAttribute="top" constant="25" id="EfA-wO-Yhz"/>
+                                                <constraint firstItem="3Eg-M2-LO8" firstAttribute="leading" secondItem="v3O-F2-YJs" secondAttribute="leading" constant="8" id="mDl-QC-Ksa"/>
+                                                <constraint firstItem="3Eg-M2-LO8" firstAttribute="top" secondItem="v3O-F2-YJs" secondAttribute="top" constant="4" id="mF0-83-IJz"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="Photo" destination="3Eg-M2-LO8" id="yIM-IF-DgR"/>
+                                            <outlet property="TSUBAKILabel" destination="c49-hK-JJO" id="E3g-t1-rWk"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="other" id="PGs-RU-nef" customClass="SettingOtherTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="172" width="320" height="44"/>
@@ -1091,7 +1120,39 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PGs-RU-nef" id="Kjr-0A-wGb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ex-mI-il0">
+                                                    <rect key="frame" x="270" y="11" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="42" id="ctr-ag-S4u"/>
+                                                        <constraint firstAttribute="height" constant="21" id="tsj-nu-W1d"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A70-Yr-ao9">
+                                                    <rect key="frame" x="8" y="11" width="200" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="200" id="Mks-U9-tof"/>
+                                                        <constraint firstAttribute="height" constant="21" id="uBc-HK-eom"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="9ex-mI-il0" secondAttribute="trailing" constant="8" id="5aE-KG-vDk"/>
+                                                <constraint firstItem="A70-Yr-ao9" firstAttribute="top" secondItem="Kjr-0A-wGb" secondAttribute="top" constant="11" id="7e3-dK-DbK"/>
+                                                <constraint firstItem="A70-Yr-ao9" firstAttribute="leading" secondItem="Kjr-0A-wGb" secondAttribute="leading" constant="8" id="XKA-mn-d6X"/>
+                                                <constraint firstItem="9ex-mI-il0" firstAttribute="top" secondItem="Kjr-0A-wGb" secondAttribute="top" constant="11" id="lQO-6v-dJy"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="accessoryLabel" destination="9ex-mI-il0" id="VVZ-Oa-tBu"/>
+                                            <outlet property="menuLabel" destination="A70-Yr-ao9" id="xge-pj-Uaq"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

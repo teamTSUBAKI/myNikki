@@ -183,12 +183,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 1{
-            if indexPath.row == 0{
-                
-                performSegueWithIdentifier("toReminder", sender: nil)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                
-            }
+            
             
         }
         

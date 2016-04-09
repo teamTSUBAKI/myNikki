@@ -11,7 +11,9 @@ import UIKit
 class SettingOtherTableViewCell: UITableViewCell {
 
     @IBOutlet weak var menuLabel: UILabel!
+    
     @IBOutlet weak var accessoryLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
