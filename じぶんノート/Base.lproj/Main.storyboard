@@ -1083,35 +1083,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w4e-oY-DBt" id="v3O-F2-YJs">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-us-Qd6">
-                                                    <rect key="frame" x="8" y="4" width="70" height="70"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="70" id="Ayo-zn-XTN"/>
-                                                        <constraint firstAttribute="height" constant="70" id="Fe5-8M-gbQ"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lm-ij-fSD">
-                                                    <rect key="frame" x="86" y="25" width="94" height="44"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="94" id="Gyi-nc-VX7"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="7lm-ij-fSD" firstAttribute="leading" secondItem="eIe-us-Qd6" secondAttribute="trailing" constant="12" id="LxV-Xo-HxA"/>
-                                                <constraint firstItem="eIe-us-Qd6" firstAttribute="leading" secondItem="v3O-F2-YJs" secondAttribute="leading" constant="8" id="RF7-Fz-IOZ"/>
-                                                <constraint firstItem="eIe-us-Qd6" firstAttribute="top" secondItem="v3O-F2-YJs" secondAttribute="top" constant="4" id="h1C-ar-EUl"/>
-                                                <constraint firstItem="7lm-ij-fSD" firstAttribute="top" secondItem="v3O-F2-YJs" secondAttribute="top" constant="25" id="peS-fm-wWP"/>
-                                            </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="Photo" destination="eIe-us-Qd6" id="ZND-rB-qDG"/>
-                                            <outlet property="TSUBAKILabel" destination="7lm-ij-fSD" id="GOP-wJ-Y7D"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="other" id="PGs-RU-nef" customClass="SettingOtherTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="172" width="320" height="44"/>
@@ -1119,39 +1091,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PGs-RU-nef" id="Kjr-0A-wGb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3x-KJ-l3L">
-                                                    <rect key="frame" x="270" y="11" width="42" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="BhP-C5-nl2"/>
-                                                        <constraint firstAttribute="width" constant="42" id="zb2-h4-bjn"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGV-4L-OBN">
-                                                    <rect key="frame" x="8" y="11" width="200" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="200" id="MHu-F9-XsH"/>
-                                                        <constraint firstAttribute="height" constant="21" id="RYC-EY-yIu"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="v3x-KJ-l3L" secondAttribute="trailing" constant="8" id="BEy-jj-j46"/>
-                                                <constraint firstItem="v3x-KJ-l3L" firstAttribute="top" secondItem="Kjr-0A-wGb" secondAttribute="top" constant="11" id="GkO-gN-jpS"/>
-                                                <constraint firstItem="FGV-4L-OBN" firstAttribute="leading" secondItem="Kjr-0A-wGb" secondAttribute="leading" constant="8" id="NF8-St-DEc"/>
-                                                <constraint firstItem="FGV-4L-OBN" firstAttribute="top" secondItem="Kjr-0A-wGb" secondAttribute="top" constant="11" id="ucR-AU-BBK"/>
-                                            </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="accessoryLabel" destination="v3x-KJ-l3L" id="Nuh-sw-x0h"/>
-                                            <outlet property="menuLabel" destination="FGV-4L-OBN" id="g1w-El-SSH"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

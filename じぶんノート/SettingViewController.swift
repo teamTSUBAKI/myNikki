@@ -88,7 +88,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 0:
             return 2
         case 1:
-            return 1
+            return 2
         case 2:
             return 2
         default:
@@ -129,7 +129,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 1:
                 
                 cells.menuLabel.text = "バージョン"
-                cells.accessoryLabel.text = "1.0.3"
+                cells.accessoryLabel.text = "1.0.4"
                 cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
                 
@@ -144,7 +144,12 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             switch indexPath.row {
             case 0:
                 cell.textLabel?.text = "リマインダー"
-                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                let mySwitch = UISwitch(frame:CGRectMake(0,0,20,20))
+                cell.accessoryView = mySwitch
+            case 1:
+                cell.textLabel?.text = "お知らせの時間"
+                cell.detailTextLabel?.text = "21:00"
+                cell.accessoryType = .DisclosureIndicator
             default:
                 print("エラー")
             }
