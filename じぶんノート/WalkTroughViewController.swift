@@ -8,20 +8,28 @@
 
 import UIKit
 import Photos
+import RealmSwift
 
 class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
 
     var appdelegate:AppDelegate!
     var asset:PHFetchResult?
+    
+    var reminderImageView:UIImageView!
+    var remindTitleLabel:UILabel!
+    var subTextLabel:UILabel!
+    
+    var reminderButton:UIButton!
   
     let screenHeight = Double(UIScreen.mainScreen().bounds.size.height)
-    var titleLabel:UILabel!
-    var subTextLabel:UILabel!
+   
+    
+    
     var descriptionTextView:UITextView!
     var scrollView:UIScrollView!
     var pageControll:UIPageControl!
     let pageNum = 6
-    let pageImage:[Int:String] = [2:"4-inch (iPhone 5) - Screenshot 3",1:"4-inch (iPhone 5) - Screenshot 1",3:"4-inch (iPhone 5) - Screenshot 5",4:"4-inch (iPhone 5) - Screenshot 2",5:"4-inch (iPhone 5) - Screenshot 4"]
+    let pageImage:[Int:String] = [1:"4-inch (iPhone 5) - Screenshot 3",0:"4-inch (iPhone 5) - Screenshot 1",3:"4-inch (iPhone 5) - Screenshot 5",4:"4-inch (iPhone 5) - Screenshot 2",5:"4-inch (iPhone 5) - Screenshot 4"]
     var startButton:UIButton!
     var viewContainer:UIView!
     
@@ -67,7 +75,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         for p in 1...pageNum{
             
             
-            if p != 1{
+            if p != 3{
             
             //titleLabel.hidden = true
             //descroptionLabel.hidden = true
@@ -108,35 +116,61 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
            
             }else{
                 
-                titleLabel = UILabel(frame: CGRectMake(0,0,250,44))
-                titleLabel.text = "写真で成長ノート"
-                titleLabel.textAlignment = NSTextAlignment.Center
-                titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-                titleLabel.textColor = UIColor.whiteColor()
-                titleLabel.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2-160)
+                reminderImageView = UIImageView(frame:CGRectMake(self.view.bounds.width * 2, 0, self.view.bounds.width, self.view.bounds.height))
+                reminderImageView.image = UIImage(named: "mockDrop_iPhone 6")
+                reminderImageView.contentMode = .ScaleAspectFill
+                reminderImageView.clipsToBounds = true
+                reminderImageView.center = CGPointMake(self.view.bounds.width * 2.5, 270)
                 
-                subTextLabel = UILabel(frame: CGRectMake(0,0,250,44))
-                subTextLabel.text = "trim"
+                switch screenHeight{
+                    
+                case 480:
+                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,0,self.view.bounds.width,44))
+
+                    
+                case 568:
+                    
+                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,0,self.view.bounds.width,44))
+
+                    
+                case 667:
+                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,50,self.view.bounds.width,100))
+                    remindTitleLabel.font = UIFont(name: "HiraKakuProN-W6",size: 23)
+                    
+                    subTextLabel = UILabel(frame: CGRectMake(self.view.bounds.width * 2,80,self.view.bounds.width,100))
+                    subTextLabel.font = UIFont(name: "HiraKakuProN-W3",size:20)
+                    
+                    reminderButton = UIButton(frame: CGRectMake(0,0,self.view.bounds.width - 40,60))
+                    reminderButton.backgroundColor = colorFromRGB.colorWithHexString("00d1aa")
+                    reminderButton.tintColor = UIColor.whiteColor()
+                    reminderButton.addTarget(self, action: "remindButtonTaped", forControlEvents: .TouchUpInside)
+                    reminderButton.center = CGPointMake(self.view.bounds.width * 2 + self.view.bounds.width/2,470)
+                    reminderButton.setTitle("リマインドする", forState: .Normal)
+                    reminderButton.titleLabel?.font = UIFont(name:"HiraKakuProN-W6" ,size:20)
+                    reminderButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                    reminderButton.layer.masksToBounds = true
+                    reminderButton.layer.cornerRadius = 10
+                    
+                case 736:
+                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,0,self.view.bounds.width,44))
+
+                default:
+                    print("エラー")
+                }
+
+                
+                remindTitleLabel.textAlignment = .Center
+                remindTitleLabel.text = "リマインダー"
+                remindTitleLabel.textColor = UIColor.whiteColor()
+                
+                subTextLabel.text = "ノートの書き忘れを防止できます"
+                subTextLabel.textAlignment = .Center
                 subTextLabel.textColor = UIColor.whiteColor()
-                subTextLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-                subTextLabel.textAlignment = NSTextAlignment.Center
-                subTextLabel.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2-125)
                 
-                /*
-                descriptionTextView = UITextView(frame: CGRectMake(0,0, 290, 200))
-                descriptionTextView.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2)
-                descriptionTextView.editable = false
-                descriptionTextView.text = "『成長を記録して、』"
-                descriptionTextView.textColor = UIColor.whiteColor()
-                descriptionTextView.font = UIFont(name: "TimesNewRomanPS-ItalicMT", size: 20)
-                descriptionTextView.textAlignment = NSTextAlignment.Center
-                descriptionTextView.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
-                
-                self.scrollView.addSubview(descriptionTextView)
-                */
+                self.scrollView.addSubview(reminderImageView)
+                self.scrollView.addSubview(remindTitleLabel)
                 self.scrollView.addSubview(subTextLabel)
-                self.scrollView.addSubview(titleLabel)
-                
+                self.scrollView.addSubview(reminderButton)
                 
             }
         
@@ -150,6 +184,33 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         tracker.set(kGAIScreenName, value: "WalkTrough")
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
+    }
+    
+    func remindButtonTaped(){
+    
+        let realm = try!Realm()
+        let reminder = Reminder()
+        reminder.createDate = NSDate()
+        reminder.id = 1
+        reminder.repitition = 1
+        
+        let now = NSDate()
+        let calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)
+        let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day]
+        let comps = calendar?.components(unit, fromDate: now)
+        
+        comps?.calendar = calendar
+        comps?.hour = 21
+        comps?.minute = 00
+        
+        reminder.Time = comps?.date
+        
+        try!realm.write({ 
+            realm.add(reminder, update: true)
+        })
+        
+        //scrollView.contentOffset = CGPointMake(self.view.bounds.width * 3, 0)
+        scrollView.scrollRectToVisible(CGRectMake(self.view.bounds.width * 3.0, 0, self.view.bounds.width, self.view.bounds.height), animated: true)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

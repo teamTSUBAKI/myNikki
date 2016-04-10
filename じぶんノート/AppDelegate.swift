@@ -212,7 +212,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notification:UILocalNotification = UILocalNotification()
         notification.alertAction = "アプリに戻る"
         //後で、ランダムにするように設定する。
-        notification.alertBody = "今日の反省をノートに記録しましょう"
+        notification.alertBody = "trimで今日１日を振り返りましょう！"
         notification.timeZone = NSTimeZone.defaultTimeZone()
         
         let realm = try!Realm()
