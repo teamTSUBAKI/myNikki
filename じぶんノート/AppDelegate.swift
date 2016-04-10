@@ -184,6 +184,79 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        if remind.isEmpty != true {
+        
+            if remind[0].repitition == 1{
+            
+                scheduledLocalNotification()
+            }else{
+                
+                UIApplication.sharedApplication().cancelAllLocalNotifications()
+            }
+        }
+        
+    }
+    
+    //毎日のお知らせのローカル通知を設定
+    func scheduledLocalNotification(){
+        
+        //まずは一度通知をキャンセルする
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
+        //通知を設定する
+        
+        let notification:UILocalNotification = UILocalNotification()
+        notification.alertAction = "アプリに戻る"
+        //後で、ランダムにするように設定する。
+        notification.alertBody = "今日の反省をノートに記録しましょう"
+        notification.timeZone = NSTimeZone.defaultTimeZone()
+        
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+        
+        let now = NSDate()
+        
+        let calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)
+        let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day,NSCalendarUnit.Hour,NSCalendarUnit.Minute]
+        let nowComps = calendar?.components(unit, fromDate: now)
+        print("realmのデータ\(remind[0].Time)")
+        let remindComps = calendar?.components(unit, fromDate: remind[0].Time!)
+        
+        
+        nowComps?.calendar = calendar
+    
+        nowComps?.hour = (remindComps?.hour)!
+        nowComps?.minute = (remindComps?.minute)!
+        
+        print("時間\(nowComps?.hour)")
+        let remindDate = nowComps!.date
+        print("也哉子\(now)")
+        //設定したreminDateが今よりも前ならば、
+        if now.compare(remindDate!) != .OrderedAscending{
+            
+            //設定したリマインドがすでに過ぎていたら、1日加える。
+            nowComps!.day += 1
+            
+        }
+    
+        print("リマインドする時間\(remindDate)")
+        notification.fireDate = remindDate!
+        print("リマイン\(NSDate(timeIntervalSinceNow: 10))")
+        //notification.fireDate = NSDate(timeIntervalSinceNow: 10)
+        
+        notification.soundName = "bgm_gameclear_2.mp3"
+        notification.repeatInterval = .Day
+        
+        notification.applicationIconBadgeNumber += 1
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+ 
+
+            
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

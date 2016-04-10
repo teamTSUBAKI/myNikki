@@ -10,6 +10,7 @@
 		135267A653184E148DFBABC1 /* Pods_______.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDC3191886A025E2F6D25156 /* Pods_______.framework */; };
 		590554321CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590554311CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift */; };
 		590554341CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590554331CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift */; };
+		590554361CB9F836009E6EE2 /* bgm_gameclear_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 590554351CB9F836009E6EE2 /* bgm_gameclear_2.mp3 */; };
 		590F367E1C5B3B610083537F /* ColorFromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F367D1C5B3B610083537F /* ColorFromRGB.swift */; };
 		591A6FA11C4FBC4500416A22 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A6FA01C4FBC4500416A22 /* TimerViewController.swift */; };
 		59212E421C7361DE00CE845B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59212E401C7361DE00CE845B /* Fabric.framework */; };
@@ -110,6 +111,7 @@
 		4128C10FC6955AED5343A92D /* Pods-じぶんノート.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-じぶんノート.release.xcconfig"; path = "Pods/Target Support Files/Pods-じぶんノート/Pods-じぶんノート.release.xcconfig"; sourceTree = "<group>"; };
 		590554311CB8AC1A009E6EE2 /* SettingReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingReminderTableViewCell.swift; sourceTree = "<group>"; };
 		590554331CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderDatePickerViewController.swift; sourceTree = "<group>"; };
+		590554351CB9F836009E6EE2 /* bgm_gameclear_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_gameclear_2.mp3; path = ../../../Downloads/bgm_gameclear_2.mp3; sourceTree = "<group>"; };
 		590F367D1C5B3B610083537F /* ColorFromRGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromRGB.swift; sourceTree = "<group>"; };
 		591A6FA01C4FBC4500416A22 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		59212E401C7361DE00CE845B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 		592D2B101CA000740030AFD3 /* Album */ = {
 			isa = PBXGroup;
 			children = (
+				590554351CB9F836009E6EE2 /* bgm_gameclear_2.mp3 */,
 				592D2B0E1CA000620030AFD3 /* AlbumViewController.swift */,
 				592D2B5B1CA1136C0030AFD3 /* allAlbum.swift */,
 				592D2B151CA039D30030AFD3 /* monthAlbum.swift */,
@@ -568,6 +571,7 @@
 				59B7BF521C19B48C008878B2 /* LaunchScreen.storyboard in Resources */,
 				59212E451C74133D00CE845B /* GoogleService-Info.plist in Resources */,
 				59B7BF4F1C19B48C008878B2 /* Assets.xcassets in Resources */,
+				590554361CB9F836009E6EE2 /* bgm_gameclear_2.mp3 in Resources */,
 				59B7BF4D1C19B48C008878B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
