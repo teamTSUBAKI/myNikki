@@ -245,18 +245,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         print("リマインドする時間\(remindDate)")
         notification.fireDate = remindDate!
-        print("リマイン\(NSDate(timeIntervalSinceNow: 10))")
+        
         //notification.fireDate = NSDate(timeIntervalSinceNow: 10)
         
         notification.soundName = "bgm_gameclear_2.mp3"
         notification.repeatInterval = .Day
         
-        notification.applicationIconBadgeNumber += 1
-        
+        notification.applicationIconBadgeNumber = 3
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
  
 
             
+    }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
+     
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
