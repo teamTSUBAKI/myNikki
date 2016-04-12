@@ -28,8 +28,8 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
     var descriptionTextView:UITextView!
     var scrollView:UIScrollView!
     var pageControll:UIPageControl!
-    let pageNum = 6
-    let pageImage:[Int:String] = [1:"4-inch (iPhone 5) - Screenshot 3",0:"4-inch (iPhone 5) - Screenshot 1",3:"4-inch (iPhone 5) - Screenshot 5",4:"4-inch (iPhone 5) - Screenshot 2",5:"4-inch (iPhone 5) - Screenshot 4"]
+    let pageNum = 2
+    let pageImage:[Int:String] = [0:"4-inch (iPhone 5) - Screenshot 1",1:"4-inch (iPhone 5) - Screenshot 3"]
     var startButton:UIButton!
     var viewContainer:UIView!
     
@@ -74,9 +74,6 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         
         for p in 1...pageNum{
             
-            
-            if p != 3{
-            
             //titleLabel.hidden = true
             //descroptionLabel.hidden = true
             
@@ -113,68 +110,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
                 default:
                 print("エラー")
                 }
-           
-            }else{
-                
-                reminderImageView = UIImageView(frame:CGRectMake(self.view.bounds.width * 2, 0, self.view.bounds.width, self.view.bounds.height))
-                reminderImageView.image = UIImage(named: "mockDrop_iPhone 6")
-                reminderImageView.contentMode = .ScaleAspectFill
-                reminderImageView.clipsToBounds = true
-                reminderImageView.center = CGPointMake(self.view.bounds.width * 2.5, 270)
-                
-                switch screenHeight{
-                    
-                case 480:
-                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,0,self.view.bounds.width,44))
-
-                    
-                case 568:
-                    
-                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,0,self.view.bounds.width,44))
-
-                    
-                case 667:
-                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,50,self.view.bounds.width,100))
-                    remindTitleLabel.font = UIFont(name: "HiraKakuProN-W6",size: 23)
-                    
-                    subTextLabel = UILabel(frame: CGRectMake(self.view.bounds.width * 2,80,self.view.bounds.width,100))
-                    subTextLabel.font = UIFont(name: "HiraKakuProN-W3",size:20)
-                    
-                    reminderButton = UIButton(frame: CGRectMake(0,0,self.view.bounds.width - 40,60))
-                    reminderButton.backgroundColor = colorFromRGB.colorWithHexString("00d1aa")
-                    reminderButton.tintColor = UIColor.whiteColor()
-                    reminderButton.addTarget(self, action: "remindButtonTaped", forControlEvents: .TouchUpInside)
-                    reminderButton.center = CGPointMake(self.view.bounds.width * 2 + self.view.bounds.width/2,470)
-                    reminderButton.setTitle("リマインドする", forState: .Normal)
-                    reminderButton.titleLabel?.font = UIFont(name:"HiraKakuProN-W6" ,size:20)
-                    reminderButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                    reminderButton.layer.masksToBounds = true
-                    reminderButton.layer.cornerRadius = 10
-                    
-                case 736:
-                    remindTitleLabel = UILabel(frame:CGRectMake(self.view.bounds.width * 2,0,self.view.bounds.width,44))
-
-                default:
-                    print("エラー")
-                }
-
-                
-                remindTitleLabel.textAlignment = .Center
-                remindTitleLabel.text = "リマインダー"
-                remindTitleLabel.textColor = UIColor.whiteColor()
-                
-                subTextLabel.text = "ノートの書き忘れを防止できます"
-                subTextLabel.textAlignment = .Center
-                subTextLabel.textColor = UIColor.whiteColor()
-                
-                self.scrollView.addSubview(reminderImageView)
-                self.scrollView.addSubview(remindTitleLabel)
-                self.scrollView.addSubview(subTextLabel)
-                self.scrollView.addSubview(reminderButton)
-                
-            }
-        
-        }
+           }
         
         // Do any additional setup after loading the view.
     }
@@ -209,17 +145,18 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
             realm.add(reminder, update: true)
         })
         
-        //scrollView.contentOffset = CGPointMake(self.view.bounds.width * 3, 0)
-        scrollView.scrollRectToVisible(CGRectMake(self.view.bounds.width * 3.0, 0, self.view.bounds.width, self.view.bounds.height), animated: true)
+        
+        scrollView.scrollRectToVisible(CGRectMake(self.view.bounds.width * 2.0, 0, self.view.bounds.width, self.view.bounds.height), animated: true)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageProgress = Double(scrollView.contentOffset.x / scrollView.bounds.width)
         self.pageControll.currentPage = Int(round(pageProgress))
-        if self.pageControll.currentPage == 5{
+        if self.pageControll.currentPage == 1{
             
             startButton.backgroundColor = colorFromRGB.colorWithHexString("4169e1")
             
+          
         }
         
     }
@@ -230,7 +167,11 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
             print("許可くん\(info)")
         }*/
         
-        performSegueWithIdentifier("toStart", sender: nil)
+        let userNotification:UIUserNotificationType = [UIUserNotificationType.Alert,UIUserNotificationType.Badge,UIUserNotificationType.Sound]
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: userNotification,categories: nil))
+        
+        performSegueWithIdentifier("addReminder", sender: nil)
         
     }
     

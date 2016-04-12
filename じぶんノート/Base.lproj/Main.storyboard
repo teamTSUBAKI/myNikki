@@ -55,7 +55,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kx0-nq-kAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1646" y="895"/>
+            <point key="canvasLocation" x="2458" y="895"/>
         </scene>
         <!--TimeLine-->
         <scene sceneID="icS-eX-4zo">
@@ -652,7 +652,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CgF-S2-9Ub" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3193" y="839"/>
+            <point key="canvasLocation" x="4005" y="839"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="b3k-pf-T7h">
@@ -927,7 +927,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XcE-tj-aIm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-146" y="450"/>
+            <point key="canvasLocation" x="303" y="550"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dCC-lB-Akr">
@@ -950,7 +950,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5kA-OG-wYL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="300" y="507"/>
+            <point key="canvasLocation" x="1112" y="507"/>
         </scene>
         <!--アルバム-->
         <scene sceneID="Unf-uM-dpV">
@@ -1040,7 +1040,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RhE-fd-daV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2837" y="839"/>
+            <point key="canvasLocation" x="3649" y="839"/>
         </scene>
         <!--カレンダー-->
         <scene sceneID="yVm-9i-BKW">
@@ -1059,7 +1059,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3rL-0f-jQb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="786" y="856"/>
+            <point key="canvasLocation" x="1598" y="856"/>
         </scene>
         <!--設定-->
         <scene sceneID="OCQ-kE-5Hf">
@@ -1218,7 +1218,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1sT-f8-WY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1844" y="1428"/>
+            <point key="canvasLocation" x="2656" y="1428"/>
         </scene>
         <!--Time-->
         <scene sceneID="WT3-gW-shW">
@@ -1259,7 +1259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UrK-JC-KKA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2245" y="1435"/>
+            <point key="canvasLocation" x="3057" y="1435"/>
         </scene>
         <!--リマインダー-->
         <scene sceneID="b6j-4c-Lbd">
@@ -1351,7 +1351,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hrd-A5-98Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2649" y="1428"/>
+            <point key="canvasLocation" x="3461" y="1428"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="39y-pp-IUG">
@@ -1371,7 +1371,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zFy-1d-AC9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="393" y="1109"/>
+            <point key="canvasLocation" x="1205" y="1109"/>
         </scene>
         <!--タイマー-->
         <scene sceneID="de7-bE-SeQ">
@@ -1541,7 +1541,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdQ-WF-3N6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-56" y="1168"/>
+            <point key="canvasLocation" x="756" y="1168"/>
         </scene>
         <!--Walk Trough View Controller-->
         <scene sceneID="xJg-dj-I5J">
@@ -1558,12 +1558,108 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <segue destination="eyp-gc-INJ" kind="show" identifier="toStart" id="b9e-rV-Z9x"/>
+                        <segue destination="TxL-Jk-NeY" kind="show" identifier="addReminder" id="Kd5-hG-b07"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8XC-YR-Xz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-492" y="986"/>
+            <point key="canvasLocation" x="-988" y="989"/>
+        </scene>
+        <!--リマインダー設定-->
+        <scene sceneID="UBm-oN-or5">
+            <objects>
+                <viewController id="W3k-jC-HKc" customClass="AddReminderViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="G0m-rO-OdN"/>
+                        <viewControllerLayoutGuide type="bottom" id="1YT-J1-wcG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3Q3-vQ-XBB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xc5-kx-wNh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="switch" id="aL7-S8-D3O" customClass="AddReminderSwitchTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aL7-S8-D3O" id="6fd-TC-d0B">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePicker" rowHeight="187" id="J78-1q-l8n" customClass="datePickerTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="136" width="320" height="187"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J78-1q-l8n" id="VQh-0B-8Lq">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="EKA-wY-HKI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="482071815.04807901">
+                                                        <!--2016-04-11 12:50:15 +0000-->
+                                                    </date>
+                                                </datePicker>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="EKA-wY-HKI" firstAttribute="top" secondItem="VQh-0B-8Lq" secondAttribute="top" id="OpH-a5-Zag"/>
+                                                <constraint firstAttribute="trailing" secondItem="EKA-wY-HKI" secondAttribute="trailing" id="QrE-GM-bye"/>
+                                                <constraint firstAttribute="bottom" secondItem="EKA-wY-HKI" secondAttribute="bottom" id="cZ2-Pd-XM8"/>
+                                                <constraint firstItem="EKA-wY-HKI" firstAttribute="leading" secondItem="VQh-0B-8Lq" secondAttribute="leading" id="lij-d6-eg1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="theStart" id="jcg-Jv-g0C" customClass="startButtonTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="323" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jcg-Jv-g0C" id="You-Eb-Sc5">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設定を保存します" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4aN-t5-igE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="7tJ-Hv-nxE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="4aN-t5-igE" firstAttribute="leading" secondItem="You-Eb-Sc5" secondAttribute="leading" id="KRk-FO-dJx"/>
+                                                <constraint firstAttribute="trailing" secondItem="4aN-t5-igE" secondAttribute="trailing" id="i6x-1k-ixK"/>
+                                                <constraint firstItem="4aN-t5-igE" firstAttribute="top" secondItem="You-Eb-Sc5" secondAttribute="top" id="t6L-Oj-kuz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="W3k-jC-HKc" id="tEJ-I9-3Ay"/>
+                                    <outlet property="delegate" destination="W3k-jC-HKc" id="Iht-Mi-Cp9"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1YT-J1-wcG" firstAttribute="top" secondItem="xc5-kx-wNh" secondAttribute="bottom" id="6AH-gY-QUc"/>
+                            <constraint firstAttribute="trailing" secondItem="xc5-kx-wNh" secondAttribute="trailing" id="ZIe-Yx-fqi"/>
+                            <constraint firstItem="xc5-kx-wNh" firstAttribute="top" secondItem="3Q3-vQ-XBB" secondAttribute="top" id="e8B-cj-FNR"/>
+                            <constraint firstItem="xc5-kx-wNh" firstAttribute="leading" secondItem="3Q3-vQ-XBB" secondAttribute="leading" id="y6Z-Jf-gmf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="リマインダー設定" id="Aaq-l9-5mP"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="xc5-kx-wNh" id="vUn-Pu-eNh"/>
+                        <segue destination="eyp-gc-INJ" kind="showDetail" identifier="Start" id="Pxy-4K-hK1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S4Z-Sd-DNl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-128" y="989"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="teu-PY-8ER">
@@ -1602,6 +1698,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KtM-Jf-Sob" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="670" y="1704"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="sfH-Sd-3UT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TxL-Jk-NeY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RLw-Xb-WWF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="W3k-jC-HKc" kind="relationship" relationship="rootViewController" id="2PJ-sf-HLN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ft6-wH-TnL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-531" y="989"/>
         </scene>
     </scenes>
     <resources>

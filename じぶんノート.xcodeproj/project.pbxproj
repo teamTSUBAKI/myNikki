@@ -21,6 +21,10 @@
 		592D2B161CA039D30030AFD3 /* monthAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D2B151CA039D30030AFD3 /* monthAlbum.swift */; };
 		592D2B1A1CA0E7660030AFD3 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D2B191CA0E7660030AFD3 /* AlbumCollectionViewCell.swift */; };
 		592D2B5C1CA1136C0030AFD3 /* allAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D2B5B1CA1136C0030AFD3 /* allAlbum.swift */; };
+		593CF4A61CBBD04400B6F4E1 /* AddReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CF4A51CBBD04400B6F4E1 /* AddReminderViewController.swift */; };
+		593CF4A81CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CF4A71CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift */; };
+		593CF4AA1CBBD4C500B6F4E1 /* datePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CF4A91CBBD4C500B6F4E1 /* datePickerTableViewCell.swift */; };
+		593CF4AC1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CF4AB1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift */; };
 		593E99941C64DB6E005465D6 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593E99931C64DB6E005465D6 /* RealmSwift.framework */; };
 		593E99961C64DB78005465D6 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593E99951C64DB78005465D6 /* Realm.framework */; };
 		593E99991C663155005465D6 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593E99981C663155005465D6 /* SettingViewController.swift */; };
@@ -125,6 +129,10 @@
 		592D2B151CA039D30030AFD3 /* monthAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = monthAlbum.swift; sourceTree = "<group>"; };
 		592D2B191CA0E7660030AFD3 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		592D2B5B1CA1136C0030AFD3 /* allAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = allAlbum.swift; sourceTree = "<group>"; };
+		593CF4A51CBBD04400B6F4E1 /* AddReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminderViewController.swift; sourceTree = "<group>"; };
+		593CF4A71CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminderSwitchTableViewCell.swift; sourceTree = "<group>"; };
+		593CF4A91CBBD4C500B6F4E1 /* datePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = datePickerTableViewCell.swift; sourceTree = "<group>"; };
+		593CF4AB1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = startButtonTableViewCell.swift; sourceTree = "<group>"; };
 		593E99931C64DB6E005465D6 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "Pods/../build/Debug-iphoneos/RealmSwift.framework"; sourceTree = "<group>"; };
 		593E99951C64DB78005465D6 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "Pods/../build/Debug-iphoneos/Realm.framework"; sourceTree = "<group>"; };
 		593E99981C663155005465D6 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +294,10 @@
 			isa = PBXGroup;
 			children = (
 				593E99A71C69905D005465D6 /* WalkTroughViewController.swift */,
+				593CF4A51CBBD04400B6F4E1 /* AddReminderViewController.swift */,
+				593CF4A71CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift */,
+				593CF4A91CBBD4C500B6F4E1 /* datePickerTableViewCell.swift */,
+				593CF4AB1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift */,
 			);
 			name = firstLunch;
 			sourceTree = "<group>";
@@ -747,6 +759,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				594A5F911C360E4B002CB673 /* timeLineNavigationController.swift in Sources */,
+				593CF4AA1CBBD4C500B6F4E1 /* datePickerTableViewCell.swift in Sources */,
 				594A5F971C365AF1002CB673 /* NoteDetailViewController.swift in Sources */,
 				59B7BF781C19B5C1008878B2 /* TabBarController.swift in Sources */,
 				59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */,
@@ -759,10 +772,12 @@
 				59F23BF71C3E466800E78103 /* PhotoDetailViewController.swift in Sources */,
 				593E999B1C66348D005465D6 /* SettingTableViewCell.swift in Sources */,
 				59D7EACB1CA90ACB001DE841 /* AlbumCollectionReusableView.swift in Sources */,
+				593CF4AC1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift in Sources */,
 				595E86CA1C5511A70048BEF5 /* SEManager.swift in Sources */,
 				593E99A81C69905D005465D6 /* WalkTroughViewController.swift in Sources */,
 				59F610F51C47751900BBD25A /* MonthView.swift in Sources */,
 				594A5F8B1C301EA1002CB673 /* timeLineTableViewCell.swift in Sources */,
+				593CF4A61CBBD04400B6F4E1 /* AddReminderViewController.swift in Sources */,
 				594A5F7F1C2E3A7D002CB673 /* NotoPhoto.swift in Sources */,
 				591A6FA11C4FBC4500416A22 /* TimerViewController.swift in Sources */,
 				59F610F91C47D52500BBD25A /* CalendarView.swift in Sources */,
@@ -780,6 +795,7 @@
 				594A5F931C360E79002CB673 /* CalendarViewNavigationController.swift in Sources */,
 				594A5F791C2D483D002CB673 /* Databese.swift in Sources */,
 				594A5F3C1C2B98B0002CB673 /* TextViewController.swift in Sources */,
+				593CF4A81CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift in Sources */,
 				59F610F71C47761900BBD25A /* DayView.swift in Sources */,
 				592D2B0F1CA000620030AFD3 /* AlbumViewController.swift in Sources */,
 			);

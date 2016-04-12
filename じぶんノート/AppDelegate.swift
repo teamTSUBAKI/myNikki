@@ -94,6 +94,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        if let options = launchOptions{
+            
+            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification{
+                
+                UIApplication.sharedApplication().cancelLocalNotification(notification)
+                
+            }
+            
+        }
+     
+        
         //realmのマイグレーション
         let config = Realm.Configuration(
         
@@ -154,9 +165,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = viewController
         //self.window?.makeKeyAndVisible()
         
-        let UIUserNotification:UIUserNotificationType = [UIUserNotificationType.Alert,UIUserNotificationType.Sound]
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotification, categories: nil))
-        
+      
+    
         return true
     }
     
@@ -233,25 +243,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nowComps?.minute = (remindComps?.minute)!
         
         print("時間\(nowComps?.hour)")
-        let remindDate = nowComps!.date
+     
         print("也哉子\(now)")
+        
         //設定したreminDateが今よりも前ならば、
-        if now.compare(remindDate!) != .OrderedAscending{
+        if now.compare((nowComps?.date)!) != .OrderedAscending{
             
             //設定したリマインドがすでに過ぎていたら、1日加える。
             nowComps!.day += 1
             
         }
     
-        print("リマインドする時間\(remindDate)")
-        notification.fireDate = remindDate!
+        let remindsDate = nowComps?.date
+        
+        print("リマインず\(remindsDate)")
+        notification.fireDate = remindsDate
         
         //notification.fireDate = NSDate(timeIntervalSinceNow: 10)
         
         notification.soundName = "bgm_gameclear_2.mp3"
         notification.repeatInterval = .Day
         
-        notification.applicationIconBadgeNumber = 3
+        notification.applicationIconBadgeNumber = 1
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
  
 
@@ -259,16 +272,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+     
+          application.applicationIconBadgeNumber = 0
         
+          UIApplication.sharedApplication().cancelLocalNotification(notification)
      
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        application.applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        application.applicationIconBadgeNumber = 0
     }
 
     func applicationWillTerminate(application: UIApplication) {
