@@ -31,6 +31,7 @@ class ReminderDatePickerViewController: UIViewController {
         let remind = realm.objects(Reminder)
         let reminder = Reminder()
         reminder.id = 1
+        print("アベニュー\(datePicker.date)")
         reminder.Time = datePicker.date
         
         if remind[0].repitition == 0{

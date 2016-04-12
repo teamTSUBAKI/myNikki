@@ -48,10 +48,10 @@ class timeLineTableViewCell: UITableViewCell {
         let maxFrame = CGRectMake(0, 0, bodyTextLabel.frame.size.width, CGFloat.max)
         let actualFrame = bodyTextLabel.textRectForBounds(maxFrame, limitedToNumberOfLines:2)
         
-        print("ゆいこん")
+        
         //計算したサイズを設定
         bodyLabelHeight.constant = actualFrame.size.height
-        print(bodyLabelHeight.constant)
+        
         
         
     }

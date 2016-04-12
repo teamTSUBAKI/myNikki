@@ -10,10 +10,14 @@ import UIKit
 
 class datePickerTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var datePicker: UIDatePicker!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
+    
+   
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

@@ -7,14 +7,23 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AddReminderViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var mySwitch:UISwitch?
+    var dateCell:datePickerTableViewCell?
+    var date:NSDate?
+    
+    var screentHeight = Double(UIScreen.mainScreen().bounds.size.height)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
+        tableView.scrollEnabled = false
         // Do any additional setup after loading the view.
     }
     
@@ -41,23 +50,35 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let switchCell:AddReminderSwitchTableViewCell = tableView.dequeueReusableCellWithIdentifier("switch") as! AddReminderSwitchTableViewCell
-        let dateCell:datePickerTableViewCell = tableView.dequeueReusableCellWithIdentifier("datePicker") as! datePickerTableViewCell
+         dateCell = tableView.dequeueReusableCellWithIdentifier("datePicker") as! datePickerTableViewCell
         let startCell:startButtonTableViewCell = tableView.dequeueReusableCellWithIdentifier("theStart") as! startButtonTableViewCell
         
         if indexPath.section == 0{
             
             switchCell.textLabel!.text = "リマインダー"
-            let mySwitch = UISwitch(frame: CGRectMake(0, 0, 20, 20))
-            mySwitch.addTarget(self, action: "mySwtchTaped", forControlEvents: .TouchUpInside)
+            mySwitch = UISwitch(frame: CGRectMake(0, 0, 20, 20))
+            mySwitch!.on = true
+            mySwitch!.addTarget(self, action: "mySwitchTaped:", forControlEvents: .ValueChanged)
             
             switchCell.accessoryView = mySwitch
-            
+            switchCell.selectionStyle = .None
             return switchCell
         }
         
         if indexPath.section == 1{
             
-            return dateCell
+            let realm = try!Realm()
+            let remind = realm.objects(Reminder)
+            
+            if remind.isEmpty == false{
+                
+                dateCell!.datePicker.date = remind[0].Time!
+                
+            }
+            
+            dateCell!.datePicker.addTarget(self, action: "datepicks:", forControlEvents: .ValueChanged)
+            
+            return dateCell!
             
         }
         
@@ -68,6 +89,14 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
         }
         
         return startCell
+    }
+    
+    
+    func datepicks(sender:AnyObject){
+        
+        print("時間設定\((sender as! UIDatePicker).date)")
+        date = (sender as! UIDatePicker).date
+        
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -85,7 +114,16 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
         case 0:
            return 44
         case 1:
-            return 200
+          
+            if screentHeight == 480{
+                
+                return 120
+                
+            }else{
+            
+                return 200
+            }
+        
         case 2:
             return 44
         default:
@@ -134,6 +172,60 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
         default:
             return nil
         }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+
+        
+        if indexPath.section == 2{
+            
+            let realm = try!Realm()
+            let reminder = Reminder()
+            
+            reminder.id = 1
+            
+            if mySwitch?.on == true{
+                
+                reminder.repitition = 1
+            }else{
+                
+                reminder.repitition = 0
+            }
+            
+            let now = NSDate()
+            let calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)
+            let unit:NSCalendarUnit = [NSCalendarUnit.Year,.Month,.Day]
+            let comps = calendar?.components(unit, fromDate: now)
+            
+            comps?.calendar = calendar
+            comps?.hour = 21
+            comps?.minute = 00
+            
+            if date != nil{
+            
+                reminder.Time = date
+            
+            }else{
+              
+                reminder.Time = comps?.date
+                
+            }
+            
+            try!realm.write({ 
+                realm.add(reminder, update: true)
+            })
+         
+            performSegueWithIdentifier("Start", sender: nil)
+            
+        }
+        
+    }
+    
+    func mySwitchTaped(sender:UISwitch){
+        
+       
+        
     }
 
     override func didReceiveMemoryWarning() {

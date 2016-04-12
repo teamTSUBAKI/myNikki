@@ -25,6 +25,7 @@
 		593CF4A81CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CF4A71CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift */; };
 		593CF4AA1CBBD4C500B6F4E1 /* datePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CF4A91CBBD4C500B6F4E1 /* datePickerTableViewCell.swift */; };
 		593CF4AC1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CF4AB1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift */; };
+		593CF4AE1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 593CF4AD1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 */; };
 		593E99941C64DB6E005465D6 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593E99931C64DB6E005465D6 /* RealmSwift.framework */; };
 		593E99961C64DB78005465D6 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593E99951C64DB78005465D6 /* Realm.framework */; };
 		593E99991C663155005465D6 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593E99981C663155005465D6 /* SettingViewController.swift */; };
@@ -133,6 +134,7 @@
 		593CF4A71CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminderSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		593CF4A91CBBD4C500B6F4E1 /* datePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = datePickerTableViewCell.swift; sourceTree = "<group>"; };
 		593CF4AB1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = startButtonTableViewCell.swift; sourceTree = "<group>"; };
+		593CF4AD1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_coinin_2.mp3; path = ../../../Downloads/bgm_coinin_2.mp3; sourceTree = "<group>"; };
 		593E99931C64DB6E005465D6 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "Pods/../build/Debug-iphoneos/RealmSwift.framework"; sourceTree = "<group>"; };
 		593E99951C64DB78005465D6 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "Pods/../build/Debug-iphoneos/Realm.framework"; sourceTree = "<group>"; };
 		593E99981C663155005465D6 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 		59B7BF461C19B48C008878B2 /* じぶんノート */ = {
 			isa = PBXGroup;
 			children = (
+				593CF4AD1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 */,
 				592D2B101CA000740030AFD3 /* Album */,
 				593E99971C66312E005465D6 /* setting */,
 				59A04D4F1C8AA98300C75001 /* noteDetail */,
@@ -579,6 +582,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				593CF4AE1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 in Resources */,
 				595E86D21C55B3D10048BEF5 /* pastel color1.mp3 in Resources */,
 				59B7BF521C19B48C008878B2 /* LaunchScreen.storyboard in Resources */,
 				59212E451C74133D00CE845B /* GoogleService-Info.plist in Resources */,

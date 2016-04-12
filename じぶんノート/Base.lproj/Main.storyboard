@@ -1233,9 +1233,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="YRe-Qj-6Ei">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="216"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="216" id="Qlf-tm-YmR"/>
+                                    <constraint firstAttribute="height" constant="216" id="gj3-mO-xyI"/>
                                 </constraints>
                                 <date key="date" timeIntervalSinceReferenceDate="481885526.04813498">
                                     <!--2016-04-09 09:05:26 +0000-->
@@ -1244,9 +1244,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="YRe-Qj-6Ei" secondAttribute="trailing" id="ARj-9O-X0k"/>
-                            <constraint firstItem="YRe-Qj-6Ei" firstAttribute="top" secondItem="mCH-Fl-RGw" secondAttribute="top" id="YgM-Fa-no4"/>
-                            <constraint firstItem="YRe-Qj-6Ei" firstAttribute="leading" secondItem="mCH-Fl-RGw" secondAttribute="leading" id="ztP-vm-uNw"/>
+                            <constraint firstAttribute="trailing" secondItem="YRe-Qj-6Ei" secondAttribute="trailing" id="kYh-gU-hjh"/>
+                            <constraint firstItem="YRe-Qj-6Ei" firstAttribute="leading" secondItem="mCH-Fl-RGw" secondAttribute="leading" id="rQq-0f-QLL"/>
+                            <constraint firstItem="YRe-Qj-6Ei" firstAttribute="top" secondItem="UvL-yB-x00" secondAttribute="bottom" id="xuR-vg-oca"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -1610,6 +1610,9 @@
                                                 <constraint firstItem="EKA-wY-HKI" firstAttribute="leading" secondItem="VQh-0B-8Lq" secondAttribute="leading" id="lij-d6-eg1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="datePicker" destination="EKA-wY-HKI" id="RSd-2K-emI"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="theStart" id="jcg-Jv-g0C" customClass="startButtonTableViewCell" customModule="TSUBAKI" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="323" width="320" height="44"/>

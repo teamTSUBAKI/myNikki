@@ -222,7 +222,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notification:UILocalNotification = UILocalNotification()
         notification.alertAction = "アプリに戻る"
         //後で、ランダムにするように設定する。
-        notification.alertBody = "trimで今日１日を振り返りましょう！"
+        notification.alertBody = "trimに今日の学びや気づきを記録しましょう"
         notification.timeZone = NSTimeZone.defaultTimeZone()
         
         let realm = try!Realm()
@@ -244,7 +244,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("時間\(nowComps?.hour)")
      
-        print("也哉子\(now)")
+    
         
         //設定したreminDateが今よりも前ならば、
         if now.compare((nowComps?.date)!) != .OrderedAscending{
@@ -261,7 +261,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //notification.fireDate = NSDate(timeIntervalSinceNow: 10)
         
-        notification.soundName = "bgm_gameclear_2.mp3"
+        notification.soundName = "bgm_coinin_2.mp3"
         notification.repeatInterval = .Day
         
         notification.applicationIconBadgeNumber = 1

@@ -40,6 +40,35 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
 
        // getAllPhotos()
         
+        let realm = try!Realm()
+        let remind = realm.objects(Reminder)
+       
+        
+        if remind.isEmpty{
+            
+            let reminder = Reminder()
+            reminder.id = 1
+            reminder.createDate = NSDate()
+            
+            let now = NSDate()
+            let calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)
+            let unit:NSCalendarUnit = [NSCalendarUnit.Year,.Month,.Day]
+            let comps = calendar?.components(unit, fromDate: now)
+            
+            comps?.calendar = calendar
+            comps?.hour = 21
+            comps?.minute = 00
+            
+            reminder.Time = comps?.date
+            //最初にオンにしてしまう
+            reminder.repitition = 1
+            
+            try!realm.write({ 
+                realm.add(reminder, update: true)
+            })
+        }
+        
+        
         self.view.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
         
         self.scrollView = UIScrollView(frame: self.view.bounds)
@@ -122,32 +151,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         tracker.send(builder.build() as [NSObject:AnyObject])
     }
     
-    func remindButtonTaped(){
-    
-        let realm = try!Realm()
-        let reminder = Reminder()
-        reminder.createDate = NSDate()
-        reminder.id = 1
-        reminder.repitition = 1
-        
-        let now = NSDate()
-        let calendar = NSCalendar(identifier:NSCalendarIdentifierGregorian)
-        let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day]
-        let comps = calendar?.components(unit, fromDate: now)
-        
-        comps?.calendar = calendar
-        comps?.hour = 21
-        comps?.minute = 00
-        
-        reminder.Time = comps?.date
-        
-        try!realm.write({ 
-            realm.add(reminder, update: true)
-        })
-        
-        
-        scrollView.scrollRectToVisible(CGRectMake(self.view.bounds.width * 2.0, 0, self.view.bounds.width, self.view.bounds.height), animated: true)
-    }
+
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageProgress = Double(scrollView.contentOffset.x / scrollView.bounds.width)
@@ -166,6 +170,8 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
        /* PHPhotoLibrary.requestAuthorization { (info) in
             print("許可くん\(info)")
         }*/
+        
+        
         
         let userNotification:UIUserNotificationType = [UIUserNotificationType.Alert,UIUserNotificationType.Badge,UIUserNotificationType.Sound]
         
