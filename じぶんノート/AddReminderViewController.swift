@@ -215,6 +215,11 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
             try!realm.write({ 
                 realm.add(reminder, update: true)
             })
+            
+            
+            let userNotification:UIUserNotificationType = [UIUserNotificationType.Alert,UIUserNotificationType.Badge,UIUserNotificationType.Sound]
+            
+            UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: userNotification,categories: nil))
          
             performSegueWithIdentifier("Start", sender: nil)
             

@@ -172,10 +172,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
         }*/
         
         
-        
-        let userNotification:UIUserNotificationType = [UIUserNotificationType.Alert,UIUserNotificationType.Badge,UIUserNotificationType.Sound]
-        
-        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: userNotification,categories: nil))
+       
         
         performSegueWithIdentifier("addReminder", sender: nil)
         
