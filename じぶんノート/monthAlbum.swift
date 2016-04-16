@@ -24,6 +24,8 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     var noPhotoLabel:UILabel!
     var noPhotoImage:UIImageView!
     
+    
+    
     var Notes:Results<(Note)>!
     
     var delegate:toNoteDetailDelegate! = nil
@@ -243,13 +245,37 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         let filePath = (path as NSString).stringByAppendingPathComponent(photo.filename)
         
-        let image = UIImage(contentsOfFile: filePath)
-       
-        cell.PhotoView.image = image
+       let image = UIImage(contentsOfFile: filePath)
+        
+        cell.PhotoView.image = nil
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+            
+            let resize = CGSizeMake(self.frame.size.width / 2 - 0.4,self.frame.size.width / 2-4)
+            UIGraphicsBeginImageContextWithOptions(resize, false, 2.0)
+            image!.drawInRect(CGRectMake(0, 0, self.frame.size.width / 2 - 0.4, self.frame.size.width / 2-4))
+            let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+            
+                cell.PhotoView.image = resizeImage
+                
+            
+            })
+            
+            
+        })
+
+          return cell
+      
     
-        return cell
+       
         
     }
+    
+    
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         
