@@ -252,7 +252,7 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
             
             let resize = CGSizeMake(self.frame.size.width / 2 - 0.4,self.frame.size.width / 2-4)
-            UIGraphicsBeginImageContextWithOptions(resize, false, 2.0)
+            UIGraphicsBeginImageContextWithOptions(resize, false, 0.0)
             image!.drawInRect(CGRectMake(0, 0, self.frame.size.width / 2 - 0.4, self.frame.size.width / 2-4))
             let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
