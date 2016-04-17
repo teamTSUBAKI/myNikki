@@ -15,6 +15,25 @@ protocol toNoteDetailDelegate{
     
 }
 
+extension UIImage{
+    
+    func resize(size:CGSize) -> UIImage{
+        
+        let widthRatio = size.width / self.size.width
+        let heightRatio = size.height / self.size.height
+        let ratio = (widthRatio < heightRatio) ? widthRatio : heightRatio
+        
+        let resizedSize = CGSize(width: self.size.width * ratio + 60,height: self.size.height * ratio + 100)
+        
+    
+        UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
+        drawInRect(CGRect(x: 0,y: 0,width: resizedSize.width,height: resizedSize.height))
+        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizeImage
+    }
+}
+
 class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
 
     var myCollectionView:UICollectionView!
@@ -24,11 +43,11 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     var noPhotoLabel:UILabel!
     var noPhotoImage:UIImageView!
     
-    
+
     
     var Notes:Results<(Note)>!
     
-    var delegate:toNoteDetailDelegate! = nil
+   // var delegate:toNoteDetailDelegate! = nil
     
     var sectionHeding:NSString!
     var sections:NSMutableArray = []
@@ -153,7 +172,7 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         default:
         //セルの一つ一つの大きさ
-        layout.itemSize = CGSizeMake(frame.size.width / 2 - 0.4,frame.size.width / 2-4)
+        layout.itemSize = CGSizeMake(frame.size.width / 2 - 0.4,frame.size.width / 2)
         
         //セルのマージン
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -245,30 +264,34 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         let filePath = (path as NSString).stringByAppendingPathComponent(photo.filename)
         
-       let image = UIImage(contentsOfFile: filePath)
-        
         cell.PhotoView.image = nil
+        
+        let image = UIImage(contentsOfFile: filePath)
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
             
-            let resize = CGSizeMake(self.frame.size.width / 2 - 0.4,self.frame.size.width / 2-4)
-            UIGraphicsBeginImageContextWithOptions(resize, false, 0.0)
-            image!.drawInRect(CGRectMake(0, 0, self.frame.size.width / 2 - 0.4, self.frame.size.width / 2-4))
+            //let Image = image?.resize(CGSizeMake(self.frame.size.width / 2 - 0.4,self.frame.size.width / 2 ))
+            let resizedSize = CGSize(width: 187,height: 250)
+            
+            
+            UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
+            image!.drawInRect(CGRect(x: 0,y: 0,width: resizedSize.width,height: resizedSize.height))
             let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             
-            dispatch_async(dispatch_get_main_queue(), {
-                
             
-                cell.PhotoView.image = resizeImage
+            dispatch_async(dispatch_get_main_queue(), {
+              
+              cell.PhotoView.image = resizeImage
                 
             
             })
             
             
         })
+        
 
-          return cell
+        return cell
       
     
        
@@ -276,6 +299,8 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     }
     
     
+    
+  
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         

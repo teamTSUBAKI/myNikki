@@ -21,6 +21,7 @@ class AlbumCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        print("イメージビュー\(frame.width)")
         PhotoView = UIImageView(frame: CGRectMake(0,0,frame.width,frame.height))
         PhotoView.contentMode = UIViewContentMode.ScaleAspectFill
         PhotoView.clipsToBounds = true
