@@ -15,27 +15,8 @@ protocol toNoteDetailDelegate{
     
 }
 
-extension UIImage{
-    
-    func resize(size:CGSize) -> UIImage{
-        
-        let widthRatio = size.width / self.size.width
-        let heightRatio = size.height / self.size.height
-        let ratio = (widthRatio < heightRatio) ? widthRatio : heightRatio
-        
-        let resizedSize = CGSize(width: self.size.width * ratio + 60,height: self.size.height * ratio + 100)
-        
-    
-        UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
-        drawInRect(CGRect(x: 0,y: 0,width: resizedSize.width,height: resizedSize.height))
-        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return resizeImage
-    }
-}
-
 class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
-
+    
     var myCollectionView:UICollectionView!
     
     var screenHeight = Double(UIScreen.mainScreen().bounds.size.height)
@@ -43,15 +24,18 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     var noPhotoLabel:UILabel!
     var noPhotoImage:UIImageView!
     
-
-    
     var Notes:Results<(Note)>!
     
-   // var delegate:toNoteDetailDelegate! = nil
+    var delegate:toNoteDetailDelegate! = nil
+    
+    //リサイズした写真をキャッシュする。
+    var imageCache = [NSIndexPath:UIImage]()
     
     var sectionHeding:NSString!
     var sections:NSMutableArray = []
     var collectionViewCells:[NSString:[NSMutableArray]]?
+    
+    let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -59,6 +43,8 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     
     init(frame: CGRect,year:Int,month:Int) {
         super.init(frame: frame)
+        
+        
         
         noPhotoImage = UIImageView(frame: CGRectMake(0, 0, 100, 100))
         noPhotoImage.image = UIImage(named: "Sleeping in Bed-104")
@@ -76,8 +62,8 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     
     func PhotoSet(year:Int,month:Int){
         //realmから写真データを引っ張ってきたい。
-    
-      
+        
+        
         let realm = try!Realm()
         
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -87,7 +73,7 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         dateFormatter.dateFormat = "MM/dd"
         
         //月の１日目
-       
+        
         let startTarget:NSDate = (calendar?.dateWithEra(1, year: year, month: month, day: 1, hour: 0, minute: 0, second: 0, nanosecond: 0))!
         
         let lastDay = self.getLastDay(year,month: month)
@@ -100,7 +86,7 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         sections = []
         let PhotoBox:NSMutableArray = []
         
-     
+        
         
         if myCollectionView != nil{
             myCollectionView.removeFromSuperview()
@@ -114,12 +100,12 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         collectionViewCells = [:]
         var collectionViewCellsForSection:NSMutableArray = []
-   
+        
         //ノートから写真を取り出して、日付毎に分けていく
         for note in Notes{
             
             if note.createDate != nil{
-            
+                
                 let comps = calendar?.components(unit, fromDate: note.createDate!)
                 
                 day = comps?.day
@@ -140,21 +126,21 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
                     
                 }
                 
-            
                 
-                    for photo in note.photos{
                 
+                for photo in note.photos{
+                    
                     collectionViewCellsForSection.addObject(photo)
                     PhotoBox.addObject(photo)
-                        
-                    }
+                    
+                }
                 
             }
             
         }
         
-       
-  
+        
+        
         
         //コレクションビューのレイアウトを生成
         let layout = UICollectionViewFlowLayout()
@@ -168,43 +154,43 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
             layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
             layout.minimumInteritemSpacing = 0.4
             layout.minimumLineSpacing = 1.0
-
-        
+            
+            
         default:
-        //セルの一つ一つの大きさ
-        layout.itemSize = CGSizeMake(frame.size.width / 2 - 0.4,frame.size.width / 2)
-        
-        //セルのマージン
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        layout.minimumInteritemSpacing = 0.2
-        layout.minimumLineSpacing = 1.0
+            //セルの一つ一つの大きさ
+            layout.itemSize = CGSizeMake(frame.size.width / 2 - 0.4,frame.size.width / 2-4)
+            
+            //セルのマージン
+            layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+            layout.minimumInteritemSpacing = 0.2
+            layout.minimumLineSpacing = 1.0
         }
         
         //セクションごとのヘッダーサイズ
         layout.headerReferenceSize = CGSizeMake(100, 30)
         
-    
+        
         switch screenHeight{
         case 480:
-        
+            
             myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 330), collectionViewLayout: layout)
-        
+            
         case 568:
             
             myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 420), collectionViewLayout: layout)
-        
-        case 667:
-        
-            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 520), collectionViewLayout: layout)
-        
-        case 736:
-        
-            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 590), collectionViewLayout: layout)
-        
-        default:
-           print("エラー")
             
-        
+        case 667:
+            
+            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 520), collectionViewLayout: layout)
+            
+        case 736:
+            
+            myCollectionView = UICollectionView(frame: CGRectMake(0, 30, frame.size.width, 590), collectionViewLayout: layout)
+            
+        default:
+            print("エラー")
+            
+            
         }
         
         myCollectionView.backgroundColor = UIColor.clearColor()
@@ -220,87 +206,79 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         
         if PhotoBox.count > 0{
-        
+            
             noPhotoImage.hidden = true
             noPhotoLabel.hidden = true
             self.addSubview(myCollectionView)
-        
+            
         }else{
             
             noPhotoLabel.hidden = false
             noPhotoImage.hidden = false
             
-       
+            
         }
         
         
-    
+        
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-     
-        let key:NSString = sections[section] as! NSString
-      
         
-     
+        let key:NSString = sections[section] as! NSString
+        
+        
+        
         return collectionViewCells![key]![0].count
         
     }
     
-   
+    
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell:AlbumCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("myCell", forIndexPath: indexPath) as! AlbumCollectionViewCell
         
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         var path = ""
-        if paths.count > 0{
+        if self.paths.count > 0{
             
-            path = paths[0]
+            path = self.paths[0]
         }
         
-        let key:NSString = sections[indexPath.section] as! NSString
-        let photo:Photos = collectionViewCells![key]![0][indexPath.row] as! Photos
+        let key:NSString = self.sections[indexPath.section] as! NSString
+        let photo:Photos = self.collectionViewCells![key]![0][indexPath.row] as! Photos
         
         let filePath = (path as NSString).stringByAppendingPathComponent(photo.filename)
         
+        
         cell.PhotoView.image = nil
         
-        let image = UIImage(contentsOfFile: filePath)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+            let image = UIImage(contentsOfFile: filePath)
+            let resize = CGSize(width: 187,height: 250)
             
-            //let Image = image?.resize(CGSizeMake(self.frame.size.width / 2 - 0.4,self.frame.size.width / 2 ))
-            let resizedSize = CGSize(width: 187,height: 250)
-            
-            
-            UIGraphicsBeginImageContextWithOptions(resizedSize, false, 0.0)
-            image!.drawInRect(CGRect(x: 0,y: 0,width: resizedSize.width,height: resizedSize.height))
+            UIGraphicsBeginImageContextWithOptions(resize, false, 0.0)
+            image?.drawInRect(CGRect(x: 0,y: 0,width: resize.width,height: resize.height))
             let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             
-            
             dispatch_async(dispatch_get_main_queue(), {
+            
+          
+                cell.PhotoView.image = resizeImage
               
-              cell.PhotoView.image = resizeImage
-                
             
             })
+        
             
-            
+        
         })
         
-
+        collectionView.reloadItemsAtIndexPaths([indexPath])
+        
         return cell
-      
-    
-       
         
     }
-    
-    
-    
-  
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         
@@ -311,30 +289,30 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
-    
+        
         
         if kind == UICollectionElementKindSectionHeader{
-   
+            
             let headerView:AlbumCollectionReusableView = myCollectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "section", forIndexPath: indexPath) as! AlbumCollectionReusableView
-        
+            
             if headerView.subviews.count == 0{
                 headerView.addSubview(UILabel(frame: CGRectMake(0,0,frame.size.width,30)))
             }
-        
-        let dateLabel:UILabel = headerView.subviews[0] as! UILabel
-        dateLabel.frame = CGRectMake(0, 3, frame.size.width, 30)
-        
-        dateLabel.textAlignment = NSTextAlignment.Center
-        dateLabel.text = sections[indexPath.section] as? String
-        dateLabel.textColor = UIColor.grayColor()
-        dateLabel.font = UIFont(name: "HiraKakuProN-W3", size: 18)
             
-              return headerView
-        
+            let dateLabel:UILabel = headerView.subviews[0] as! UILabel
+            dateLabel.frame = CGRectMake(0, 3, frame.size.width, 30)
+            
+            dateLabel.textAlignment = NSTextAlignment.Center
+            dateLabel.text = sections[indexPath.section] as? String
+            dateLabel.textColor = UIColor.grayColor()
+            dateLabel.font = UIFont(name: "HiraKakuProN-W3", size: 18)
+            
+            return headerView
+            
         }
         
         return UICollectionReusableView()
-      
+        
         
     }
     
@@ -342,7 +320,7 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         let key = sections[indexPath.section] as! NSString
         let photo:Photos = collectionViewCells![key]![0][indexPath.row] as! Photos
-       
+        
         self.delegate.photoSelected(photo)
         
     }
@@ -371,15 +349,15 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         return nil
     }
     
- 
+    
     
     
     /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+     // Only override drawRect: if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func drawRect(rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
 }
