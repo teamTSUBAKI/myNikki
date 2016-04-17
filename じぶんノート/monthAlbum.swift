@@ -252,29 +252,42 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         cell.PhotoView.image = nil
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-        
-            let image = UIImage(contentsOfFile: filePath)
-            let resize = CGSize(width: 187,height: 250)
+     
+        if let imagee = imageCache[indexPath]{
             
-            UIGraphicsBeginImageContextWithOptions(resize, false, 0.0)
-            image?.drawInRect(CGRect(x: 0,y: 0,width: resize.width,height: resize.height))
-            let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+            cell.PhotoView.image = imagee
             
-            dispatch_async(dispatch_get_main_queue(), {
             
-          
-                cell.PhotoView.image = resizeImage
-              
+        }else{
             
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                
+                let image = UIImage(contentsOfFile: filePath)
+                let resize = CGSize(width: 187,height: 250)
+                
+                UIGraphicsBeginImageContextWithOptions(resize, false, 0.0)
+                image?.drawInRect(CGRect(x: 0,y: 0,width: resize.width,height: resize.height))
+                let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                self.imageCache[indexPath] = resizeImage
+                
+               dispatch_async(dispatch_get_main_queue(), {
+                    
+                    
+                    cell.PhotoView.image = resizeImage
+                    
+                    
+                })
+                
+                
+                
             })
-        
+
             
+            
+        }
         
-        })
-        
-        collectionView.reloadItemsAtIndexPaths([indexPath])
         
         return cell
         
