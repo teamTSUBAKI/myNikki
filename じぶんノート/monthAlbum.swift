@@ -15,6 +15,8 @@ protocol toNoteDetailDelegate{
     
 }
 
+
+
 class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     
     var myCollectionView:UICollectionView!
