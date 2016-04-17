@@ -481,7 +481,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
         
             /*
-            let date:String = "2016-3-20 23:35:12"
+            let date:String = "2016-5-7 23:35:12"
             let dateformatter:NSDateFormatter = NSDateFormatter()
             dateformatter.locale = NSLocale(localeIdentifier: "ja")
             dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"

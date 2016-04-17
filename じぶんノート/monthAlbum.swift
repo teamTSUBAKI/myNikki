@@ -15,7 +15,24 @@ protocol toNoteDetailDelegate{
     
 }
 
-
+extension UIImage{
+    
+    func resize(size:CGSize)-> UIImage{
+        
+        let widthRatio = size.width / self.size.width
+        let heightRatio = size.height / self.size.height
+        let ratio = (widthRatio < heightRatio) ? widthRatio : heightRatio
+        let resizeSize = CGSize(width: (self.size.width*ratio),height: (self.size.height * ratio))
+        
+        UIGraphicsBeginImageContextWithOptions(resizeSize, false, 0.0)
+        drawInRect(CGRect(x: 0,y: 0,width:resizeSize.width,height:resizeSize.height))
+        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizeImage
+        
+    }
+    
+}
 
 class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     
@@ -265,19 +282,16 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 
                 let image = UIImage(contentsOfFile: filePath)
-                let resize = CGSize(width: 187,height: 250)
+            
                 
-                UIGraphicsBeginImageContextWithOptions(resize, false, 0.0)
-                image?.drawInRect(CGRect(x: 0,y: 0,width: resize.width,height: resize.height))
-                let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
+                let reImage = image?.resize(CGSizeMake(cell.PhotoView.frame.width, cell.PhotoView.frame.height + 60))
                 
-                self.imageCache[indexPath] = resizeImage
+                self.imageCache[indexPath] = reImage
                 
                dispatch_async(dispatch_get_main_queue(), {
                     
                     
-                    cell.PhotoView.image = resizeImage
+                    cell.PhotoView.image = reImage
                     
                     
                 })
