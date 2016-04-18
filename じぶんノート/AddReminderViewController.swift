@@ -27,6 +27,13 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "setFirstReminderView")
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject:AnyObject])
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
     }

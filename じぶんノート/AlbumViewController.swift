@@ -36,6 +36,13 @@ class AlbumViewController: UIViewController,toNoteDetailDelegate {
         self.viewContainer.addSubview(MonthAlbum)
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "AlbumView")
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject:AnyObject])
+    }
 
     func photoSelected(select: Photos) {
         
