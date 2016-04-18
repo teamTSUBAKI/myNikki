@@ -9,6 +9,25 @@
 import UIKit
 import RealmSwift
 
+//写真のリサイズのためにUIImageを拡張
+extension UIImage{
+    
+    func resized(size:CGSize) -> UIImage{
+        let widthRatio = size.width / self.size.width
+        let heightRatio = size.height / self.size.height
+        let ratio = (widthRatio < heightRatio) ? widthRatio:heightRatio
+        let resizeSize = CGSize(width:(self.size.width * ratio),height: (self.size.height * ratio))
+        
+        UIGraphicsBeginImageContextWithOptions(resizeSize, false, 0.0)
+        drawInRect(CGRect(x:0,y: 0,width: resizeSize.width,height: resizeSize.height))
+        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return resizeImage
+    }
+    
+}
+
 
 class timeLineViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
 
@@ -40,7 +59,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
-    
+    //リサイズした写真をキャッシュする
+    var imageCache = [NSIndexPath:UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +100,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         tableView.tableFooterView = view
         tableView.tableHeaderView = view
         
-        print(NSDate())
+        
         
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
@@ -151,13 +171,14 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         self.setupYearandMonth()
         self.tableView.reloadData()
-        print("リワーズ")
+        
         
     }
     
     override func viewWillAppear(animated: Bool) {
         
-        
+        //なぜか、ここで初期化することでうまくいった。
+        imageCache = [:]
                
         let tracker = GAI.sharedInstance().defaultTracker
         tracker.set(kGAIScreenName, value: "TimeLine")
@@ -166,7 +187,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         self.setupYearandMonth()
         self.tableView.reloadData()
-        print("リローダー")
+        
         
         //データがない場合のエンプティステイト
         if tableViewSections.count == 0{
@@ -214,7 +235,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     //セクションヘッダーに年月を入れるための準備
     func setupYearandMonth(){
     //使用するカレンダーを選択
-    print("男はつらいよ")
+    
     let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     //NSDate形式の情報から変換するフォーマットを作る
     let dateFormattaer:NSDateFormatter = NSDateFormatter()
@@ -232,9 +253,9 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     //宣言しただけで初期化していなかったためにエラーになっていた。
     tableViewCells = [:]
     tableViewSections = []
-    print("男はつらいね")
+    
         if self.navigationController is timeLineNavigationController{
-            print("男はつらいか")
+            
            
             let realm = try!Realm()
             notes = realm.objects(Note).sorted("id", ascending: false)
@@ -246,7 +267,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             let calendar:NSCalendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             calendar.timeZone = NSTimeZone(abbreviation: "GMT")!
             
-            print("カレンダー\(day!)")
+            
             
             let targetDate:NSDate = calendar.dateWithEra(1, year: year!, month: month!, day: day!, hour: 0, minute: 0, second: 0, nanosecond: 0)!
             let lastTargetDate:NSDate = calendar.dateWithEra(1, year: year!, month: month!, day: day!, hour: 23, minute: 59, second: 59, nanosecond: 0)!
@@ -259,7 +280,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         }
         
         
-         print("男はつらいて")
+        
         //帰ってきた全てのノートデータを取り出す
         for note in notes!  {
             
@@ -290,7 +311,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             }
         
         tableViewCellsForSection.addObject(note)
-        print("データ数\(tableViewCellsForSection.count)")
+        
         
             
             
@@ -306,7 +327,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     
         
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        print("セクションの数！\(self.tableViewSections.count)")
+        
         return self.tableViewSections.count
     }
     
@@ -314,13 +335,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         //ディクショナリーから取り出すためのキーを変数に入れる
         let key:NSString = tableViewSections[section] as! NSString
         //キーでノートデータ配列のデータ数を数える。
-    
-        print("セルの数：\(self.tableViewCells![key]![0].count)")
-
-        
-        
-        
-        return self.tableViewCells![key]![0].count
+    return self.tableViewCells![key]![0].count
         
     }
     
@@ -351,16 +366,13 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:timeLineTableViewCell = tableView.dequeueReusableCellWithIdentifier("noteCell")as! timeLineTableViewCell
     
-
-        
         let key = self.tableViewSections[indexPath.section] as! NSString
         let note:Note = self.tableViewCells![key]![0][indexPath.row] as! Note
         
         if note.photos.isEmpty{
             
-            print("ゆい")
+            
             cell.PhotoWidth.constant = 0
-            print("写真の幅\(cell.PhotoWidth.constant)")
             cell.titleLabeX.constant = 10
             cell.bodyLabelX.constant = 10
             cell.timerX.constant = 10
@@ -368,6 +380,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             cell.timerLabel.textColor = UIColor.whiteColor()
             cell.timerLabel.layer.cornerRadius = 5
             cell.timerLabel.layer.masksToBounds = true
+            
+            
             
             
         }else{
@@ -388,10 +402,44 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         //画像ファイルパス
         let filepath = (path! as NSString).stringByAppendingPathComponent(filename)
-        //ファイルから写真を取り込む
-        let image =  UIImage(contentsOfFile: filepath)
             
-        cell.Photo.image = image
+        cell.Photo.image = nil
+            
+            
+            if let Image = imageCache[indexPath]{
+                
+                
+                
+                cell.Photo.image = Image
+                
+                
+            }else{
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                
+                
+                    //ファイルから写真を取り込む
+                    let image =  UIImage(contentsOfFile: filepath)
+                    
+                    
+                    let reImage:UIImage? = image?.resized(CGSizeMake(cell.PhotoWidth.constant, cell.Photo.frame.height + 60))
+                    
+                    
+                    self.imageCache[indexPath] = reImage
+                
+                    dispatch_async(dispatch_get_main_queue(), {
+                    
+                    
+                        cell.Photo.image = reImage
+                    
+                    
+                    })
+                
+                
+                
+                })
+                
+            }
     
         //エラーハンドリングの実装例。とりあえず、エラーハンドリングしなくてもクラッシュはしないみたいだからおいおい実装していく
          /*   do {
@@ -502,8 +550,6 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         }*/
 
         
-        
-        print("時間：\(comps.minute)")
         let mimute = comps.minute.description
         if mimute.characters.count == 1{
          
@@ -515,7 +561,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
 
         }
         cell.dayLabel.text = "\(comps.day)"
-        print(comps.weekday)
+        
         cell.weekDayLabel.text = weekDay[comps.weekday]
         
         return cell
@@ -572,6 +618,9 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         //削除の場合
         if editingStyle == .Delete{
+            
+            //キャッシュからも消す
+            imageCache = [:]
             
             let realm = try!Realm()
             

@@ -63,7 +63,8 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
     init(frame: CGRect,year:Int,month:Int) {
         super.init(frame: frame)
         
-        
+        //試しにこれを初期化する。
+        imageCache = [:]
         
         noPhotoImage = UIImageView(frame: CGRectMake(0, 0, 100, 100))
         noPhotoImage.image = UIImage(named: "Sleeping in Bed-104")
@@ -268,12 +269,11 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         let filePath = (path as NSString).stringByAppendingPathComponent(photo.filename)
         
-        
         cell.PhotoView.image = nil
         
-     
         if let imagee = imageCache[indexPath]{
             
+       
             cell.PhotoView.image = imagee
             
             

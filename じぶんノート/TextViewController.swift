@@ -131,7 +131,18 @@ class TextViewController: UIViewController,UITextViewDelegate {
                 note.id = maxNote[0].id + 1
             }
             
+            //テストのため一時的にコメントアウト。必ず元に戻す。
             note.createDate = NSDate()
+            
+           /* let date:String = "2016-6-7 23:35:12"
+             let dateformatter:NSDateFormatter = NSDateFormatter()
+             dateformatter.locale = NSLocale(localeIdentifier: "ja")
+             dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+             let changeDate = dateformatter.dateFromString(date)
+             note.createDate = changeDate
+             */
+            
+
             
             note.noteText = textView.text
             
