@@ -139,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let gai = GAI.sharedInstance()
         gai.trackUncaughtExceptions = true
         gai.logger.logLevel = GAILogLevel.Verbose
-       // gai.dryRun = true
+        gai.dryRun = true
         
         
         //UserDefaultsにtrueを保存
