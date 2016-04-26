@@ -183,7 +183,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
             
      })
         
-        let noteAction:UIAlertAction = UIAlertAction(title: "メモを書く", style: UIAlertActionStyle.Default, handler: {(action:UIAlertAction)->Void in
+        let noteAction:UIAlertAction = UIAlertAction(title: "ノートを書く", style: UIAlertActionStyle.Default, handler: {(action:UIAlertAction)->Void in
         
            let textViewControllers = self.storyboard?.instantiateViewControllerWithIdentifier("TextView")as! TextViewController
            let navigation = UINavigationController()

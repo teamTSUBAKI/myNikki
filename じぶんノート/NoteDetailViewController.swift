@@ -230,7 +230,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         
         
-        if textViews.text != "練習メニューやメモを書く．．．"{
+        if textViews.text != "振り返りや改善、明日の目標などを書く..."{
         textViews.attributedText = newAttributedText
         }
    
@@ -383,7 +383,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if note![0].noteText.isEmpty{
                 
-                textView.text = "練習メニューやメモを書く．．．"
+                textView.text = "振り返りや改善、明日の目標などを書く..."
                 textView.textColor = UIColor.grayColor()
                 
             }else{
@@ -571,7 +571,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if Notes![0].noteText.isEmpty{
                 
-                self.textView.text = "練習メニューやメモを書く．．．"
+                self.textView.text = "振り返りや改善、明日の目標などを書く..."
                 self.textView.textColor = UIColor.grayColor()
                 
             }else{
@@ -710,7 +710,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
         
             
-            self.textView.text = "練習メニューやメモを書く．．．"
+            self.textView.text = "振り返りや改善、明日の目標などを書く..."
+            self.textView.textColor = UIColor.grayColor()
             
         }
         

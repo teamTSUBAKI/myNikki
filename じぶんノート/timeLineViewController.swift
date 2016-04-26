@@ -74,7 +74,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         emptyStatLabel = UILabel(frame: CGRectMake(0,0,300,50))
         emptyStatLabel.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2-50)
         emptyStatLabel.textAlignment = NSTextAlignment.Center
-        emptyStatLabel.text = "写真とメモで成長を記録しましょう"
+        emptyStatLabel.text = "写真とノートで成長を記録しましょう"
         emptyStatLabel.textColor = colorFromRGB.colorWithHexString("B0C4DE")
         
         descriptionLabel = UITextView(frame: CGRectMake(0, 0, 180, 50))
@@ -82,7 +82,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         // descriptionLabel.backgroundColor = UIColor.grayColor()
         descriptionLabel.textAlignment = NSTextAlignment.Center
         descriptionLabel.editable = false
-        descriptionLabel.text = "カメラをタップすると\n写真やメモを記録できます"
+        descriptionLabel.text = "カメラをタップすると\n写真やノートを記録できます"
         
         arrowImageView = UIImageView(frame: CGRectMake(0, 0,44, 44))
         arrowImageView.center = CGPointMake(self.view.bounds.width/2, self.view.bounds.height - 70)
@@ -111,7 +111,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         if self.navigationController is timeLineNavigationController{
             
-            let textButton = UIBarButtonItem(title: "メモを書く", style: .Plain, target: self, action: "textButtonTaped")
+            let textButton = UIBarButtonItem(title: "ノートを書く", style: .Plain, target: self, action: "textButtonTaped")
             let settingButton = UIBarButtonItem(image: UIImage(named: "More-52"), style: .Plain, target: self, action: "settingButtonTaped")
             
             self.navigationItem.leftBarButtonItem = settingButton
