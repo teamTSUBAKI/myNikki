@@ -139,7 +139,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let gai = GAI.sharedInstance()
         gai.trackUncaughtExceptions = true
         gai.logger.logLevel = GAILogLevel.Verbose
-        gai.dryRun = true
+        
+        //これをコメントアウトすることで、アナリティクスが起動する。
+        //gai.dryRun = true
         
         
         //UserDefaultsにtrueを保存
