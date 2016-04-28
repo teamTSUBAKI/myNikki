@@ -141,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         gai.logger.logLevel = GAILogLevel.Verbose
         
         //これをコメントアウトすることで、アナリティクスが起動する。
-        gai.dryRun = true
+        //gai.dryRun = true
         
         
         //UserDefaultsにtrueを保存
