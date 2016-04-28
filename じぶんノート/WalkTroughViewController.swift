@@ -29,7 +29,7 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
     var scrollView:UIScrollView!
     var pageControll:UIPageControl!
     let pageNum = 2
-    let pageImage:[Int:String] = [0:"4-inch (iPhone 5) - Screenshot 1",1:"4-inch (iPhone 5) - Screenshot 3"]
+    let pageImage:[Int:String] = [0:"4-inch (iPhone 5) - Screenshot 1"]
     var startButton:UIButton!
     var viewContainer:UIView!
     
@@ -106,40 +106,317 @@ class WalkTroughViewController: UIPageViewController,UIScrollViewDelegate {
             //titleLabel.hidden = true
             //descroptionLabel.hidden = true
             
-               switch screenHeight{
+            print(screenHeight)
                 
+                switch screenHeight{
+                    
                 case 480:
-                 let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1),20,self.view.bounds.width,self.view.bounds.height-150))
-                 v.image = UIImage(named: pageImage[p-1]!)
-                 v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
-                 v.contentMode = UIViewContentMode.ScaleAspectFit
-                 self.scrollView.addSubview(v)
-               
-                case 568:
-                 let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 170))
-                 v.image = UIImage(named: pageImage[p-1]!)
-                 v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
-                 v.contentMode = UIViewContentMode.ScaleAspectFit
-                self.scrollView.addSubview(v)
-                
-                case 667:
-                let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 200))
-                v.image = UIImage(named: pageImage[p-1]!)
-                v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
-                v.contentMode = UIViewContentMode.ScaleAspectFit
-                self.scrollView.addSubview(v)
-                
-                case 736:
-                let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 200))
-                v.image = UIImage(named: pageImage[p-1]!)
-                v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
-                v.contentMode = UIViewContentMode.ScaleAspectFit
-                self.scrollView.addSubview(v)
+                    
+                    if p == 1{
+                    
+                    let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1),20,self.view.bounds.width,self.view.bounds.height-150))
+                    v.image = UIImage(named: pageImage[p-1]!)
+                    v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                    v.contentMode = UIViewContentMode.ScaleAspectFit
+                    self.scrollView.addSubview(v)
+                    
+                    }else{
+                        
+                        let TopLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),-15,self.view.bounds.width,200))
+                        TopLabel.text = "ワークダイアリーを続ける\nコツは、\n①最初に書くことを決めて\n②それに答えるだけの形式\nにすることです！"
+                        TopLabel.textAlignment = .Center
+                        TopLabel.textColor = UIColor.whiteColor()
+                        TopLabel.font = UIFont.systemFontOfSize(CGFloat(16))
+                        TopLabel.numberOfLines = 0
+                        self.scrollView.addSubview(TopLabel)
+                        
+                        let TopSubLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),130,self.view.bounds.width,50))
+                        TopSubLabel.text = "たとえば、このように。"
+                        TopSubLabel.textAlignment = .Center
+                        TopSubLabel.textColor = UIColor.whiteColor()
+                        TopSubLabel.font = UIFont.systemFontOfSize(CGFloat(12))
+                        self.scrollView.addSubview(TopSubLabel)
+                        
+                        let label1 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+30,160,self.view.bounds.width,50))
+                        label1.text = "１うまくいかなかったことや嫌だったこと"
+                        
+                        label1.textColor = UIColor.whiteColor()
+                        label1.font = UIFont.systemFontOfSize(CGFloat(14))
+                        self.scrollView.addSubview(label1)
+                        
+                        let andLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),175,self.view.bounds.width,50))
+                        andLabel.text = "&"
+                        andLabel.textColor = UIColor.whiteColor()
+                        andLabel.textAlignment = .Center
+                        andLabel.font = UIFont.systemFontOfSize(CGFloat(14))
+                        self.scrollView.addSubview(andLabel)
+                        
+                        let kaizenLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),190,self.view.bounds.width,50))
+                        kaizenLabel.text = "改善点"
+                        kaizenLabel.textColor = UIColor.whiteColor()
+                        kaizenLabel.font = UIFont.systemFontOfSize(CGFloat(14))
+                        kaizenLabel.textAlignment = .Center
+                        self.scrollView.addSubview(kaizenLabel)
+                        
+                        
+                        
+                        let label2 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1) + 30,205,self.view.bounds.width,50))
+                        label2.text = "２よかったことや気づき"
+                        label2.font = UIFont.systemFontOfSize(CGFloat(14))
+                        
+                        label2.textColor = UIColor.whiteColor()
+                        
+                        
+                        
+                        
+                        self.scrollView.addSubview(label2)
+                        
 
+                        
+                        let label3 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+30,220,self.view.bounds.width,50))
+                        label3.text = "３明日の目標"
+                        label3.textColor = UIColor.whiteColor()
+                        label3.font = UIFont.systemFontOfSize(CGFloat(14))
+                        
+                        self.scrollView.addSubview(label3)
+                    
+                        let label4 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+30,260,self.view.bounds.width,60))
+                        label4.text = "では、日記のあるお仕事ライフを！"
+                        label4.textColor = UIColor.whiteColor()
+                        label4.numberOfLines = 0
+                        label4.font = UIFont.italicSystemFontOfSize(CGFloat(18))
+                        
+                        self.scrollView.addSubview(label4)
+                        
+                    }
+                    
+                case 568:
+                    
+                    if p == 1{
+                    let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 170))
+                    v.image = UIImage(named: pageImage[p-1]!)
+                    v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                    v.contentMode = UIViewContentMode.ScaleAspectFit
+                    self.scrollView.addSubview(v)
+                    }else{
+                        
+                        let TopLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),25,self.view.bounds.width,200))
+                        TopLabel.text = "ワークダイアリーを続ける\nコツは、\n①最初に書くことを決めて\n②それに答えるだけの形式\nにすることです！"
+                        TopLabel.textAlignment = .Center
+                        TopLabel.textColor = UIColor.whiteColor()
+                        TopLabel.font = UIFont.systemFontOfSize(CGFloat(20))
+                        TopLabel.numberOfLines = 0
+                        self.scrollView.addSubview(TopLabel)
+                        
+                        let TopSubLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),190,self.view.bounds.width,50))
+                        TopSubLabel.text = "たとえば、このように。"
+                        TopSubLabel.textAlignment = .Center
+                        TopSubLabel.textColor = UIColor.whiteColor()
+                        TopSubLabel.font = UIFont.systemFontOfSize(CGFloat(15))
+                        self.scrollView.addSubview(TopSubLabel)
+                    
+                        let label1 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+20,220,self.view.bounds.width,50))
+                        label1.text = "１うまくいかなかったことや嫌だったこと"
+                        
+                        label1.textColor = UIColor.whiteColor()
+                        label1.font = UIFont.systemFontOfSize(CGFloat(16))
+                        self.scrollView.addSubview(label1)
+                        
+                        let andLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),240,self.view.bounds.width,50))
+                        andLabel.text = "&"
+                        andLabel.textColor = UIColor.whiteColor()
+                        andLabel.textAlignment = .Center
+                        andLabel.font = UIFont.systemFontOfSize(CGFloat(16))
+                        self.scrollView.addSubview(andLabel)
+                        
+                        let kaizenLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),260,self.view.bounds.width,50))
+                        kaizenLabel.text = "改善点"
+                        kaizenLabel.textColor = UIColor.whiteColor()
+                        kaizenLabel.font = UIFont.systemFontOfSize(CGFloat(16))
+                        kaizenLabel.textAlignment = .Center
+                        self.scrollView.addSubview(kaizenLabel)
+                        
+                        
+                        
+                        let label2 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1) + 20,280,self.view.bounds.width,50))
+                        label2.text = "２よかったことや気づき"
+                        label2.font = UIFont.systemFontOfSize(CGFloat(16))
+                        
+                        label2.textColor = UIColor.whiteColor()
+
+                
+                        
+                        
+                        self.scrollView.addSubview(label2)
+                        
+                        let label3 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+20,300,self.view.bounds.width,50))
+                        label3.text = "３明日の目標"
+                        label3.textColor = UIColor.whiteColor()
+                        label3.font = UIFont.systemFontOfSize(CGFloat(16))
+                        
+                        self.scrollView.addSubview(label3)
+                        
+                        let label4 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+10,340,self.view.bounds.width,60))
+                        label4.text = "では、日記のあるお仕事ライフを！"
+                        label4.textColor = UIColor.whiteColor()
+                        label4.numberOfLines = 0
+                        label4.font = UIFont.italicSystemFontOfSize(CGFloat(19))
+                        
+                        self.scrollView.addSubview(label4)
+                        
+                    }
+                    
+                case 667:
+                    
+                    if p == 1{
+                    
+                    let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 200))
+                    v.image = UIImage(named: pageImage[p-1]!)
+                    v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                    v.contentMode = UIViewContentMode.ScaleAspectFit
+                    self.scrollView.addSubview(v)
+                    }else{
+                        
+                        let TopLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),40,self.view.bounds.width,200))
+                        TopLabel.text = "ワークダイアリーを続ける\nコツは、\n①最初に書くことを決めて\n②それに答えるだけの形式\nにすることです！"
+                        TopLabel.textAlignment = .Center
+                        TopLabel.textColor = UIColor.whiteColor()
+                        TopLabel.font = UIFont.systemFontOfSize(CGFloat(24))
+                        TopLabel.numberOfLines = 0
+                        self.scrollView.addSubview(TopLabel)
+                        
+                        let TopSubLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),230,self.view.bounds.width,50))
+                        TopSubLabel.text = "たとえば、このように。"
+                        TopSubLabel.textAlignment = .Center
+                        TopSubLabel.textColor = UIColor.whiteColor()
+                        self.scrollView.addSubview(TopSubLabel)
+                        
+                        let label1 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+15,280,self.view.bounds.width,50))
+                        label1.text = "１うまくいかなかったことや嫌だったこと"
+                        
+                        label1.textColor = UIColor.whiteColor()
+                        label1.font = UIFont.systemFontOfSize(CGFloat(20))
+                        self.scrollView.addSubview(label1)
+                        
+                        let andLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),300,self.view.bounds.width,50))
+                        andLabel.text = "&"
+                        andLabel.textColor = UIColor.whiteColor()
+                        andLabel.textAlignment = .Center
+                        andLabel.font = UIFont.systemFontOfSize(CGFloat(20))
+                        self.scrollView.addSubview(andLabel)
+                        
+                        let kaizenLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),320,self.view.bounds.width,50))
+                        kaizenLabel.text = "改善点"
+                        kaizenLabel.textColor = UIColor.whiteColor()
+                        kaizenLabel.font = UIFont.systemFontOfSize(CGFloat(20))
+                        kaizenLabel.textAlignment = .Center
+                        self.scrollView.addSubview(kaizenLabel)
+
+                        
+                        
+                        let label2 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1) + 15,340,self.view.bounds.width,50))
+                        label2.text = "２よかったことや気づき"
+                        label2.font = UIFont.systemFontOfSize(CGFloat(20))
+
+                        label2.textColor = UIColor.whiteColor()
+                        
+                        
+                        self.scrollView.addSubview(label2)
+                        
+                        let label3 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+15,360,self.view.bounds.width,50))
+                        label3.text = "３明日の目標"
+                        label3.textColor = UIColor.whiteColor()
+                        label3.font = UIFont.systemFontOfSize(CGFloat(20))
+                        
+                        self.scrollView.addSubview(label3)
+                       
+                        
+                        let label4 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+10,420,self.view.bounds.width,60))
+                        label4.text = "では、日記のあるお仕事ライフを！"
+                        label4.textColor = UIColor.whiteColor()
+                        label4.numberOfLines = 0
+                        label4.font = UIFont.italicSystemFontOfSize(CGFloat(24))
+                        
+                        self.scrollView.addSubview(label4)
+                       
+                    }
+                case 736:
+                    
+                    if p == 1{
+                    let v = UIImageView(frame: CGRectMake(self.view.bounds.width * CGFloat(p-1) , 70, self.view.bounds.width, self.view.bounds.height - 200))
+                    v.image = UIImage(named: pageImage[p-1]!)
+                    v.backgroundColor = colorFromRGB.colorWithHexString("B0C4DE")
+                    v.contentMode = UIViewContentMode.ScaleAspectFit
+                    self.scrollView.addSubview(v)
+                    }else{
+                        
+                        let TopLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),60,self.view.bounds.width,200))
+                        TopLabel.text = "ワークダイアリーを続ける\nコツは、\n①最初に書くことを決めて\n②それに答えるだけの形式\nにすることです！"
+                        TopLabel.textAlignment = .Center
+                        TopLabel.textColor = UIColor.whiteColor()
+                        TopLabel.font = UIFont.systemFontOfSize(CGFloat(24))
+                        TopLabel.numberOfLines = 0
+                        self.scrollView.addSubview(TopLabel)
+                        
+                        let TopSubLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),250,self.view.bounds.width,50))
+                        TopSubLabel.text = "たとえば、このように。"
+                        TopSubLabel.textAlignment = .Center
+                        TopSubLabel.textColor = UIColor.whiteColor()
+                        self.scrollView.addSubview(TopSubLabel)
+                        
+                        let label1 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+20,300,self.view.bounds.width,50))
+                        label1.text = "１うまくいかなかったことや嫌だったこと"
+                        
+                        label1.textColor = UIColor.whiteColor()
+                        label1.font = UIFont.systemFontOfSize(CGFloat(20))
+                        self.scrollView.addSubview(label1)
+                        
+                        let andLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),320,self.view.bounds.width,50))
+                        andLabel.text = "&"
+                        andLabel.textColor = UIColor.whiteColor()
+                        andLabel.textAlignment = .Center
+                        andLabel.font = UIFont.systemFontOfSize(CGFloat(20))
+                        self.scrollView.addSubview(andLabel)
+                        
+                        let kaizenLabel = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1),340,self.view.bounds.width,50))
+                        kaizenLabel.text = "改善点"
+                        kaizenLabel.textColor = UIColor.whiteColor()
+                        kaizenLabel.font = UIFont.systemFontOfSize(CGFloat(20))
+                        kaizenLabel.textAlignment = .Center
+                        self.scrollView.addSubview(kaizenLabel)
+                        
+
+                        
+                        let label2 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1) + 20,365,self.view.bounds.width,50))
+                        label2.text = "２よかったことや気づき"
+                        label2.font = UIFont.systemFontOfSize(CGFloat(20))
+                        
+                        label2.textColor = UIColor.whiteColor()
+                        
+                        
+                        self.scrollView.addSubview(label2)
+                        
+                        let label3 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+20,400,self.view.bounds.width,50))
+                        label3.text = "３明日の目標"
+                        label3.textColor = UIColor.whiteColor()
+                        label3.font = UIFont.systemFontOfSize(CGFloat(20))
+                        
+                        self.scrollView.addSubview(label3)
+                        
+                        let label4 = UILabel(frame:CGRectMake(self.view.bounds.width * CGFloat(p-1)+18,440,self.view.bounds.width,60))
+                        label4.text = "では、日記のあるお仕事ライフを！"
+                        label4.textColor = UIColor.whiteColor()
+                        label4.numberOfLines = 0
+                        label4.font = UIFont.italicSystemFontOfSize(CGFloat(25))
+                        
+                        self.scrollView.addSubview(label4)
+                        
+                    }
                 default:
-                print("エラー")
-                }
-           }
+                    print("エラー")
+                   }
+            
+        }
         
         // Do any additional setup after loading the view.
     }
