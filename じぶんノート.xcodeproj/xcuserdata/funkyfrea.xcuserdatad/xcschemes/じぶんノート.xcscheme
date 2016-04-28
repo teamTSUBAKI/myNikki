@@ -81,6 +81,12 @@
             ReferencedContainer = "container:&#x3057;&#x3099;&#x3075;&#x3099;&#x3093;&#x30ce;&#x30fc;&#x30c8;.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-AppleLanguages (ja)"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
