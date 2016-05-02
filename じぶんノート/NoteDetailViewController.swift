@@ -1377,58 +1377,14 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     
     @IBAction func NoImagePhotoButtonTaped(sender: AnyObject) {
         
-        let status:AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        let cameraViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Camera")
+        appDelegate?.tabBarCamera = true
+        appDelegate?.addPhotoFlag = true
+        appDelegate?.noteFlag = true
+        appDelegate?.noPhotoButtonTaped = true
+        appDelegate?.editNoteId = note![0].id
         
-        switch status{
-        case AVAuthorizationStatus.Authorized:
-            //許可されている場合
-            let cameraViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Camera")
-            appDelegate?.tabBarCamera = true
-            appDelegate?.addPhotoFlag = true
-            appDelegate?.noteFlag = true
-            appDelegate?.noPhotoButtonTaped = true
-            appDelegate?.editNoteId = note![0].id
-            
-            self.presentViewController(cameraViewController!, animated: true, completion: nil)
-            
-            
-        case AVAuthorizationStatus.Denied:
-            //カメラの使用が禁止されている場合
-            break;
-        case AVAuthorizationStatus.NotDetermined:
-            //まだ確認されていない場合、許可を求めるダイアログを表示
-            
-            AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { (granted) -> Void in
-                
-                if granted{
-                    //許可された場合
-                    let cameraViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Camera")
-                    self.appDelegate?.tabBarCamera = true
-                    self.appDelegate?.addPhotoFlag = true
-                    self.appDelegate?.noPhotoButtonTaped = true
-                    self.appDelegate?.noteFlag = true
-                    self.appDelegate?.editNoteId = self.note![0].id
-                    
-                    self.presentViewController(cameraViewController!, animated: true, completion: nil)
-                    
-                    
-                }else{
-                    
-                    print("不許可")
-                    
-                }
-                
-            })
-            
-        default:
-            break
-            
-        }
-        
-        
-        
-        
-        
+        self.presentViewController(cameraViewController!, animated: true, completion: nil)
         
     }
     

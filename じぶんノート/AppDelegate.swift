@@ -129,7 +129,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
-        Fabric.with([Crashlytics.self])
+        //開発中のためFablicを一度止める
+        //Fabric.with([Crashlytics.self])
         
         //グーグルアナリティクス
         var configureError:NSError?
