@@ -167,10 +167,10 @@
 		59B7BF4E1C19B48C008878B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59B7BF511C19B48C008878B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59B7BF531C19B48C008878B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59B7BF581C19B48D008878B2 /* じぶんノートTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "じぶんノートTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59B7BF581C19B48D008878B2 /* myNikkiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myNikkiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B7BF5C1C19B48D008878B2 /* ________Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "________Tests.swift"; sourceTree = "<group>"; };
 		59B7BF5E1C19B48D008878B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59B7BF631C19B48D008878B2 /* じぶんノートUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "じぶんノートUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59B7BF631C19B48D008878B2 /* myNikkiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myNikkiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B7BF671C19B48D008878B2 /* ________UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "________UITests.swift"; sourceTree = "<group>"; };
 		59B7BF691C19B48D008878B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59B7BF771C19B5C1008878B2 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 				59212E441C74133D00CE845B /* GoogleService-Info.plist */,
 				59212E401C7361DE00CE845B /* Fabric.framework */,
 				59212E411C7361DE00CE845B /* Crashlytics.framework */,
-				59B7BF461C19B48C008878B2 /* じぶんノート */,
+				59B7BF461C19B48C008878B2 /* myNikki */,
 				59B7BF5B1C19B48D008878B2 /* じぶんノートTests */,
 				59B7BF661C19B48D008878B2 /* じぶんノートUITests */,
 				59B7BF451C19B48C008878B2 /* Products */,
@@ -368,13 +368,13 @@
 			isa = PBXGroup;
 			children = (
 				59B7BF441C19B48C008878B2 /* TSUBAKI.app */,
-				59B7BF581C19B48D008878B2 /* じぶんノートTests.xctest */,
-				59B7BF631C19B48D008878B2 /* じぶんノートUITests.xctest */,
+				59B7BF581C19B48D008878B2 /* myNikkiTests.xctest */,
+				59B7BF631C19B48D008878B2 /* myNikkiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		59B7BF461C19B48C008878B2 /* じぶんノート */ = {
+		59B7BF461C19B48C008878B2 /* myNikki */ = {
 			isa = PBXGroup;
 			children = (
 				593CF4AD1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 */,
@@ -401,7 +401,7 @@
 				59212E471C7413EC00CE845B /* じぶんノートTests-Bridging-Header.h */,
 				59212E481C7413EC00CE845B /* じぶんノートUITests-Bridging-Header.h */,
 			);
-			path = "じぶんノート";
+			path = myNikki;
 			sourceTree = "<group>";
 		};
 		59B7BF5B1C19B48D008878B2 /* じぶんノートTests */ = {
@@ -467,9 +467,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		59B7BF431C19B48C008878B2 /* じぶんノート */ = {
+		59B7BF431C19B48C008878B2 /* myNikki */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 59B7BF6C1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "じぶんノート" */;
+			buildConfigurationList = 59B7BF6C1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "myNikki" */;
 			buildPhases = (
 				FF9BAFEBB3C8CECB89507F62 /* Check Pods Manifest.lock */,
 				59B7BF401C19B48C008878B2 /* Sources */,
@@ -485,14 +485,14 @@
 			);
 			dependencies = (
 			);
-			name = "じぶんノート";
+			name = myNikki;
 			productName = "じぶんノート";
 			productReference = 59B7BF441C19B48C008878B2 /* TSUBAKI.app */;
 			productType = "com.apple.product-type.application";
 		};
-		59B7BF571C19B48D008878B2 /* じぶんノートTests */ = {
+		59B7BF571C19B48D008878B2 /* myNikkiTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 59B7BF6F1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "じぶんノートTests" */;
+			buildConfigurationList = 59B7BF6F1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "myNikkiTests" */;
 			buildPhases = (
 				0E4B0E7E7CD5120209194BC0 /* Check Pods Manifest.lock */,
 				59B7BF541C19B48D008878B2 /* Sources */,
@@ -506,14 +506,14 @@
 			dependencies = (
 				59B7BF5A1C19B48D008878B2 /* PBXTargetDependency */,
 			);
-			name = "じぶんノートTests";
+			name = myNikkiTests;
 			productName = "じぶんノートTests";
-			productReference = 59B7BF581C19B48D008878B2 /* じぶんノートTests.xctest */;
+			productReference = 59B7BF581C19B48D008878B2 /* myNikkiTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		59B7BF621C19B48D008878B2 /* じぶんノートUITests */ = {
+		59B7BF621C19B48D008878B2 /* myNikkiUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 59B7BF721C19B48D008878B2 /* Build configuration list for PBXNativeTarget "じぶんノートUITests" */;
+			buildConfigurationList = 59B7BF721C19B48D008878B2 /* Build configuration list for PBXNativeTarget "myNikkiUITests" */;
 			buildPhases = (
 				6A12AC9B8B18AF93D6174A62 /* Check Pods Manifest.lock */,
 				59B7BF5F1C19B48D008878B2 /* Sources */,
@@ -526,9 +526,9 @@
 			dependencies = (
 				59B7BF651C19B48D008878B2 /* PBXTargetDependency */,
 			);
-			name = "じぶんノートUITests";
+			name = myNikkiUITests;
 			productName = "じぶんノートUITests";
-			productReference = 59B7BF631C19B48D008878B2 /* じぶんノートUITests.xctest */;
+			productReference = 59B7BF631C19B48D008878B2 /* myNikkiTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -557,7 +557,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 59B7BF3F1C19B48C008878B2 /* Build configuration list for PBXProject "じぶんノート" */;
+			buildConfigurationList = 59B7BF3F1C19B48C008878B2 /* Build configuration list for PBXProject "myNikki" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -570,9 +570,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				59B7BF431C19B48C008878B2 /* じぶんノート */,
-				59B7BF571C19B48D008878B2 /* じぶんノートTests */,
-				59B7BF621C19B48D008878B2 /* じぶんノートUITests */,
+				59B7BF431C19B48C008878B2 /* myNikki */,
+				59B7BF571C19B48D008878B2 /* myNikkiTests */,
+				59B7BF621C19B48D008878B2 /* myNikkiUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -834,12 +834,12 @@
 /* Begin PBXTargetDependency section */
 		59B7BF5A1C19B48D008878B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 59B7BF431C19B48C008878B2 /* じぶんノート */;
+			target = 59B7BF431C19B48C008878B2 /* myNikki */;
 			targetProxy = 59B7BF591C19B48D008878B2 /* PBXContainerItemProxy */;
 		};
 		59B7BF651C19B48D008878B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 59B7BF431C19B48C008878B2 /* じぶんノート */;
+			target = 59B7BF431C19B48C008878B2 /* myNikki */;
 			targetProxy = 59B7BF641C19B48D008878B2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -965,13 +965,13 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/じぶんノート",
 				);
-				INFOPLIST_FILE = "じぶんノート/Info.plist";
+				INFOPLIST_FILE = myNikki/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.TSUBAKI;
+				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.myNikki;
 				PRODUCT_NAME = TSUBAKI;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノート-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "myNikki/じぶんノート-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -992,14 +992,14 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/じぶんノート",
 				);
-				INFOPLIST_FILE = "じぶんノート/Info.plist";
+				INFOPLIST_FILE = myNikki/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.TSUBAKI;
+				PRODUCT_BUNDLE_IDENTIFIER = inc.teamTSUBAKI.myNikki;
 				PRODUCT_NAME = TSUBAKI;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノート-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "myNikki/じぶんノート-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -1012,10 +1012,10 @@
 				INFOPLIST_FILE = "じぶんノートTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "inc.BiyousiNote.--------Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = myNikkiTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノートTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/じぶんノート.app/じぶんノート";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/myNikki.app/myNikki";
 			};
 			name = Debug;
 		};
@@ -1028,9 +1028,9 @@
 				INFOPLIST_FILE = "じぶんノートTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "inc.BiyousiNote.--------Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = myNikkiTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノートTests-Bridging-Header.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/じぶんノート.app/じぶんノート";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/myNikki.app/myNikki";
 			};
 			name = Release;
 		};
@@ -1042,7 +1042,7 @@
 				INFOPLIST_FILE = "じぶんノートUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "inc.BiyousiNote.--------UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = myNikkiTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノートUITests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_TARGET_NAME = "じぶんノート";
@@ -1058,7 +1058,7 @@
 				INFOPLIST_FILE = "じぶんノートUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "inc.BiyousiNote.--------UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = myNikkiTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "じぶんノート/じぶんノートUITests-Bridging-Header.h";
 				TEST_TARGET_NAME = "じぶんノート";
 				USES_XCTRUNNER = YES;
@@ -1068,7 +1068,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		59B7BF3F1C19B48C008878B2 /* Build configuration list for PBXProject "じぶんノート" */ = {
+		59B7BF3F1C19B48C008878B2 /* Build configuration list for PBXProject "myNikki" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59B7BF6A1C19B48D008878B2 /* Debug */,
@@ -1077,7 +1077,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		59B7BF6C1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "じぶんノート" */ = {
+		59B7BF6C1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "myNikki" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59B7BF6D1C19B48D008878B2 /* Debug */,
@@ -1086,7 +1086,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		59B7BF6F1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "じぶんノートTests" */ = {
+		59B7BF6F1C19B48D008878B2 /* Build configuration list for PBXNativeTarget "myNikkiTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59B7BF701C19B48D008878B2 /* Debug */,
@@ -1095,7 +1095,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		59B7BF721C19B48D008878B2 /* Build configuration list for PBXNativeTarget "じぶんノートUITests" */ = {
+		59B7BF721C19B48D008878B2 /* Build configuration list for PBXNativeTarget "myNikkiUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59B7BF731C19B48D008878B2 /* Debug */,

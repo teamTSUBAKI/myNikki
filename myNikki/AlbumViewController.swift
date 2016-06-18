@@ -35,6 +35,8 @@ class AlbumViewController: UIViewController,toNoteDetailDelegate {
         
         self.viewContainer.addSubview(MonthAlbum)
         // Do any additional setup after loading the view.
+        
+        //ドナルドトランプ
     }
     
     override func viewWillAppear(animated: Bool) {
