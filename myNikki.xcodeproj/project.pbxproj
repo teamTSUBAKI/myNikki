@@ -13,6 +13,9 @@
 		590554361CB9F836009E6EE2 /* bgm_gameclear_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 590554351CB9F836009E6EE2 /* bgm_gameclear_2.mp3 */; };
 		590F367E1C5B3B610083537F /* ColorFromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F367D1C5B3B610083537F /* ColorFromRGB.swift */; };
 		591A6FA11C4FBC4500416A22 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A6FA01C4FBC4500416A22 /* TimerViewController.swift */; };
+		591D2AE71D16C99B00930A7A /* wantsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D2AE61D16C99B00930A7A /* wantsListViewController.swift */; };
+		591D2AE91D16CED900930A7A /* wantsListTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D2AE81D16CED900930A7A /* wantsListTableHeaderView.swift */; };
+		591D2AEB1D1780A600930A7A /* wantsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D2AEA1D1780A600930A7A /* wantsListTableViewCell.swift */; };
 		59212E421C7361DE00CE845B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59212E401C7361DE00CE845B /* Fabric.framework */; };
 		59212E431C7361DE00CE845B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59212E411C7361DE00CE845B /* Crashlytics.framework */; };
 		59212E451C74133D00CE845B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59212E441C74133D00CE845B /* GoogleService-Info.plist */; };
@@ -119,6 +122,9 @@
 		590554351CB9F836009E6EE2 /* bgm_gameclear_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm_gameclear_2.mp3; path = ../../../Downloads/bgm_gameclear_2.mp3; sourceTree = "<group>"; };
 		590F367D1C5B3B610083537F /* ColorFromRGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromRGB.swift; sourceTree = "<group>"; };
 		591A6FA01C4FBC4500416A22 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
+		591D2AE61D16C99B00930A7A /* wantsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantsListViewController.swift; sourceTree = "<group>"; };
+		591D2AE81D16CED900930A7A /* wantsListTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantsListTableHeaderView.swift; sourceTree = "<group>"; };
+		591D2AEA1D1780A600930A7A /* wantsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantsListTableViewCell.swift; sourceTree = "<group>"; };
 		59212E401C7361DE00CE845B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		59212E411C7361DE00CE845B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		59212E441C74133D00CE845B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -255,6 +261,16 @@
 			name = timer;
 			sourceTree = "<group>";
 		};
+		591D2AE51D16C96C00930A7A /* wantsList */ = {
+			isa = PBXGroup;
+			children = (
+				591D2AE61D16C99B00930A7A /* wantsListViewController.swift */,
+				591D2AE81D16CED900930A7A /* wantsListTableHeaderView.swift */,
+				591D2AEA1D1780A600930A7A /* wantsListTableViewCell.swift */,
+			);
+			name = wantsList;
+			sourceTree = "<group>";
+		};
 		592302C51C46854E00558322 /* calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				593CF4AD1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 */,
+				591D2AE51D16C96C00930A7A /* wantsList */,
 				592D2B101CA000740030AFD3 /* Album */,
 				593E99971C66312E005465D6 /* setting */,
 				59A04D4F1C8AA98300C75001 /* noteDetail */,
@@ -788,6 +805,8 @@
 				593E999D1C671C5D005465D6 /* SettingOtherTableViewCell.swift in Sources */,
 				59D7EACD1CAA4E2F001DE841 /* albumNavigationViewController.swift in Sources */,
 				590554341CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift in Sources */,
+				591D2AE91D16CED900930A7A /* wantsListTableHeaderView.swift in Sources */,
+				591D2AE71D16C99B00930A7A /* wantsListViewController.swift in Sources */,
 				592D2B5C1CA1136C0030AFD3 /* allAlbum.swift in Sources */,
 				592302D31C4733DC00558322 /* CalendarViewController.swift in Sources */,
 				594A5F871C301E6C002CB673 /* timeLineViewController.swift in Sources */,
@@ -799,6 +818,7 @@
 				594A5F931C360E79002CB673 /* CalendarViewNavigationController.swift in Sources */,
 				594A5F791C2D483D002CB673 /* Databese.swift in Sources */,
 				594A5F3C1C2B98B0002CB673 /* TextViewController.swift in Sources */,
+				591D2AEB1D1780A600930A7A /* wantsListTableViewCell.swift in Sources */,
 				593CF4A81CBBD4A800B6F4E1 /* AddReminderSwitchTableViewCell.swift in Sources */,
 				59F610F71C47761900BBD25A /* DayView.swift in Sources */,
 				592D2B0F1CA000620030AFD3 /* AlbumViewController.swift in Sources */,
