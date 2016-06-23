@@ -39,6 +39,52 @@ class Photos:Object{
     
 }
 
+class WantItem: Object {
+    dynamic var id = 0
+    dynamic var createDate:NSDate?
+    dynamic var editDate:NSDate?
+    dynamic var listNumber = 0
+    dynamic var wantName = ""
+    //達成したかどうか？
+    dynamic var done = false
+    //達成日
+    dynamic var doneDate:NSDate?
+    //達成メモ
+    dynamic var doneMemo = ""
+    
+    //将来実装する用
+    //達成してないwantsにつけられるメモ機能
+    dynamic var wantsMemo = ""
+    //期限
+    dynamic var timeLimit:NSDate?
+    
+    override class func primaryKey() -> String{
+        return "id"
+    }
+    
+    let wantsDonePhotos = List<wantsDonePhoto>()
+}
+
+class wantsDonePhoto:Object{
+    dynamic var id = 0
+    dynamic var createdate:NSDate?
+    dynamic var editDate:NSDate?
+    dynamic var fileName = ""
+    
+    override class func primaryKey() -> String{
+        
+        return "id"
+        
+    }
+    
+    var wantItem:[WantItem]{
+        
+        return linkingObjects(WantItem.self,forProperty:"wantsDonePhotos")
+    }
+    
+    
+}
+
 
 class Reminder:Object{
     dynamic var id = 0

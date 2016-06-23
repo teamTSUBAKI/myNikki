@@ -71,6 +71,9 @@
 		59B7BF681C19B48D008878B2 /* ________UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF671C19B48D008878B2 /* ________UITests.swift */; };
 		59B7BF781C19B5C1008878B2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF771C19B5C1008878B2 /* TabBarController.swift */; };
 		59B7BF7A1C1AFAC2008878B2 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B7BF791C1AFAC2008878B2 /* CameraViewController.swift */; };
+		59D3F35A1D1AD1EB0051786D /* emptyHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59D3F3591D1AD1EB0051786D /* emptyHeaderView.xib */; };
+		59D3F35C1D1AD2040051786D /* emptyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3F35B1D1AD2040051786D /* emptyHeaderView.swift */; };
+		59D3F35E1D1BB7570051786D /* wantItemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3F35D1D1BB7570051786D /* wantItemAddViewController.swift */; };
 		59D7EACB1CA90ACB001DE841 /* AlbumCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7EACA1CA90ACB001DE841 /* AlbumCollectionReusableView.swift */; };
 		59D7EACD1CAA4E2F001DE841 /* albumNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D7EACC1CAA4E2F001DE841 /* albumNavigationViewController.swift */; };
 		59E44BD61C2110D7005AF7F3 /* PhotosAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E44BD51C2110D7005AF7F3 /* PhotosAlbumViewController.swift */; };
@@ -181,6 +184,9 @@
 		59B7BF691C19B48D008878B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59B7BF771C19B5C1008878B2 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		59B7BF791C1AFAC2008878B2 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		59D3F3591D1AD1EB0051786D /* emptyHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = emptyHeaderView.xib; sourceTree = "<group>"; };
+		59D3F35B1D1AD2040051786D /* emptyHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = emptyHeaderView.swift; sourceTree = "<group>"; };
+		59D3F35D1D1BB7570051786D /* wantItemAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantItemAddViewController.swift; sourceTree = "<group>"; };
 		59D7EACA1CA90ACB001DE841 /* AlbumCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumCollectionReusableView.swift; sourceTree = "<group>"; };
 		59D7EACC1CAA4E2F001DE841 /* albumNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = albumNavigationViewController.swift; sourceTree = "<group>"; };
 		59E44BD51C2110D7005AF7F3 /* PhotosAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosAlbumViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +273,9 @@
 				591D2AE61D16C99B00930A7A /* wantsListViewController.swift */,
 				591D2AE81D16CED900930A7A /* wantsListTableHeaderView.swift */,
 				591D2AEA1D1780A600930A7A /* wantsListTableViewCell.swift */,
+				59D3F3591D1AD1EB0051786D /* emptyHeaderView.xib */,
+				59D3F35B1D1AD2040051786D /* emptyHeaderView.swift */,
+				59D3F35D1D1BB7570051786D /* wantItemAddViewController.swift */,
 			);
 			name = wantsList;
 			sourceTree = "<group>";
@@ -606,6 +615,7 @@
 				59B7BF4F1C19B48C008878B2 /* Assets.xcassets in Resources */,
 				590554361CB9F836009E6EE2 /* bgm_gameclear_2.mp3 in Resources */,
 				59B7BF4D1C19B48C008878B2 /* Main.storyboard in Resources */,
+				59D3F35A1D1AD1EB0051786D /* emptyHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +793,7 @@
 				593CF4AA1CBBD4C500B6F4E1 /* datePickerTableViewCell.swift in Sources */,
 				594A5F971C365AF1002CB673 /* NoteDetailViewController.swift in Sources */,
 				59B7BF781C19B5C1008878B2 /* TabBarController.swift in Sources */,
+				59D3F35E1D1BB7570051786D /* wantItemAddViewController.swift in Sources */,
 				59B7BF481C19B48C008878B2 /* AppDelegate.swift in Sources */,
 				59B7BF7A1C1AFAC2008878B2 /* CameraViewController.swift in Sources */,
 				59A04D531C8AABAD00C75001 /* shareTableViewCell.swift in Sources */,
@@ -806,6 +817,7 @@
 				59D7EACD1CAA4E2F001DE841 /* albumNavigationViewController.swift in Sources */,
 				590554341CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift in Sources */,
 				591D2AE91D16CED900930A7A /* wantsListTableHeaderView.swift in Sources */,
+				59D3F35C1D1AD2040051786D /* emptyHeaderView.swift in Sources */,
 				591D2AE71D16C99B00930A7A /* wantsListViewController.swift in Sources */,
 				592D2B5C1CA1136C0030AFD3 /* allAlbum.swift in Sources */,
 				592302D31C4733DC00558322 /* CalendarViewController.swift in Sources */,

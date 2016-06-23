@@ -104,28 +104,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
      
-        
-        //realmのマイグレーション
-        let config = Realm.Configuration(
-        
-            schemaVersion:1,
-            
-            migrationBlock:{migration,oldShemaVersion in
-            
-            
-                if (oldShemaVersion < 1){
-                    //何もする必要なし
-                    
-                    
-                }
-            
-            })
-        
-        //デフォルトRealmに新しい設定を適用
-        Realm.Configuration.defaultConfiguration = config
-    
-    
-    
+     
+        //レルムのデータファイルを削除。要注意。
+        if let p = Realm.Configuration.defaultConfiguration.path{
+            try?NSFileManager.defaultManager().removeItemAtPath(p)
+        }
     
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
