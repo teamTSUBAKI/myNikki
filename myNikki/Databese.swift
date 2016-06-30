@@ -47,8 +47,10 @@ class WantItem: Object {
     dynamic var wantName = ""
     //達成したかどうか？
     dynamic var done = false
+    //継続中かどうか
+    dynamic var continues = false
     //達成日
-    dynamic var doneDate:NSDate?
+    dynamic var doneDate = ""
     //達成メモ
     dynamic var doneMemo = ""
     

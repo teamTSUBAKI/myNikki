@@ -134,7 +134,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         }
         
         //realmをデータベースごと消したいときに使う
-       /*if let path = Realm.Configuration.defaultConfiguration.path{
+        /* if let path = Realm.Configuration.defaultConfiguration.path{
             try?NSFileManager.defaultManager().removeItemAtPath(path)
             
         }*/

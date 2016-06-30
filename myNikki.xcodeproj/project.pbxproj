@@ -54,6 +54,8 @@
 		594A5F971C365AF1002CB673 /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */; };
 		595E86CA1C5511A70048BEF5 /* SEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E86C91C5511A70048BEF5 /* SEManager.swift */; };
 		595E86D21C55B3D10048BEF5 /* pastel color1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */; };
+		597F1EC41D1C180A00C4DAA4 /* editItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */; };
+		597F1EC61D1D1EB500C4DAA4 /* completeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */; };
 		59A04D421C82D16000C75001 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D411C82D16000C75001 /* SystemConfiguration.framework */; };
 		59A04D441C82D17200C75001 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D431C82D17200C75001 /* StoreKit.framework */; };
 		59A04D461C82D18000C75001 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D451C82D18000C75001 /* Security.framework */; };
@@ -161,6 +163,8 @@
 		594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		595E86C91C5511A70048BEF5 /* SEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SEManager.swift; sourceTree = "<group>"; };
 		595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pastel color1.mp3"; sourceTree = "<group>"; };
+		597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editItemViewController.swift; sourceTree = "<group>"; };
+		597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = completeViewController.swift; sourceTree = "<group>"; };
 		59A04D411C82D16000C75001 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		59A04D431C82D17200C75001 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		59A04D451C82D18000C75001 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -276,6 +280,8 @@
 				59D3F3591D1AD1EB0051786D /* emptyHeaderView.xib */,
 				59D3F35B1D1AD2040051786D /* emptyHeaderView.swift */,
 				59D3F35D1D1BB7570051786D /* wantItemAddViewController.swift */,
+				597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */,
+				597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */,
 			);
 			name = wantsList;
 			sourceTree = "<group>";
@@ -802,6 +808,7 @@
 				59A04D511C8AA9CF00C75001 /* shareViewController.swift in Sources */,
 				592D2B1A1CA0E7660030AFD3 /* AlbumCollectionViewCell.swift in Sources */,
 				59F23BF71C3E466800E78103 /* PhotoDetailViewController.swift in Sources */,
+				597F1EC61D1D1EB500C4DAA4 /* completeViewController.swift in Sources */,
 				593E999B1C66348D005465D6 /* SettingTableViewCell.swift in Sources */,
 				59D7EACB1CA90ACB001DE841 /* AlbumCollectionReusableView.swift in Sources */,
 				593CF4AC1CBBD6DF00B6F4E1 /* startButtonTableViewCell.swift in Sources */,
@@ -818,6 +825,7 @@
 				590554341CB8FD13009E6EE2 /* ReminderDatePickerViewController.swift in Sources */,
 				591D2AE91D16CED900930A7A /* wantsListTableHeaderView.swift in Sources */,
 				59D3F35C1D1AD2040051786D /* emptyHeaderView.swift in Sources */,
+				597F1EC41D1C180A00C4DAA4 /* editItemViewController.swift in Sources */,
 				591D2AE71D16C99B00930A7A /* wantsListViewController.swift in Sources */,
 				592D2B5C1CA1136C0030AFD3 /* allAlbum.swift in Sources */,
 				592302D31C4733DC00558322 /* CalendarViewController.swift in Sources */,

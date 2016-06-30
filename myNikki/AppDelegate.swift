@@ -106,9 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      
      
         //レルムのデータファイルを削除。要注意。
-        if let p = Realm.Configuration.defaultConfiguration.path{
+       /* if let p = Realm.Configuration.defaultConfiguration.path{
             try?NSFileManager.defaultManager().removeItemAtPath(p)
-        }
+        }*/
     
         let userDefaults = NSUserDefaults.standardUserDefaults()
         

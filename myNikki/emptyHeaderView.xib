@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="483" height="338"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sky-1018270_1920" translatesAutoresizingMaskIntoConstraints="NO" id="cHG-y5-sA2">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="street-238458_1920" translatesAutoresizingMaskIntoConstraints="NO" id="cHG-y5-sA2">
                     <rect key="frame" x="0.0" y="0.0" width="483" height="200"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="200" id="VcB-cm-4l1"/>
@@ -149,6 +149,6 @@
         </view>
     </objects>
     <resources>
-        <image name="sky-1018270_1920" width="960" height="719"/>
+        <image name="street-238458_1920" width="960" height="640"/>
     </resources>
 </document>

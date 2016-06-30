@@ -9,19 +9,40 @@
 import UIKit
 import RealmSwift
 
-class wantItemAddViewController: UIViewController,UITextFieldDelegate {
+class wantItemAddViewController: UIViewController,UITextViewDelegate{
 
-    @IBOutlet weak var textField: UITextField!
+    
+    @IBOutlet weak var textView: UITextView!
+    
+    var delegate:addWantDelegate!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textField.becomeFirstResponder()
-        textField.delegate = self
+        let toolBar = UIToolbar(frame: CGRectMake(0,0,self.view.bounds.width,44))
+        toolBar.barStyle = .Default
+        
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace,target: self,action: nil)
+        let doneBarButton = UIBarButtonItem(title:"OK!",style: .Plain,target:self,action:"doneButtonTaped")
+      
+        
+        toolBar.items = [space,doneBarButton]
+        
+        textView.inputAccessoryView = toolBar
+        
+        textView.becomeFirstResponder()
+        textView.delegate = self
 
         // Do any additional setup after loading the view.
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func doneButtonTaped(){
+    
+        self.view.endEditing(true)
+        addRealm()
+    }
+    
+    func addRealm(){
         
         let realm = try!Realm()
         let wantItems = realm.objects(WantItem).sorted("id", ascending: false)
@@ -40,7 +61,7 @@ class wantItemAddViewController: UIViewController,UITextFieldDelegate {
         
         addItem.createDate = NSDate()
         addItem.done = false
-        addItem.wantName = textField.text!
+        addItem.wantName = textView.text!
         
         try!realm.write({
             
@@ -48,12 +69,21 @@ class wantItemAddViewController: UIViewController,UITextFieldDelegate {
             
         })
         
+        self.delegate.addRandomNumber()
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        self.dismissViewControllerAnimated(true, completion: {
+        
 
-        return true
+        
+        
+        })
+
         
     }
+    
+    
+    
     
     
 
