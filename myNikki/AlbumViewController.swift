@@ -27,7 +27,8 @@ class AlbumViewController: UIViewController,toNoteDetailDelegate {
         MonthAlbum.nextMonthAlbum.delegate = self
         MonthAlbum.prevMonthAlbum.delegate = self
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
+        self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: "savePhoto", object: nil)
         

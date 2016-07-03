@@ -56,6 +56,7 @@
 		595E86D21C55B3D10048BEF5 /* pastel color1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */; };
 		597F1EC41D1C180A00C4DAA4 /* editItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */; };
 		597F1EC61D1D1EB500C4DAA4 /* completeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */; };
+		597F1ECA1D269E2000C4DAA4 /* wantsListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC91D269E2000C4DAA4 /* wantsListSettingViewController.swift */; };
 		59A04D421C82D16000C75001 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D411C82D16000C75001 /* SystemConfiguration.framework */; };
 		59A04D441C82D17200C75001 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D431C82D17200C75001 /* StoreKit.framework */; };
 		59A04D461C82D18000C75001 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D451C82D18000C75001 /* Security.framework */; };
@@ -165,6 +166,7 @@
 		595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pastel color1.mp3"; sourceTree = "<group>"; };
 		597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editItemViewController.swift; sourceTree = "<group>"; };
 		597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = completeViewController.swift; sourceTree = "<group>"; };
+		597F1EC91D269E2000C4DAA4 /* wantsListSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantsListSettingViewController.swift; sourceTree = "<group>"; };
 		59A04D411C82D16000C75001 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		59A04D431C82D17200C75001 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		59A04D451C82D18000C75001 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -282,6 +284,7 @@
 				59D3F35D1D1BB7570051786D /* wantItemAddViewController.swift */,
 				597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */,
 				597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */,
+				597F1EC91D269E2000C4DAA4 /* wantsListSettingViewController.swift */,
 			);
 			name = wantsList;
 			sourceTree = "<group>";
@@ -816,6 +819,7 @@
 				593E99A81C69905D005465D6 /* WalkTroughViewController.swift in Sources */,
 				59F610F51C47751900BBD25A /* MonthView.swift in Sources */,
 				594A5F8B1C301EA1002CB673 /* timeLineTableViewCell.swift in Sources */,
+				597F1ECA1D269E2000C4DAA4 /* wantsListSettingViewController.swift in Sources */,
 				593CF4A61CBBD04400B6F4E1 /* AddReminderViewController.swift in Sources */,
 				594A5F7F1C2E3A7D002CB673 /* NotoPhoto.swift in Sources */,
 				591A6FA11C4FBC4500416A22 /* TimerViewController.swift in Sources */,

@@ -14,7 +14,10 @@ class wantItemAddViewController: UIViewController,UITextViewDelegate{
     
     @IBOutlet weak var textView: UITextView!
     
-    var delegate:addWantDelegate!
+    
+    @IBOutlet weak var placeHolderLabel: UILabel!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +42,23 @@ class wantItemAddViewController: UIViewController,UITextViewDelegate{
     func doneButtonTaped(){
     
         self.view.endEditing(true)
-        addRealm()
+        
+        if textView.text != ""{
+        
+            addRealm()
+        }else{
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func addRealm(){
         
         let realm = try!Realm()
+        
+        //現在デフォルト状態のリストを取得。
+        let wantItemLists = realm.objects(WantItemList).filter("defaultList = true").first
+        
         let wantItems = realm.objects(WantItem).sorted("id", ascending: false)
         
         let addItem = WantItem()
@@ -65,12 +79,12 @@ class wantItemAddViewController: UIViewController,UITextViewDelegate{
         
         try!realm.write({
             
-            realm.add(addItem, update: true)
+            wantItemLists!.wantItems.append(addItem)
             
         })
         
-        self.delegate.addRandomNumber()
         
+       
         
         self.dismissViewControllerAnimated(true, completion: {
         
@@ -82,6 +96,24 @@ class wantItemAddViewController: UIViewController,UITextViewDelegate{
         
     }
     
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        placeHolderLabel.hidden = true
+        
+        return true
+        
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        
+        if textView.text == ""{
+        
+            placeHolderLabel.hidden = false
+        
+        }
+        
+    }
     
     
     

@@ -57,6 +57,8 @@ class wantsListTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         //高さを動的に変えるときの横幅
+      
+        
         self.wantItemNameLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.wantItemNameLabel.bounds)
         self.doneMemoLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.doneMemoLabel.bounds)
     }
@@ -83,7 +85,7 @@ class wantsListTableViewCell: UITableViewCell {
             
             let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
             print("高い\(size.height)")
-            return size.height
+            return size.height + 10
         }
         
         return 0

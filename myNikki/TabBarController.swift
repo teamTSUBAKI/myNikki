@@ -69,7 +69,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
         // ボタン生成
         centerButton = UIButton()
         centerButton!.frame = CGRectMake(0, 0, 60,40)
-        centerButton?.backgroundColor = UIColor(red: 0, green: 0.7098, blue: 0.8667, alpha: 1.0)
+        centerButton?.backgroundColor = colorFromRGB.colorWithHexString("0fb5c4")
         centerButton?.layer.cornerRadius = 5
         centerButton?.layer.masksToBounds = true
         centerButton!.tag = 1

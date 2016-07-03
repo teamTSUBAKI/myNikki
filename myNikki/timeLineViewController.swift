@@ -65,6 +65,8 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+        
         
         
         let dic = ["downloadRealmFile":false]
@@ -104,8 +106,10 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
-        self.navigationController?.navigationBar.tintColor = UIColor.grayColor()
+        self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         
         
@@ -133,24 +137,11 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         }
         
-        //realmをデータベースごと消したいときに使う
-        /* if let path = Realm.Configuration.defaultConfiguration.path{
-            try?NSFileManager.defaultManager().removeItemAtPath(path)
-            
-        }*/
+        //realmデータファイルごと消したいとき
+        //取り扱い注意。必ずコメントアウトする
+     //  dataReset()
         
-        //最後のデータを消したいときに使う
-        /*let realm = try!Realm()
-        let note = realm.objects(Note).sorted("id", ascending: false)
-        
-        try!realm.write({ () -> Void in
-            
-            realm.delete(note[0])
-            
-        })*/
-        
-        //Documentのデータを全部消す
-      // try?NSFileManager.defaultManager().removeItemAtPath(path!)
+
         
          self.setupYearandMonth()
         
@@ -165,6 +156,33 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             })
         
          NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: "savePhoto", object: nil)
+    }
+    
+    
+    
+    func dataReset(){
+        
+        //realmをデータベースごと消したいときに使う
+         if let path = Realm.Configuration.defaultConfiguration.path{
+         try?NSFileManager.defaultManager().removeItemAtPath(path)
+         
+         }
+        
+        //Documentのデータを全部消す
+       // try?NSFileManager.defaultManager().removeItemAtPath(path!)
+        
+        //最後のデータを消したいときに使う
+        /*let realm = try!Realm()
+         let note = realm.objects(Note).sorted("id", ascending: false)
+         
+         try!realm.write({ () -> Void in
+         
+         realm.delete(note[0])
+         
+         })*/
+        
+
+        
     }
     
     func reload(){

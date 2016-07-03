@@ -436,8 +436,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             }
             
             self.navigationItem.title = "\(comps.year)/\(comps.month)/\(comps.day)"
-            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
-            self.navigationController?.navigationBar.tintColor = UIColor.grayColor()
+            self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
+            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
             //PDFメール用に日付データを入れる
             appDelegate?.dateForPDF = self.navigationItem.title
@@ -586,8 +587,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             self.navigationItem.title = "\(comps.year)/\(comps.month)/\(comps.day)"
             //ナヴィゲーションのtitleの色を変更
-            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
-            self.navigationController?.navigationBar.tintColor = UIColor.grayColor()
+            self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
+            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
             
             //PDFメール用に日付データを入れる
             appDelegate?.dateForPDF = self.navigationItem.title

@@ -39,6 +39,28 @@ class Photos:Object{
     
 }
 
+
+
+class WantItemList: Object {
+    
+    dynamic var id = 0
+    dynamic var createDate:NSDate?
+    dynamic var editDate:NSDate?
+    dynamic var listNumber = 0
+    dynamic var listName = ""
+    //デフォルトかどうか
+    dynamic var defaultList = false
+    //リストの色
+    dynamic var listColor = ""
+    
+    
+    override class func primaryKey() -> String{
+        return "id"
+    }
+    
+    let wantItems = List<WantItem>()
+}
+
 class WantItem: Object {
     dynamic var id = 0
     dynamic var createDate:NSDate?
@@ -62,6 +84,10 @@ class WantItem: Object {
     
     override class func primaryKey() -> String{
         return "id"
+    }
+    
+    var wantItemList:[WantItemList]{
+        return linkingObjects(WantItemList.self, forProperty: "wantItems")
     }
     
     let wantsDonePhotos = List<wantsDonePhoto>()

@@ -31,8 +31,8 @@ class CalendarViewController: UIViewController,modalViewDelegate{
         calendarView.nextMonthView.delegate = self
         calendarView.prevMonthView.delegate = self
         
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.grayColor()]
+        self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.viewContainer.addSubview(calendarView)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: "savePhoto", object: nil)

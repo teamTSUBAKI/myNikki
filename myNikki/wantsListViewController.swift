@@ -10,33 +10,39 @@ import UIKit
 import RealmSwift
 
 
-protocol addWantDelegate{
-    
-    func addRandomNumber()
-    
-}
 
 
-class wantsListViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,addWantDelegate{
+class wantsListViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,UITextFieldDelegate{
+    
 
     @IBOutlet weak var tableView: UITableView!
-    private let tableHeaderViewHeight:CGFloat = 300.0
+    private let tableHeaderViewHeight:CGFloat = 120.0
     
     let screenHeight = Double(UIScreen.mainScreen().bounds.size.height)
     
    
     @IBOutlet weak var headerView: UIView!
-    var emptyHeader:UIView!
+    
   
     var addButton:UIButton!
     
     var wantThings:Results<WantItem>?
+    var wantList:Results<WantItemList>?
+    
+    var doneThings:Results<WantItem>?
 
     var wantThingsRandom:Results<WantItem>?
 
     
-    //シャッフルした後の配列
-    var randomNumbers:[Int] = [Int]()
+    
+    @IBOutlet weak var wantsNumberLabel: UILabel!
+    @IBOutlet weak var graphViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var DoneNumberLabel: UILabel!
+    @IBOutlet weak var notDoneNumberLabel: UILabel!
+    
+    @IBOutlet weak var graphBaseView: UIView!
+    @IBOutlet weak var graphView: UIView!
+ 
     
     var emptyLabel:UILabel!
     
@@ -46,18 +52,37 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        tableView.separatorStyle = .None
+        
+        
+        //グラフの色
+        graphView.backgroundColor = colorFromRGB.colorWithHexString("ffd700")
         
         let realm = try!Realm()
-        wantThings = realm.objects(WantItem)
         
-        //ランダムな数字の配列を生成
-        //やりたいことがあるならば
-        if wantThings?.count != 0{
+        wantList = realm.objects(WantItemList).filter("defaultList = true")
         
-            randomNumber()
-        
+        if wantList?.count == 0{
+            
+            let wantsList = WantItemList()
+            wantsList.id = 1
+            wantsList.listName = "人生でやりたいことリスト"
+            wantsList.createDate = NSDate()
+            wantsList.editDate = NSDate()
+            wantsList.defaultList = true
+            
+            try!realm.write({ 
+                
+                realm.add(wantsList)
+            })
+            
         }
+        
+        wantThings = realm.objects(WantItem).sorted("id", ascending: true)
+        
+        doneThings = wantThings?.filter("done = true")
+        
+        showWantsItemNumber()
         
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         
@@ -67,24 +92,9 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
             
         }
 
-        
-        //ヘッダービューを追加
-        headerView = tableView.tableHeaderView
-        tableView.tableHeaderView = nil
-        tableView.addSubview(headerView)
-        
         let View = UIView(frame:CGRectZero)
         View.backgroundColor = UIColor.clearColor()
         tableView.tableFooterView = View
-        
-        
-        
-        //データがないとき用のヘッダービューと同じものを生成
-        emptyHeader = NSBundle.mainBundle().loadNibNamed("emptyHeaderView", owner: self, options: nil)[0] as! UIView
-        emptyHeader.frame = CGRectMake(0, 0, self.view.bounds.width, 300)
-        
-        self.view.addSubview(emptyHeader)
-        
         
         emptyLabel = UILabel()
         emptyLabel.text = "やりたいコトをリストにしましょう！"
@@ -121,7 +131,7 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
                addButton.frame = CGRectMake(300, 550, 44, 44)
         }
      
-        addButton.backgroundColor = UIColor.orangeColor()
+        addButton.backgroundColor = colorFromRGB.colorWithHexString("0fb5c4")
         addButton.layer.masksToBounds = true
         addButton.layer.cornerRadius = 20
         addButton.alpha = 0.8
@@ -131,24 +141,58 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
         self.view.addSubview(addButton)
         
-        //ナビゲーションを透明にしたい
-        self.automaticallyAdjustsScrollViewInsets = false
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        
+        }
+    
+    
+    func showWantsItemNumber(){
+    
  
-        self.navigationController?.navigationBar.barTintColor = UIColor.clearColor()
-
         
+        if wantThings?.count != 0{
         
+            wantsNumberLabel.text = "\((wantThings?.count)!)"
+            DoneNumberLabel.text = "\((doneThings?.count)!)"
+            notDoneNumberLabel.text = "\((wantThings?.count)! - (doneThings?.count)!)"
         
-        print("ナツメグやろう")
-        tableView.contentInset = UIEdgeInsets(top: tableHeaderViewHeight, left: 0, bottom: 0, right: 0)
-        tableView.contentOffset = CGPointMake(0, -tableHeaderViewHeight)
+        }else{
+            
+            wantsNumberLabel.text = "0"
+            DoneNumberLabel.text = "0"
+            notDoneNumberLabel.text = "0"
+            
+        }
         
-        //上にスクロールした時にヘッダーのサイズを大きくして画像を拡大する。
-        updateHeaderView()
+    }
+    
+    func showGraph(){
+    
+        
+        if wantThings?.count != 0{
+       
+            print("できたこと\((doneThings?.count)!)")
+            print("やりたいこと\((wantThings?.count)!)")
+            
+            let donePercent:Double = Double((doneThings?.count)!) / Double((wantThings?.count)!)
+            print("パーセント\(donePercent)")
+            
+            let graphBaseLength = graphBaseView.bounds.size.width
+              print("ベースの幅\(graphBaseLength)")
+            let graphLengh = graphBaseLength * CGFloat(donePercent)
+            
+            graphViewWidth.constant = graphLengh
+            
+            print("レングス\(graphLengh)")
+            
+            print("呼ば")
+        
+        }else{
+            
+            graphViewWidth.constant = 0
+        }
         
     }
     
@@ -158,7 +202,6 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
         let wantItemAddControllers:wantItemAddViewController = self.storyboard?.instantiateViewControllerWithIdentifier("wantItemAdd") as! wantItemAddViewController
         
-        wantItemAddControllers.delegate = self
         
         self.presentViewController(wantItemAddControllers, animated: false, completion: nil)
        
@@ -168,6 +211,18 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        showWantsItemNumber()
+        showGraph()
+        
+        if wantList?.count == 0{
+            
+            self.navigationItem.title = "人生でやりたいことリスト"
+            
+        }else{
+            
+            self.navigationItem.title = wantList![0].listName
+            
+        }
     
     }
     
@@ -180,50 +235,19 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
     }
     
-    func randomNumber(){
-        
-        print("やぁ")
-    
-        //重複しないランダムな数字を入れた配列を作る。
-        //まずは順番の配列。
-        
-        //シャッフルする前の配列
-        var beforeSuffule:[Int] = [Int]()
-        
-        for ind in 0...(wantThings?.count)!-1{
-            
-            beforeSuffule.append(ind)
-            
-            
-        }
-        
-        //シャッフルする
-        
-        randomNumbers = [Int]()
-        for _ in 0...(wantThings?.count)!-1{
-            
-            
-            let num = beforeSuffule.removeAtIndex(Int(arc4random()) % beforeSuffule.count)
-            
-            
-            
-            randomNumbers.append(num)
-            print("ランダムな配列\(randomNumbers)")
-        }
-    }
     
     func WantsDataIsEmpty(){
     
         //やりたいことが未登録ならば
         if wantThings?.count == 0{
             
-            emptyHeader.hidden = false
+            
             emptyLabel.hidden = false
             tableView.hidden = true
             
         }else{
             
-            emptyHeader.hidden = true
+            
             emptyLabel.hidden = true
             tableView.hidden = false
             
@@ -277,44 +301,37 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         cell.wantsNumber.text = "\(indexPath.row + 1)"
         cell.wantsNumber.sizeToFit()
         
-        
-        
-        //ランダムな値でデータを取り出したい
-        
-        if randomNumbers.count == 0{
-            randomNumber()
-        }
-        
-        print("ランダムず\(randomNumbers)")
-        let num = randomNumbers[indexPath.row]
+        cell.doneMemoLabel.textColor = colorFromRGB.colorWithHexString("6495ed")
         
         //達成済みなら線を引きたい。
-        if wantThings![num].done{
+        if wantThings![indexPath.row].done{
             
-            let text = NSAttributedString(string: wantThings![num].wantName,attributes: [NSStrikethroughStyleAttributeName:NSUnderlineStyle.StyleSingle.rawValue,NSStrikethroughColorAttributeName:UIColor.redColor()])
+            let text = NSAttributedString(string: wantThings![indexPath.row].wantName,attributes: [NSStrikethroughStyleAttributeName:NSUnderlineStyle.StyleSingle.rawValue,NSStrikethroughColorAttributeName:UIColor.blackColor()])
             
             cell.wantItemNameLabel.attributedText = text
             
             
         }else{
         
-            cell.wantItemNameLabel.text = wantThings![num].wantName
+            cell.wantItemNameLabel.text = wantThings![indexPath.row].wantName
             
         }
         
+        cell.wantItemNameLabel.sizeToFit()
+        
         cell.doneMemoLabel.numberOfLines = 0
-        cell.doneMemoLabel.text = wantThings![num].doneMemo
+        cell.doneMemoLabel.text = wantThings![indexPath.row].doneMemo
         
         
         
-        if wantThings![num].wantsDonePhotos.count == 0{
+        if wantThings![indexPath.row].wantsDonePhotos.count == 0{
             
             print("写真なし")
             cell.donePhotoheight.constant = 0
         
         }else{
             
-            let filename = wantThings![num].wantsDonePhotos[0].fileName
+            let filename = wantThings![indexPath.row].wantsDonePhotos[0].fileName
             let filePath = (path as NSString).stringByAppendingPathComponent(filename)
             
             let doneImages:UIImage = UIImage(contentsOfFile:filePath)!
@@ -338,9 +355,9 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
 
         let completesViewController:completeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("comp") as! completeViewController
         
-        let num = randomNumbers[indexPath.row]
         
-        completesViewController.wantItemId = self.wantThings![num].id
+        
+        completesViewController.wantItemId = self.wantThings![indexPath.row].id
         
         
         presentViewController(completesViewController, animated: true, completion: nil)
@@ -353,8 +370,8 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
             let editViewController:editItemViewController = self.storyboard?.instantiateViewControllerWithIdentifier("editItem") as! editItemViewController
             
-            let cell = tableView.cellForRowAtIndexPath(index)
-            editViewController.editItemCatch = cell?.textLabel?.text
+            let cell = tableView.cellForRowAtIndexPath(index) as! wantsListTableViewCell
+            editViewController.editItemCatch = cell.wantItemNameLabel.text
             editViewController.editItemIdCatch = self.wantThings![indexPath.row].id
             self.presentViewController(editViewController, animated: false, completion: nil)
             
@@ -369,65 +386,46 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
             let realm = try!Realm()
             
-            let num = self.randomNumbers[indexPath.row]
+            let deleteItem = self.wantThings![indexPath.row]
             
-            let deleteItem = self.wantThings![num]
+            //写真があるデータならば
+            if deleteItem.wantsDonePhotos.count != 0{
+                
+                let deletePhotoName = deleteItem.wantsDonePhotos[0].fileName
+                let deletePhotoPath = (self.path as NSString).stringByAppendingPathComponent(deletePhotoName)
+                
+                do{
+                    
+                    try NSFileManager.defaultManager().removeItemAtPath(deletePhotoPath)
+                    
+                }catch{
+                    print("エラー")
+                }
+                
+            }
+
             
             try!realm.write({ 
                 
                 realm.delete(deleteItem)
                 
             })
-    
-            //ランダムな数字の配列の最大値を取り出す
-            let numMax = self.randomNumbers.maxElement()
             
-            //最大値のインデックスを調べる
-            let numMaxIndex = self.randomNumbers.indexOf(numMax!)
-            
-            self.randomNumbers.removeAtIndex(numMaxIndex!)
             
             
             tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow:indexPath.row,inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-            
+    
+            //削除のアニメーションを残しつつ、reloadしてリストを更新する。
             let dispatchTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,Int64(0.1 * Double(NSEC_PER_SEC)))
+            
             dispatch_after(dispatchTime, dispatch_get_main_queue(), {
             
                 
                 tableView.reloadData()
-            
+                self.showWantsItemNumber()
             
             })
     
-
-            
-            
-            
-        
-            
-            /*
-            UIView.animateWithDuration(0.5, animations: {
-                //ランダムな数字の配列の最大値を取り出す
-                let numMax = self.randomNumbers.maxElement()
-                
-                //最大値のインデックスを調べる
-                let numMaxIndex = self.randomNumbers.indexOf(numMax!)
-                
-                self.randomNumbers.removeAtIndex(numMaxIndex!)
-                
-                tableView.beginUpdates()
-                tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow:indexPath.row,inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-                tableView.endUpdates()
-                
-                
-                }, completion: { _ in
-                    tableView.reloadData()
-            })*/
-            
-            
-          
-          
-        
             tableView.editing = false
         
         }
@@ -439,37 +437,39 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
     }
     
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-       updateHeaderView()
-        
-    }
+
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        let num = randomNumbers[indexPath.row]
-        
-        let data = wantThings![num]
+        let data = wantThings![indexPath.row]
   
         return wantsListTableViewCell.heightForRow(tableView,data:data)
         
     }
     
     
-    func addRandomNumber(){
+
+    @IBAction func settingButtonTaped(sender: AnyObject) {
+        
+        let wantListsettingViewController:wantsListSettingViewController = self.storyboard?.instantiateViewControllerWithIdentifier("wantListSetting") as! wantsListSettingViewController
+        
+        let navigation = UINavigationController()
+        navigation.viewControllers = [wantListsettingViewController]
         
         let realm = try!Realm()
-        let wants = realm.objects(WantItem)
-        print("呼ばれない？")
+        let wantLists = realm.objects(WantItemList).filter("defaultList = true")
         
-        //一個目のやりたいことの時は、tableのcellForRowIndexPathでランダムナンバー配列を用意するので、こっちはいらない。
-        if wants.count != 1{
+        let wantListIds = wantLists[0].id
         
-            print("数")
-            randomNumbers.append(wants.count-1)
-        }
+        wantListsettingViewController.wantListId = wantListIds
+        
+        self.presentViewController(navigation, animated: true, completion: nil)
+        
     }
+    
+    
+    
     
     
 

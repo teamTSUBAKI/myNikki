@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class completeViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate{
+class completeViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextViewDelegate{
 
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
@@ -23,12 +23,20 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
     @IBOutlet weak var photoAddLabel: UILabel!
     @IBOutlet weak var emptyPhotoImage: UIImageView!
     @IBOutlet weak var wantDoneImageView: UIImageView!
+    @IBOutlet weak var emptyPhotoView: UIView!
     
+    @IBOutlet weak var placeHolderLabel: UILabel!
+    var wantsThing:WantItem?
+    
+    @IBOutlet weak var memoLabel: UILabel!
+    @IBOutlet weak var imagelabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
     //達成済みか
     var doneOrNotFlag = false
     //継続中か
     var continueOrNotFlag = false
+    
+    var path = ""
     
     private var wantIds:Int?
     var wantItemId:Int?{
@@ -45,8 +53,19 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
         }
     }
     
+    
+    
+    var photoAddOrChangeFlag = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        memoLabel.textColor = colorFromRGB.colorWithHexString("0fb5c4")
+        imagelabel.textColor = colorFromRGB.colorWithHexString("0fb5c4")
+        
+        
+        memoTextView.delegate = self
         
         let toolBar = UIToolbar(frame:CGRectMake(0,0,self.view.bounds.width,44))
         toolBar.barStyle = .Default
@@ -63,15 +82,30 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
         
         
         let realm = try!Realm()
-        let wantsThing = realm.objects(WantItem).filter("id = \(wantIds!)").first
+        wantsThing = realm.objects(WantItem).filter("id = \(wantIds!)").first
         
         doneOrNotFlag = (wantsThing?.done)!
         continueOrNotFlag = (wantsThing?.continues)!
-        
+       
+        //写真が登録されているならば
         if wantsThing?.wantsDonePhotos.count != 0{
             
-            //写真を表示
+            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             
+            if paths.count > 0{
+                
+                path = paths[0]
+                
+            }
+            
+            //写真を表示
+            let filename = wantsThing?.wantsDonePhotos[0].fileName
+            
+            let filePath = (path as NSString).stringByAppendingPathComponent(filename!)
+            
+            let image = UIImage(contentsOfFile:filePath)
+            
+            wantDoneImageView.image = image
             
             
             //ラベルを非表示
@@ -80,30 +114,67 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
             
         }else{
             
+            emptyPhotoView.backgroundColor = colorFromRGB.colorWithHexString("F6FBF6")
             photoAddLabel.hidden = false
             emptyPhotoImage.hidden = false
             
         }
         
         
+        
+        
         wantItemNameLabel.text = wantsThing?.wantName
         
-        memoTextView.text = wantsThing?.doneMemo
+        if wantsThing?.doneMemo != ""{
+        
+            memoTextView.text = wantsThing?.doneMemo
+            placeHolderLabel.hidden = true
+        
+        }else{
+            
+            placeHolderLabel.hidden = false
+            
+        }
+     
         
         
         //達成済みなら
         if doneOrNotFlag == true{
             
+            wantDoneMassageLabel.text = "実現！"
+            wantDoneMassageLabel.textColor = UIColor.whiteColor()
             doneButton.setImage(UIImage(named: "Checked Filled-50 (1)"), forState: .Normal)
+            wantDoneButtonView.backgroundColor = colorFromRGB.colorWithHexString("ffd700")
             
         }else{
             
             doneButton.setImage(UIImage(named: "Checked Filled-50"), forState: .Normal)
+            wantDoneButtonView.backgroundColor = colorFromRGB.colorWithHexString("F6FBF6")
+            
+        }
+        
+        //継続中なら
+        if continueOrNotFlag{
+            continueView.backgroundColor = UIColor.orangeColor()
+            continueLabel.text = "継続中！"
+            continueLabel.textColor = UIColor.whiteColor()
+            continueButton.setImage(UIImage(named: "Checked Filled-50 (1)"), forState: .Normal)
+            
+
+        
+            
+        }else{
+            
+            continueView.backgroundColor = colorFromRGB.colorWithHexString("F6FBF6")
+            continueLabel.text = "継続中ならこっちをチェック！"
+            continueLabel.textColor = UIColor.blackColor()
+            continueButton.setImage(UIImage(named: "Checked Filled-50"), forState: .Normal)
             
         }
         
         saveButton.layer.masksToBounds = true
         saveButton.layer.cornerRadius = 5
+        saveButton.backgroundColor = colorFromRGB.colorWithHexString("0fb5c4")
         
       
         
@@ -143,40 +214,122 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
         let fileName = NSUUID().UUIDString + ".jpg"
         let filePath = (path as NSString).stringByAppendingPathComponent(fileName)
         
+        //写真があって、かつその写真が今回登録、変更されたならば
+        if wantDoneImageView.image != nil && photoAddOrChangeFlag == true{
         
-        if wantDoneImageView.image != nil{
+         
+            //初めての写真登録ならば
+            if wantsThing?.wantsDonePhotos.count == 0{
+            let data = UIImageJPEGRepresentation(wantDoneImageView.image!, 0.8)
         
-           let data = UIImageJPEGRepresentation(wantDoneImageView.image!, 0.8)
-        
-           if ((data?.writeToFile(filePath, atomically: true)) != nil){
+            if ((data?.writeToFile(filePath, atomically: true)) != nil){
             
  
             try!realm.write({
                 
-                let photos = realm.objects(wantsDonePhoto).sorted("id", ascending: false)
-                let photo = wantsDonePhoto()
+                   let photos = realm.objects(wantsDonePhoto).sorted("id", ascending: false)
+                   let photo = wantsDonePhoto()
                 
-                if photos.count == 0{
+                   if photos.count == 0{
                     
-                    photo.id = 1
+                       photo.id = 1
                     
-                }else{
+                   }else{
                     
-                    photo.id = photos[0].id + 1
+                       photo.id = photos[0].id + 1
+                    
+                   }
+                
+                   photo.fileName = fileName
+                   photo.createdate = NSDate()
+                
+                   wantItem?.wantsDonePhotos.append(photo)
+                
+                  })
+               }
+            
+            }else{
+               //すでに写真が登録されていて、変更された場合
+                let deletePhoto = wantsThing?.wantsDonePhotos[0]
+                let deletePhotoName = deletePhoto!.fileName
+                let deleteFilePath = (path as NSString).stringByAppendingPathComponent(deletePhotoName)
+                
+                do{
+                    try NSFileManager.defaultManager().removeItemAtPath(deleteFilePath)
+                }catch{
+                    print("エラー")
                     
                 }
                 
-                photo.fileName = fileName
-                photo.createdate = NSDate()
+                try!realm.write({ 
+                    
+                    realm.delete(deletePhoto!)
+                    
+                })
                 
-                wantItem?.wantsDonePhotos.append(photo)
+                let data = UIImageJPEGRepresentation(wantDoneImageView.image!, 0.8)
                 
-               })
-       
+                if ((data?.writeToFile(filePath, atomically: true)) != nil){
+                    
+                    try!realm.write({ 
+                        
+                        let photos = realm.objects(wantsDonePhoto).sorted("id", ascending: false)
+                        let photo = wantsDonePhoto()
+                        
+                        if photos.count == 0{
+                            
+                            photo.id = 1
+                            
+                        }else{
+                            
+                            photo.id = photos[0].id + 1
+                            
+                        }
+                        
+                        photo.createdate = NSDate()
+                        photo.fileName = fileName
+                        
+                        wantItem!.wantsDonePhotos.append(photo)
+                        
+                    })
+                    
+                    
+                }
+                
+                
+            }
             
+        }else{
             
+            //写真がない状態ならば
+            if wantDoneImageView.image == nil{
+            let deletePhoto:wantsDonePhoto?
+                
+                if wantsThing?.wantsDonePhotos.count != 0{
+                
+                deletePhoto = wantsThing?.wantsDonePhotos[0]
+                
+                let deletePhotoName = deletePhoto?.fileName
+                let deletePhotoPath = (path as NSString).stringByAppendingPathComponent(deletePhotoName!)
+                    
+                    do{
+                        
+                        try NSFileManager.defaultManager().removeItemAtPath(deletePhotoPath)
+                        
+                    }catch{
+                        
+                        print("エラー")
+                    }
+                
+                     try!realm.write({
+                    
+                        realm.delete(deletePhoto!)
+                       
+                      })
+                
+                }
+            }
             
-           }
             
         }
         
@@ -193,15 +346,18 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
         //達成済みなら
         if doneOrNotFlag == true{
             
-            wantDoneButtonView.backgroundColor = UIColor.lightGrayColor()
+            wantDoneButtonView.backgroundColor = colorFromRGB.colorWithHexString("F6FBF6")
             wantDoneMassageLabel.text = "達成したらチェック！"
             wantDoneMassageLabel.textColor = UIColor.blackColor()
             doneButton.setImage(UIImage(named: "Checked Filled-50"), forState: .Normal)
             doneOrNotFlag = false
             
         }else{
-            wantDoneButtonView.backgroundColor = UIColor.orangeColor()
-            wantDoneMassageLabel.text = "おめでとう!"
+            wantDoneButtonView.backgroundColor = colorFromRGB.colorWithHexString("ffd700")
+           
+            
+
+            wantDoneMassageLabel.text = "実現！"
             wantDoneMassageLabel.textColor = UIColor.whiteColor()
             doneButton.setImage(UIImage(named: "Checked Filled-50 (1)"), forState: .Normal)
             doneOrNotFlag = true
@@ -215,7 +371,7 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
         
         if continueOrNotFlag{
             
-            continueView.backgroundColor = UIColor.lightGrayColor()
+            continueView.backgroundColor = colorFromRGB.colorWithHexString("F6FBF6")
             continueLabel.text = "継続中ならこっちをチェック！"
             continueLabel.textColor = UIColor.blackColor()
             continueButton.setImage(UIImage(named: "Checked Filled-50"), forState: .Normal)
@@ -282,8 +438,13 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
     func photoDelete(){
         
         wantDoneImageView.image = nil
+        emptyPhotoView.backgroundColor = colorFromRGB.colorWithHexString("F6FBF6")
         emptyPhotoImage.hidden = false
+        photoAddLabel.hidden = false
         
+   
+        
+      
         
     }
     
@@ -323,7 +484,7 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
             
             wantDoneImageView.image = photoImage
             emptyPhotoImage.hidden = true
-            
+            photoAddOrChangeFlag = true
         }
         
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -341,6 +502,22 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
         memoTextView.resignFirstResponder()
     }
     
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        
+        placeHolderLabel.hidden = true
+        return true
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        
+        if memoTextView.text == ""{
+        
+        
+            placeHolderLabel.hidden = false
+        
+        }
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

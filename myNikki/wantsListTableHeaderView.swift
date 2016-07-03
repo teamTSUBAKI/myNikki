@@ -10,8 +10,7 @@ import UIKit
 
 class wantsListTableHeaderView: UIView {
 
-    @IBOutlet weak var backgroundImageView:UIImageView!
-    
+
   
  
 
