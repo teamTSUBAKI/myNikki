@@ -45,6 +45,7 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
  
     
     var emptyLabel:UILabel!
+    var emptyArrowImage:UIImageView!
     
     var path = ""
     
@@ -53,6 +54,8 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         super.viewDidLoad()
         
         tableView.separatorStyle = .None
+        
+        graphViewWidth.constant = 0
         
         
         //グラフの色
@@ -98,11 +101,14 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
         emptyLabel = UILabel()
         emptyLabel.text = "やりたいコトをリストにしましょう！"
-        emptyLabel.frame = CGRectMake(0, 400, self.view.bounds.width, 60)
+       
         emptyLabel.textAlignment = .Center
         emptyLabel.textColor = UIColor.grayColor()
         
-        self.view.addSubview(emptyLabel)
+        
+        emptyArrowImage = UIImageView()
+        emptyArrowImage.image = UIImage(named: "diagonal-arrow")
+      
         
     
         //リストに追加するためのボタンを表示
@@ -112,33 +118,41 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         switch screenHeight {
         case 480:
             
-               addButton.frame = CGRectMake(250, 400, 44, 44)
+               emptyArrowImage.frame = CGRectMake(200,320, 40, 40)
+               addButton.frame = CGRectMake(250, 360, 60, 60)
+               emptyLabel.frame = CGRectMake(0, 200, self.view.bounds.width, 60)
          
         case 568:
             
-               addButton.frame = CGRectMake(250, 470, 44, 44)
+               emptyArrowImage.frame = CGRectMake(210,400, 40, 40)
+               addButton.frame = CGRectMake(250, 440, 60, 60)
+               emptyLabel.frame = CGRectMake(0, 250, self.view.bounds.width, 60)
             
         case 667:
          
-               addButton.frame = CGRectMake(300, 550, 44, 44)
+               addButton.frame = CGRectMake(300, 550, 60, 60)
+               emptyLabel.frame = CGRectMake(0, 400, self.view.bounds.width, 60)
             
         case 736:
             
                addButton.frame = CGRectMake(300, 550, 44, 44)
+               emptyLabel.frame = CGRectMake(0, 400, self.view.bounds.width, 60)
          
         default:
             
                addButton.frame = CGRectMake(300, 550, 44, 44)
+               emptyLabel.frame = CGRectMake(0, 400, self.view.bounds.width, 60)
         }
      
         addButton.backgroundColor = colorFromRGB.colorWithHexString("0fb5c4")
         addButton.layer.masksToBounds = true
-        addButton.layer.cornerRadius = 20
+        addButton.layer.cornerRadius = 30
         addButton.alpha = 0.8
-        addButton.setTitle("+", forState: .Normal)
-        addButton.titleLabel?.font = UIFont.systemFontOfSize(32)
+        addButton.setImage(UIImage(named: "Plus Math-64"), forState: .Normal)
         addButton.addTarget(self, action: Selector("addWantItem"), forControlEvents: .TouchUpInside)
         
+        self.view.addSubview(emptyLabel)
+        self.view.addSubview(emptyArrowImage)
         self.view.addSubview(addButton)
         
         
@@ -241,13 +255,13 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         //やりたいことが未登録ならば
         if wantThings?.count == 0{
             
-            
+            emptyArrowImage.hidden = false
             emptyLabel.hidden = false
             tableView.hidden = true
             
         }else{
             
-            
+            emptyArrowImage.hidden = true
             emptyLabel.hidden = true
             tableView.hidden = false
             
@@ -297,9 +311,38 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
         let cell:wantsListTableViewCell = tableView.dequeueReusableCellWithIdentifier("wantCell", forIndexPath: indexPath) as! wantsListTableViewCell
         
+        if (indexPath.row + 1).description.characters.count == 1{
+            
+                cell.wantsNumber.text = "00" + "\(indexPath.row + 1)"
+          cell.wantsNumber.sizeToFit()
+        }else if (indexPath.row + 1).description.characters.count == 2{
         
-        cell.wantsNumber.text = "\(indexPath.row + 1)"
-        cell.wantsNumber.sizeToFit()
+                cell.wantsNumber.text = "0" + "\(indexPath.row + 1)"
+              cell.wantsNumber.sizeToFit()
+        }else if (indexPath.row + 1).description.characters.count == 3{
+            
+                cell.wantsNumber.text = "\(indexPath.row + 1)"
+              cell.wantsNumber.sizeToFit()
+        }
+    
+        //継続中ならラベルを表示する。
+        if wantThings![indexPath.row].continues{
+            
+            cell.continueLabel.textColor = UIColor.whiteColor()
+            cell.continueLabel.backgroundColor = UIColor.orangeColor()
+            cell.continueLabel.layer.cornerRadius = 5
+            cell.continueLabel.layer.masksToBounds = true
+            cell.continueLabel.hidden = false
+            
+        }else{
+            
+            cell.continueLabel.hidden = true
+            
+        }
+        
+        
+        
+      
         
         cell.doneMemoLabel.textColor = colorFromRGB.colorWithHexString("6495ed")
         
@@ -337,7 +380,7 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
             let doneImages:UIImage = UIImage(contentsOfFile:filePath)!
             
             cell.donePhotoImage.image = doneImages
-            cell.donePhotoheight.constant = 200
+            cell.donePhotoheight.constant = 190
             
         }
         

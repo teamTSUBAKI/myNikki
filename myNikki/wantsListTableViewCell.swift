@@ -19,6 +19,7 @@ class wantsListTableViewCell: UITableViewCell {
     @IBOutlet weak var donePhotoImage: UIImageView!
     @IBOutlet weak var donePhotoheight: NSLayoutConstraint!
     
+    @IBOutlet weak var continueLabel: UILabel!
     
     private var _data:WantItem?
     var data:WantItem?{
@@ -85,7 +86,7 @@ class wantsListTableViewCell: UITableViewCell {
             
             let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
             print("高い\(size.height)")
-            return size.height + 10
+            return size.height + 20
         }
         
         return 0

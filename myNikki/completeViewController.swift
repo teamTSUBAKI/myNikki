@@ -124,6 +124,7 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
         
         
         wantItemNameLabel.text = wantsThing?.wantName
+        wantItemNameLabel.sizeToFit()
         
         if wantsThing?.doneMemo != ""{
         
@@ -453,6 +454,8 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
       let library = UIImagePickerController()
       library.delegate = self
       library.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+      library.navigationBar.backgroundColor = colorFromRGB.colorWithHexString("0fb5c4")
+        library.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
       self.presentViewController(library, animated: true, completion: nil)
         
         
@@ -469,6 +472,7 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
             let camera = UIImagePickerController()
             camera.sourceType = souceType
             camera.delegate = self
+    
             self.presentViewController(camera, animated: true, completion: nil)
         
             
