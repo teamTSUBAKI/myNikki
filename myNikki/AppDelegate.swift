@@ -89,6 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var nowYearsForCal:Int!
     var nowMonthsForCal:Int!
     
+    
+    
+    
 
     //初回起動時に呼ばれる
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -143,6 +146,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
              viewController = storyBorad.instantiateViewControllerWithIdentifier("WalkTrough") as!
                  WalkTroughViewController
+            
+            print("ゆいこはん")
             
             
         }else{
@@ -211,7 +216,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notification:UILocalNotification = UILocalNotification()
         notification.alertAction = "アプリに戻る"
         //後で、ランダムにするように設定する。
-        notification.alertBody = "trimに今日の学びや気づきを記録しましょう"
+        notification.alertBody = "じぶん日記に今の気持ちや出来事を書いてみて！"
         notification.timeZone = NSTimeZone.defaultTimeZone()
         
         let realm = try!Realm()

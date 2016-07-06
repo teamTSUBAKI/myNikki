@@ -124,7 +124,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 1:
             return 2
         case 2:
-            return 2
+            return 1
         default:
             return 0
         }
@@ -162,13 +162,13 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             switch indexPath.row{
             case 0:
-                cell.Photo.image = UIImage(named: "114")
-                cell.TSUBAKILabel.text = "trim"
+                cell.Photo.image = UIImage(named: "512")
+                cell.TSUBAKILabel.text = "じぶん日記"
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
             case 1:
                 
                 cells.menuLabel.text = "バージョン"
-                cells.accessoryLabel.text = "1.0.5"
+                cells.accessoryLabel.text = "1.0.0"
                 cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
                 
@@ -241,7 +241,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             switch indexPath.row{
             case 0:
-                cell.textLabel?.text = "フィードバック・改善要望を送る"
+                cell.textLabel?.text = "お問い合わせ"
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
 
             case 1:
@@ -320,24 +320,38 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             if indexPath.row == 0{
                 
-                if MFMailComposeViewController.canSendMail() == false{
+                let alert = UIAlertController(title: "お問い合わせ",message: "",preferredStyle:.ActionSheet)
+                
+                let webAction:UIAlertAction = UIAlertAction(title: "web",style: .Default,handler: {(action:UIAlertAction)-> Void in
+                
+                    let url = NSURL(string: "https://docs.google.com/forms/d/1v-g2ImwaJvwT1K_ORtA7Y54PPHdjg_nqUtZW2yqETcE/viewform")!
+                    UIApplication.sharedApplication().openURL(url)
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
                     
-                    print("メール送れない")
-                    return
-                }
                 
-                let mailController = MFMailComposeViewController()
-                let toAddress = ["teamTSUBAKI0127@gmail.com"]
-                let ccAddress = ["funkyfrea@gmail.com"]
+                })
                 
-                mailController.mailComposeDelegate = self
-                mailController.setSubject("フィードバック・改善要望")
-                mailController.setToRecipients(toAddress)
-                mailController.setCcRecipients(ccAddress)
+                let twitterAction:UIAlertAction = UIAlertAction(title: "Twitter",style: .Default,handler: {(action:UIAlertAction)-> Void in
                 
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                    let url:NSURL = NSURL(string:"https://twitter.com/zibunnikki0630")!
+                    UIApplication.sharedApplication().openURL(url)
+                     tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                })
                 
-                self.presentViewController(mailController, animated: true, completion: nil)
+                let mailAction:UIAlertAction = UIAlertAction(title: "mail",style: .Default,handler: {(action:UIAlertAction)-> Void in
+                     tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                
+                    self.sendMail()
+                
+                })
+                
+                alert.addAction(webAction)
+                alert.addAction(twitterAction)
+                alert.addAction(mailAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+    
             }
             
             if indexPath.row == 1{
@@ -350,6 +364,34 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
         
     }
+    
+    
+    
+    func sendMail(){
+        
+        
+        if MFMailComposeViewController.canSendMail() == false{
+            
+            print("メール送れない")
+            return
+        }
+        
+        let mailController = MFMailComposeViewController()
+        let toAddress = ["teamTSUBAKI0127@gmail.com"]
+        let ccAddress = ["funkyfrea@gmail.com"]
+        
+        mailController.mailComposeDelegate = self
+        mailController.setSubject("フィードバック・改善要望")
+        mailController.setToRecipients(toAddress)
+        mailController.setCcRecipients(ccAddress)
+        
+       
+        
+        self.presentViewController(mailController, animated: true, completion: nil)
+        
+    }
+    
+    
     
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         switch result.rawValue{

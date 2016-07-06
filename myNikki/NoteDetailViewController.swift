@@ -14,7 +14,7 @@ import Crashlytics
 
 
 
-class NoteDetailViewController: UIViewController,UITextViewDelegate{
+class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRecognizerDelegate{
     
     var path:String?
     var asset:PHFetchResult!
@@ -28,14 +28,14 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     
     @IBOutlet weak var topImage: UIImageView!
     
-    @IBOutlet weak var noImagePhotoButtonHeight: NSLayoutConstraint!
+    
     
     @IBOutlet weak var allViewContainerConst: NSLayoutConstraint!
     @IBOutlet weak var textViewContainerConst: NSLayoutConstraint!
     @IBOutlet weak var textViewConst: NSLayoutConstraint!
     @IBOutlet weak var textButtonConst: NSLayoutConstraint!
     
-    @IBOutlet weak var timerLabels: UILabel!
+    
     @IBOutlet weak var timerLabelWidth: NSLayoutConstraint!
     
     @IBOutlet weak var nonImageView1: UIImageView!
@@ -76,7 +76,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     
     
     
-    @IBOutlet weak var noImagePhotoButton: UIButton!
+    
     
     var presentTopImage = 0
     
@@ -109,6 +109,12 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        let tap = UITapGestureRecognizer(target: self,action: "taped")
+        
+        self.view.addGestureRecognizer(tap)
+        tap.delegate = self
+        
         //メール添付用にシェアモーダルに送る写真入れ
         appDelegate?.Photoes = nil
         
@@ -119,7 +125,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         appDelegate?.photosCount = 0
         
         let tabview = UIView(frame: (self.tabBarController?.tabBar.frame)!)
-        tabview.backgroundColor = UIColor.blackColor()
+        tabview.backgroundColor = UIColor.clearColor()
         self.view.addSubview(tabview)
         
         
@@ -173,8 +179,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         tracker.send(builder.build() as [NSObject:AnyObject])
         
         //とりあえず最初は隠しておいて、状況に応じて表示する
-        noImagePhotoButton.hidden = true
-        timerLabels.hidden = true
+        
+        
         self.photoSet()
         self.hightFirstLineInTextView(textView)
         
@@ -187,7 +193,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         textViewConst.constant = sizeThatShouldFitTheConst.height+60
         textButtonConst.constant = sizeThatShouldFitTheConst.height+60
         allViewContainerConst.constant = (topImageViewContainerHeight.constant - 50) + sizeThatShouldFitTheConst.height+60
-        
+ 
+        print("調整")
+   
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -230,7 +238,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         
         
         
-        if textViews.text != "振り返りや改善、明日の目標などを書く..."{
+        if textViews.text != "タップして日記を書く..."{
         textViews.attributedText = newAttributedText
         }
    
@@ -328,15 +336,15 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if note![0].photos.count == 0{
                 
-                self.imageViewY.constant = 150
-                self.topImageViewContainerHeight.constant = 250
+                self.imageViewY.constant = 0
+                self.topImageViewContainerHeight.constant = 0
                 
                 self.topImageViewHeight.constant = 0
                 self.imageViewHeight.constant = 0
                 
                 
                 toPhotoDetailButton.hidden = true
-                noImagePhotoButton.hidden = false
+                
                 
                 
                 
@@ -346,7 +354,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 self.imageSize()
                 
                 toPhotoDetailButton.hidden = false
-                noImagePhotoButton.hidden = true
+                
                 
                 //メール添付用にシェアモーダルに送る
                 appDelegate?.Photoes = note![0].photos
@@ -383,7 +391,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if note![0].noteText.isEmpty{
                 
-                textView.text = "振り返りや改善、明日の目標などを書く..."
+                textView.text = "タップして日記を書く..."
                 textView.textColor = UIColor.grayColor()
                 
             }else{
@@ -397,33 +405,39 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             let unit:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day,NSCalendarUnit.Hour,NSCalendarUnit.Minute,NSCalendarUnit.Weekday]
             let comps:NSDateComponents = calendar.components(unit, fromDate: note![0].createDate!)
             
+            /*
             DateLabels = UILabel(frame: CGRectMake(0,0,180,44))
             DateLabels.text = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDays[comps.weekday])"
             DateLabels.textColor = UIColor.whiteColor()
             DateLabels.textAlignment = NSTextAlignment.Center
             DateLabels.center = CGPointMake(self.view.bounds.width/2-30, 20)
             self.view.subviews[3].addSubview(DateLabels)
-            
+            */
+            /*
             shareButton = UIButton(frame: CGRectMake(0,0,44,44))
             shareButton.setImage(UIImage(named:"Upload-50"), forState: .Normal)
             shareButton.addTarget(self, action: "sharedButtonTaped", forControlEvents: .TouchUpInside)
             shareButton.center = CGPointMake(self.view.bounds.width - 30, 20)
             self.view.subviews[3].addSubview(shareButton)
 
+             */
 
             
             let minute = comps.minute.description
             if minute.characters.count == 1{
                 
+                /*
                 minutesAndHoursLabels = UILabel(frame: CGRectMake(0,0,100,44))
                 minutesAndHoursLabels.center = CGPointMake(self.view.bounds.width/2+80,20)
                 minutesAndHoursLabels.textAlignment = NSTextAlignment.Center
                 minutesAndHoursLabels.text = "\(comps.hour):0\(comps.minute)"
                 minutesAndHoursLabels.textColor = UIColor.whiteColor()
                 self.view.subviews[3].addSubview(minutesAndHoursLabels)
+                */
                 
             }else{
                 
+                /*
                 minutesAndHoursLabels = UILabel(frame: CGRectMake(0,0,80,44))
                 minutesAndHoursLabels.center = CGPointMake(self.view.bounds.width/2+80,20)
                 minutesAndHoursLabels.textAlignment = NSTextAlignment.Center
@@ -431,7 +445,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 minutesAndHoursLabels.textColor = UIColor.whiteColor()
                 
                 self.view.subviews[3].addSubview(minutesAndHoursLabels)
-
+                 */
                 
             }
             
@@ -443,46 +457,11 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             //PDFメール用に日付データを入れる
             appDelegate?.dateForPDF = self.navigationItem.title
             
-            var myTimes = note![0].timerTime
-            let myTimers = note![0].timerTime
-            
-            let hours = myTimes / 3600
-            myTimes -= hours * 3600
-            
-            let minutes = myTimes / 60
-            myTimes -= minutes * 60
-            
-            let seconds = myTimes
+    
             
             
             
-            if myTimers >= 3600{
-                
-                timerLabels.hidden = false
-                timerLabels.textColor = UIColor.whiteColor()
-                timerLabels.text = "タイム：\(hours)時間\(minutes)分\(seconds)秒"
-                timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
-                timerLabelWidth.constant = 160
-                timerLabels.layer.masksToBounds = true
-                timerLabels.layer.cornerRadius = 5
-
-                
-            }else if myTimers >= 1{
-                
-                timerLabels.hidden = false
-                timerLabels.textColor = UIColor.whiteColor()
-                timerLabels.text = "タイム：\(minutes)分\(seconds)秒"
-                timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
-                timerLabelWidth.constant = 130
-                timerLabels.layer.masksToBounds = true
-                timerLabels.layer.cornerRadius = 5
-
-            
-            }else if myTimers == 0{
-                
-                timerLabels.hidden = true
-                
-            }
+     
             
             
             
@@ -504,7 +483,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 self.topImageViewHeight.constant = 0
                 self.topImageViewContainerHeight.constant = 0
                 self.imageViewHeight.constant = 0
-                noImagePhotoButton.hidden = true
+                
+           
+                
                 
             }else{
                 
@@ -572,7 +553,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if Notes![0].noteText.isEmpty{
                 
-                self.textView.text = "振り返りや改善、明日の目標などを書く..."
+                self.textView.text = "タップして日記を書く..."
                 self.textView.textColor = UIColor.grayColor()
                 
             }else{
@@ -594,33 +575,37 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             //PDFメール用に日付データを入れる
             appDelegate?.dateForPDF = self.navigationItem.title
             
+            /*
             DateLabels = UILabel(frame: CGRectMake(0,0,180,44))
             DateLabels.text = "\(comps.year)年\(comps.month)月\(comps.day)日\(weekDays[comps.weekday])"
             DateLabels.textColor = UIColor.whiteColor()
             DateLabels.textAlignment = NSTextAlignment.Center
             DateLabels.center = CGPointMake(self.view.bounds.width/2-30, 20)
             self.view.subviews[3].addSubview(DateLabels)
-            
+            */
+            /*
             shareButton = UIButton(frame: CGRectMake(0,0,44,44))
             shareButton.setImage(UIImage(named:"Upload-50"), forState: .Normal)
             shareButton.addTarget(self, action: "sharedButtonTaped", forControlEvents: .TouchUpInside)
             shareButton.center = CGPointMake(self.view.bounds.width - 30, 20)
             self.view.subviews[3].addSubview(shareButton)
+            */
             
             let minute = comps.minute.description
             if minute.characters.count == 1{
                 
-        
+                /*
                 minutesAndHoursLabels = UILabel(frame: CGRectMake(0,0,100,44))
                 minutesAndHoursLabels.center = CGPointMake(self.view.bounds.width/2+80,20)
                 minutesAndHoursLabels.textAlignment = NSTextAlignment.Center
                 minutesAndHoursLabels.text = "\(comps.hour):0\(comps.minute)"
                 minutesAndHoursLabels.textColor = UIColor.whiteColor()
                 self.view.subviews[3].addSubview(minutesAndHoursLabels)
+                */
                 
             }else{
                 
-                
+                /*
                 minutesAndHoursLabels = UILabel(frame: CGRectMake(0,0,80,44))
                 minutesAndHoursLabels.center = CGPointMake(self.view.bounds.width/2+80,20)
                 minutesAndHoursLabels.textAlignment = NSTextAlignment.Center
@@ -628,52 +613,21 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                 minutesAndHoursLabels.textColor = UIColor.whiteColor()
                 
                 self.view.subviews[3].addSubview(minutesAndHoursLabels)
-
+                */
+                
             }
             
             
             
-            let myTime = Notes![0].timerTime
-            var myTimes = Notes![0].timerTime
+         
             
     
             
-            
-            let hours = myTimes / 3600
-            myTimes -= hours * 3600
-            
-            let minutes = myTimes / 60
-            myTimes -= minutes * 60
-            
-            let seconds = myTimes
+        
             
             
             
-            if myTime >= 3600{
-                
-                timerLabels.hidden = false
-                timerLabels.textColor = UIColor.whiteColor()
-                timerLabels.text = "タイム：\(hours)時間\(minutes)分\(seconds)秒"
-                timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
-                timerLabelWidth.constant = 160
-                timerLabels.layer.masksToBounds = true
-                timerLabels.layer.cornerRadius = 5
-
-            }else if myTime >= 1{
-                
-                
-                timerLabels.hidden = false
-                timerLabels.textColor = UIColor.whiteColor()
-                timerLabels.text = "タイム：\(minutes)分\(seconds)秒"
-                timerLabelWidth.constant = 130
-                timerLabels.layer.masksToBounds = true
-                timerLabels.layer.cornerRadius = 5
-                timerLabels.backgroundColor = colorFromRGB.colorWithHexString("87CEEB")
-            }else if myTime == 0{
-                
-                
-                timerLabels.hidden = true
-            }
+       
             
             
             
@@ -684,22 +638,22 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
             if appDelegate?.timerFlag == true{
                 appDelegate?.timerFlag = false
-                noImagePhotoButton.hidden = false
+                
                 
                 
                 self.imageViewY.constant = 0
                 self.topImageViewHeight.constant = 0
                 self.topImageViewContainerHeight.constant = 200
                 self.imageViewHeight.constant = 0
-                self.noImagePhotoButtonHeight.constant = 200
+                
                 toPhotoDetailButton.hidden = true
                 
             }else{
                 
                 print("山")
-                noImagePhotoButton.hidden = true
                 
-                timerLabels.hidden = true
+                
+               
                 
                 self.topImageViewHeight.constant = 0
                 self.topImageViewContainerHeight.constant = 0
@@ -712,7 +666,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
             
         
             
-            self.textView.text = "振り返りや改善、明日の目標などを書く..."
+            self.textView.text = "タップして日記を書く..."
             self.textView.textColor = UIColor.grayColor()
             
         }
@@ -1099,11 +1053,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
                     let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
                     
                     
-                    if timerLabels.text != "Label"{
-                    
-                        let rects = CGRectMake(300, 20, 300, 300)
-                        drawString(timerLabels.text!, rect: rects, Color: color.CGColor, FontSize: 14, Font: "HiraKakuProN-W6", ul: false)
-                    }
+                   
                     
                     drawString(day, rect: rect, Color: color.CGColor, FontSize: 14, Font: "HiraKakuProN-W6", ul: false)
                 }
@@ -1125,11 +1075,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         if (noten[0].photos.isEmpty){
             
             let color:UIColor = colorFromRGB.colorWithHexString("2860A3")
-            if timerLabels.text != "Label"{
-                
-                let rects = CGRectMake(300, 50, 600, 300)
-                drawString(timerLabels.text!, rect: rects, Color: color.CGColor, FontSize: 14, Font: "HiraKakuProN-W3", ul: false)
-            }
+       
             
             let minute = String(comps.minute)
             var day = ""
@@ -1345,51 +1291,50 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate{
         return nil
     }
     
+
+
+    func taped(){
     
-    
-    /* override func viewDidLayoutSubviews() {
-    let fixedWidth = textView.frame.size.width
-    let textViewNewSize = textView.sizeThatFits(CGSizeMake(fixedWidth,CGFloat.max))
-    
-    
-    /*var newFrame = allViewContainer.frame
-    newFrame.size = CGSizeMake(max(textViewNewSize.width, fixedWidth), 100 + textViewNewSize.height)
-    allViewContainer.frame = newFrame
-    print(allViewContainer.frame)*/
-    
-    var newFrame = textView.frame
-    newFrame.size = CGSizeMake(max(textViewNewSize.width, fixedWidth), textViewNewSize.height)
-    textView.frame = newFrame
-    print("テキストビュー\(textView.frame)")
-    textView.backgroundColor = UIColor.purpleColor()
-    
-    newFrame = textViewContainer.frame
-    newFrame.size = CGSizeMake(max(textViewNewSize.width,fixedWidth), textViewNewSize.height)
-    textViewContainer.frame = newFrame
-    textViewContainer.backgroundColor = UIColor.redColor()
-    
-    
-    newFrame = textButton.frame
-    newFrame.size = CGSizeMake(max(textViewNewSize.width, fixedWidth), textViewNewSize.height)
-    textButton.frame = newFrame
-    
-    
-    
-    }*/
-    
-    @IBAction func NoImagePhotoButtonTaped(sender: AnyObject) {
+        print("やん")
+        //新規ノートの場合
+        if appDelegate?.noteFlag == true{
+            let realm = try!Realm()
+            let note = realm.objects(Note).sorted("id", ascending: false)
+            
+            //ノートidを渡す
+            appDelegate?.editNoteId = note[0].id
+            //ノートが追加だということを知らせる。フラグ名がわかりづらいな。
+            appDelegate?.addPhotoFlag = true
+            //ノートのテキストを送る
+            appDelegate?.textData = note[0].noteText
+            performSegueWithIdentifier("toTextView", sender: nil)
+            
+            
+            
+        }else if appDelegate?.noteFlag == false{
+            
+            //ノートidを渡す
+            appDelegate?.editNoteId = notes?.id
+            //ノートが追加だということを知らせる。フラグ名がわかりづらいな。
+            appDelegate?.addPhotoFlag = true
+            //ノートディテールのテキストビューを押したことを伝える
+            appDelegate?.textViewOfNoteDetail = true
+            //ノートのテキストを送る
+            appDelegate?.textData = notes?.noteText
+            
+            performSegueWithIdentifier("toTextView", sender: nil)
+            
+            
+        }else{
+            
+            appDelegate?.textViewOfNoteDetail = true
+            appDelegate?.cancelAdd = true
+            performSegueWithIdentifier("toTextView", sender: nil)
+            
+        }
         
-        let cameraViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Camera")
-        appDelegate?.tabBarCamera = true
-        appDelegate?.addPhotoFlag = true
-        appDelegate?.noteFlag = true
-        appDelegate?.noPhotoButtonTaped = true
-        appDelegate?.editNoteId = note![0].id
-        
-        self.presentViewController(cameraViewController!, animated: true, completion: nil)
-        
+
     }
-    
     
     
     

@@ -76,19 +76,20 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         emptyStatLabel = UILabel(frame: CGRectMake(0,0,300,50))
         emptyStatLabel.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2-50)
         emptyStatLabel.textAlignment = NSTextAlignment.Center
-        emptyStatLabel.text = "写真とノートで成長を記録しましょう"
-        emptyStatLabel.textColor = colorFromRGB.colorWithHexString("B0C4DE")
+        emptyStatLabel.text = "大切な毎日を写真と言葉で\n書き残しましょう"
+        emptyStatLabel.numberOfLines = 0
+        emptyStatLabel.textColor = UIColor.grayColor()
         
         descriptionLabel = UITextView(frame: CGRectMake(0, 0, 180, 50))
         descriptionLabel.center = CGPointMake(self.view.bounds.size.width/2,self.view.bounds.height - 100)
         // descriptionLabel.backgroundColor = UIColor.grayColor()
         descriptionLabel.textAlignment = NSTextAlignment.Center
         descriptionLabel.editable = false
-        descriptionLabel.text = "カメラをタップすると\n写真やノートを記録できます"
+        descriptionLabel.text = "カメラをタップすると\n日記を書くことができます"
         
         arrowImageView = UIImageView(frame: CGRectMake(0, 0,44, 44))
         arrowImageView.center = CGPointMake(self.view.bounds.width/2, self.view.bounds.height - 70)
-        arrowImageView.image = UIImage(named: "Down-50")
+        arrowImageView.image = UIImage(named: "Down-50 (4)")
         
         self.view.addSubview(arrowImageView)
         self.view.addSubview(descriptionLabel)
@@ -115,7 +116,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
         
         if self.navigationController is timeLineNavigationController{
             
-            let textButton = UIBarButtonItem(title: "ノートを書く", style: .Plain, target: self, action: "textButtonTaped")
+            let textButton = UIBarButtonItem(title: "日記を書く", style: .Plain, target: self, action: "textButtonTaped")
             let settingButton = UIBarButtonItem(image: UIImage(named: "More-52"), style: .Plain, target: self, action: "settingButtonTaped")
             
             self.navigationItem.leftBarButtonItem = settingButton
@@ -124,7 +125,7 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             self.navigationItem.title = "TimeLine"
         }else if self.navigationController is CalendarViewNavigationController{
             
-            self.navigationItem.title = "\(month!)月\(day!)日ノート一覧"
+            self.navigationItem.title = "\(month!)月\(day!)日の日記一覧"
             
         }
         

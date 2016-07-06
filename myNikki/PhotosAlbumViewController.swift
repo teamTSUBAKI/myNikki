@@ -480,8 +480,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             note.createDate = NSDate()
             
         
-            
-            /*let date:String = "2016-6-7 23:35:12"
+            /*
+            let date:String = "2016-7-16 22:34:12"
             let dateformatter:NSDateFormatter = NSDateFormatter()
             dateformatter.locale = NSLocale(localeIdentifier: "ja")
             dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"

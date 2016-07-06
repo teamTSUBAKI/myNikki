@@ -49,13 +49,17 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
     
     var path = ""
     
+    //リサイズした写真をキャッシュする
+    var cacheImage = [NSIndexPath:UIImage]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //区切り線をなくす
         tableView.separatorStyle = .None
         
-        graphViewWidth.constant = 0
+        
         
         
         //グラフの色
@@ -85,7 +89,7 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
         doneThings = wantThings?.filter("done = true")
         
-        showWantsItemNumber()
+     
         
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         
@@ -99,9 +103,9 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         View.backgroundColor = UIColor.clearColor()
         tableView.tableFooterView = View
         
-        emptyLabel = UILabel()
+        emptyLabel = UILabel(frame:CGRectMake(0,0,300,50))
         emptyLabel.text = "やりたいコトをリストにしましょう！"
-       
+        emptyLabel.center = CGPointMake(self.view.bounds.width/2,self.view.bounds.height/2-50)
         emptyLabel.textAlignment = .Center
         emptyLabel.textColor = UIColor.grayColor()
         
@@ -120,23 +124,30 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
             
                emptyArrowImage.frame = CGRectMake(200,320, 40, 40)
                addButton.frame = CGRectMake(250, 360, 60, 60)
-               emptyLabel.frame = CGRectMake(0, 200, self.view.bounds.width, 60)
+              
+               graphBaseView.bounds.size.width = 260
          
         case 568:
             
                emptyArrowImage.frame = CGRectMake(210,400, 40, 40)
                addButton.frame = CGRectMake(250, 440, 60, 60)
-               emptyLabel.frame = CGRectMake(0, 250, self.view.bounds.width, 60)
+               
+               graphBaseView.bounds.size.width = 260
             
         case 667:
          
+               emptyArrowImage.frame = CGRectMake(250,510, 40, 40)
                addButton.frame = CGRectMake(300, 550, 60, 60)
-               emptyLabel.frame = CGRectMake(0, 400, self.view.bounds.width, 60)
+            
+            
+            
             
         case 736:
             
-               addButton.frame = CGRectMake(300, 550, 44, 44)
-               emptyLabel.frame = CGRectMake(0, 400, self.view.bounds.width, 60)
+               emptyArrowImage.frame = CGRectMake(290, 560, 40, 40)
+               addButton.frame = CGRectMake(330, 600, 60, 60)
+               graphBaseView.bounds.size.width = 354
+            
          
         default:
             
@@ -158,6 +169,9 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
         self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        
+        showWantsItemNumber()
+        showGraph()
         
         }
     
@@ -225,6 +239,9 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        
+        cacheImage = [:]
+        
         showWantsItemNumber()
         showGraph()
         
@@ -237,17 +254,13 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
             self.navigationItem.title = wantList![0].listName
             
         }
+        
+         WantsDataIsEmpty()
+         tableView.reloadData()
     
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-        WantsDataIsEmpty()
-        print("武蔵野線")
-        
-        tableView.reloadData()
-        
-    }
+    
     
     
     func WantsDataIsEmpty(){
@@ -270,21 +283,7 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
     }
 
     
-    func updateHeaderView(){
-        print("アップです")
-        
-        var headerRect = CGRect(x: 0,y: -tableHeaderViewHeight,width:tableView.bounds.width,height:tableHeaderViewHeight)
-        
-        
-        if tableView.contentOffset.y < -tableHeaderViewHeight{
-            
-            headerRect.origin.y = tableView.contentOffset.y
-            headerRect.size.height = -tableView.contentOffset.y
-            
-        }
-        
-        headerView.frame = headerRect
-    }
+ 
   
     
  
@@ -376,11 +375,39 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
             
             let filename = wantThings![indexPath.row].wantsDonePhotos[0].fileName
             let filePath = (path as NSString).stringByAppendingPathComponent(filename)
-            
-            let doneImages:UIImage = UIImage(contentsOfFile:filePath)!
-            
-            cell.donePhotoImage.image = doneImages
             cell.donePhotoheight.constant = 190
+            
+            
+            cell.donePhotoImage.image = nil
+            
+            if let image = cacheImage[indexPath]{
+                
+                cell.donePhotoImage.image = image
+            
+            }else{
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+                
+                
+                    //ファイルから写真を取り込む
+                    let image = UIImage(contentsOfFile:filePath)
+                    
+                    let resizeImage = image?.resize(CGSizeMake(cell.donePhotoImage.bounds.size.width+400, cell.donePhotoImage.bounds.size.height + 400))
+                
+                    self.cacheImage[indexPath] = resizeImage
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                    
+                        cell.donePhotoImage.image = resizeImage
+                    
+                    })
+                
+                })
+                
+                
+            }
+            
+            
             
         }
         
@@ -426,6 +453,9 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         }
         
         let deleteButton:UITableViewRowAction = UITableViewRowAction(style: .Normal,title: "削除"){(action,index) -> Void in
+            
+            
+            self.cacheImage = [:]
         
             let realm = try!Realm()
             

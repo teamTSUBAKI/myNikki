@@ -28,6 +28,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
             print("呼ぶ")
             self.selectedIndex = 0
             userDefaults.setBool(false, forKey: "firstLunch")
+            userDefaults.synchronize()
             
         }
         
@@ -183,7 +184,7 @@ class TabBarController: UITabBarController,UIActionSheetDelegate{
             
      })
         
-        let noteAction:UIAlertAction = UIAlertAction(title: "ノートを書く", style: UIAlertActionStyle.Default, handler: {(action:UIAlertAction)->Void in
+        let noteAction:UIAlertAction = UIAlertAction(title: "日記を書く", style: UIAlertActionStyle.Default, handler: {(action:UIAlertAction)->Void in
         
            let textViewControllers = self.storyboard?.instantiateViewControllerWithIdentifier("TextView")as! TextViewController
            let navigation = UINavigationController()

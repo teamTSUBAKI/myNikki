@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="スプラッシュ画面(2208x1242).fw" translatesAutoresizingMaskIntoConstraints="NO" id="9bC-Ne-tew">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1136×640" translatesAutoresizingMaskIntoConstraints="NO" id="9bC-Ne-tew">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
                         </subviews>
@@ -37,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="スプラッシュ画面(2208x1242).fw" width="621" height="1104"/>
+        <image name="1136×640" width="320" height="567"/>
     </resources>
 </document>
