@@ -184,6 +184,14 @@ class completeViewController: UIViewController,UIImagePickerControllerDelegate,U
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "wantListComplete")
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject:AnyObject])
+
+    }
 
     
     @IBAction func saveButtonTaped(sender: AnyObject) {

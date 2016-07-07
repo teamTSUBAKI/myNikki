@@ -18,7 +18,6 @@
 		591D2AEB1D1780A600930A7A /* wantsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D2AEA1D1780A600930A7A /* wantsListTableViewCell.swift */; };
 		59212E421C7361DE00CE845B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59212E401C7361DE00CE845B /* Fabric.framework */; };
 		59212E431C7361DE00CE845B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59212E411C7361DE00CE845B /* Crashlytics.framework */; };
-		59212E451C74133D00CE845B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59212E441C74133D00CE845B /* GoogleService-Info.plist */; };
 		592302D31C4733DC00558322 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592302D21C4733DC00558322 /* CalendarViewController.swift */; };
 		592D2B0F1CA000620030AFD3 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D2B0E1CA000620030AFD3 /* AlbumViewController.swift */; };
 		592D2B161CA039D30030AFD3 /* monthAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592D2B151CA039D30030AFD3 /* monthAlbum.swift */; };
@@ -54,6 +53,7 @@
 		594A5F971C365AF1002CB673 /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */; };
 		595E86CA1C5511A70048BEF5 /* SEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595E86C91C5511A70048BEF5 /* SEManager.swift */; };
 		595E86D21C55B3D10048BEF5 /* pastel color1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */; };
+		59626F5A1D2E0C96005FFF0E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59626F591D2E0C96005FFF0E /* GoogleService-Info.plist */; };
 		597F1EC41D1C180A00C4DAA4 /* editItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */; };
 		597F1EC61D1D1EB500C4DAA4 /* completeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */; };
 		597F1ECA1D269E2000C4DAA4 /* wantsListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC91D269E2000C4DAA4 /* wantsListSettingViewController.swift */; };
@@ -133,7 +133,6 @@
 		591D2AEA1D1780A600930A7A /* wantsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantsListTableViewCell.swift; sourceTree = "<group>"; };
 		59212E401C7361DE00CE845B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		59212E411C7361DE00CE845B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		59212E441C74133D00CE845B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59212E461C7413EC00CE845B /* じぶんノート-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "じぶんノート-Bridging-Header.h"; sourceTree = "<group>"; };
 		59212E471C7413EC00CE845B /* じぶんノートTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "じぶんノートTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		59212E481C7413EC00CE845B /* じぶんノートUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "じぶんノートUITests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -164,6 +163,7 @@
 		594A5F961C365AF1002CB673 /* NoteDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
 		595E86C91C5511A70048BEF5 /* SEManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SEManager.swift; sourceTree = "<group>"; };
 		595E86D11C55B3D10048BEF5 /* pastel color1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pastel color1.mp3"; sourceTree = "<group>"; };
+		59626F591D2E0C96005FFF0E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editItemViewController.swift; sourceTree = "<group>"; };
 		597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = completeViewController.swift; sourceTree = "<group>"; };
 		597F1EC91D269E2000C4DAA4 /* wantsListSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantsListSettingViewController.swift; sourceTree = "<group>"; };
@@ -386,7 +386,7 @@
 		59B7BF3B1C19B48C008878B2 = {
 			isa = PBXGroup;
 			children = (
-				59212E441C74133D00CE845B /* GoogleService-Info.plist */,
+				59626F591D2E0C96005FFF0E /* GoogleService-Info.plist */,
 				59212E401C7361DE00CE845B /* Fabric.framework */,
 				59212E411C7361DE00CE845B /* Crashlytics.framework */,
 				59B7BF461C19B48C008878B2 /* myNikki */,
@@ -618,9 +618,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				593CF4AE1CBCF34500B6F4E1 /* bgm_coinin_2.mp3 in Resources */,
+				59626F5A1D2E0C96005FFF0E /* GoogleService-Info.plist in Resources */,
 				595E86D21C55B3D10048BEF5 /* pastel color1.mp3 in Resources */,
 				59B7BF521C19B48C008878B2 /* LaunchScreen.storyboard in Resources */,
-				59212E451C74133D00CE845B /* GoogleService-Info.plist in Resources */,
 				59B7BF4F1C19B48C008878B2 /* Assets.xcassets in Resources */,
 				590554361CB9F836009E6EE2 /* bgm_gameclear_2.mp3 in Resources */,
 				59B7BF4D1C19B48C008878B2 /* Main.storyboard in Resources */,

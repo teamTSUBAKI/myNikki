@@ -33,6 +33,15 @@
 	<dict>
 		<key>APIKey</key>
 		<string>53ae3a6fa64eaa50ece07f2616f65178aa3e89dc</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array/>

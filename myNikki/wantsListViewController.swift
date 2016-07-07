@@ -240,6 +240,13 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        //goggleアナリティクス
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "wantList")
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject:AnyObject])
+
+        
         
         cacheImage = [:]
         

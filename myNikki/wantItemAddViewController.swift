@@ -39,6 +39,16 @@ class wantItemAddViewController: UIViewController,UITextViewDelegate{
         // Do any additional setup after loading the view.
     }
     
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "wantListAdd")
+        let builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject:AnyObject])
+
+    }
+    
     func doneButtonTaped(){
     
         self.view.endEditing(true)
