@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>myNikki.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>shareExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>59A04D571C8D13C000C75001</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59B7BF431C19B48C008878B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59B7BF571C19B48D008878B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59B7BF621C19B48D008878B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
