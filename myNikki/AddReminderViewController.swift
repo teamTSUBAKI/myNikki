@@ -21,6 +21,10 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        
+        self.navigationController?.navigationBar.barTintColor = colorFromRGB.colorWithHexString("0fb5c4")
 
         tableView.backgroundColor = colorFromRGB.colorWithHexString("f5f5f5")
         tableView.scrollEnabled = false

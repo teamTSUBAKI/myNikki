@@ -182,10 +182,11 @@ class wantsListViewController: UIViewController,UITableViewDataSource,UITableVie
         
         if wantThings?.count != 0{
         
+            
             wantsNumberLabel.text = "\((wantThings?.count)!)"
             DoneNumberLabel.text = "\((doneThings?.count)!)"
             notDoneNumberLabel.text = "\((wantThings?.count)! - (doneThings?.count)!)"
-        
+ 
         }else{
             
             wantsNumberLabel.text = "0"
