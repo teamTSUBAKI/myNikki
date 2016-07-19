@@ -119,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         //開発中のためFablicを一度止める
-        Fabric.with([Crashlytics.self])
+     //   Fabric.with([Crashlytics.self])
         
         //クラッシュさせるコード。必ず、コメントアウトか、消す。ここ以外には一切書いてない
         //Crashlytics.sharedInstance().crash()
@@ -134,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         gai.logger.logLevel = GAILogLevel.Verbose
         
         //これをコメントアウトすることで、アナリティクスが起動する。
-        //gai.dryRun = true
+        gai.dryRun = true
         
         
         //UserDefaultsにtrueを保存

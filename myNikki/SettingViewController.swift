@@ -124,7 +124,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
         case 1:
             return 2
         case 2:
-            return 1
+            return 2
         default:
             return 0
         }
@@ -168,7 +168,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 1:
                 
                 cells.menuLabel.text = "バージョン"
-                cells.accessoryLabel.text = "1.0.0"
+                cells.accessoryLabel.text = "1.0.2"
                 cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
                 
@@ -345,6 +345,14 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
                 
                 })
                 
+                
+                let cancel:UIAlertAction = UIAlertAction(title:"キャンセル",style: .Cancel,handler: {(action:UIAlertAction)-> Void in
+                
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                
+                })
+                
+                alert.addAction(cancel)
                 alert.addAction(webAction)
                 alert.addAction(twitterAction)
                 alert.addAction(mailAction)
@@ -356,8 +364,9 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             if indexPath.row == 1{
                 
-                let url:NSURL = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1080560434&pageNumber=0&sortOrdering=2&mt=8")!
+                let url:NSURL = NSURL(string: "https://itunes.apple.com/us/app/jibun-ri-ji-ri-ji-yaritaikotorisuto/id1131614479?mt=8")!
                 UIApplication.sharedApplication().openURL(url)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 
             }
             

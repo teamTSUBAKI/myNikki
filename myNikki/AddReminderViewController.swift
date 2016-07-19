@@ -169,7 +169,7 @@ class AddReminderViewController: UIViewController,UITableViewDataSource,UITableV
             let label:UILabel = UILabel(frame:CGRectMake(8,2,self.view.bounds.width,44))
             label.font = UIFont(name: "HiraKakuProN-W3", size: 15)
             label.numberOfLines = 0
-            label.text = "  リマインダーを設定し、\n  仕事、練習の記録を習慣にしましょう"
+            label.text = "  リマインダーを設定し、\n  日記を書くことを習慣にしましょう"
             label.textColor = UIColor.grayColor()
             return label
         case 1:

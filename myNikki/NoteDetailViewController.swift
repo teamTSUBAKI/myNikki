@@ -28,13 +28,16 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
     
     @IBOutlet weak var topImage: UIImageView!
     
+    @IBOutlet weak var imageView4pic: UIView!
     
+    @IBOutlet weak var backBlurImage: UIImageView!
     
     @IBOutlet weak var allViewContainerConst: NSLayoutConstraint!
     @IBOutlet weak var textViewContainerConst: NSLayoutConstraint!
     @IBOutlet weak var textViewConst: NSLayoutConstraint!
     @IBOutlet weak var textButtonConst: NSLayoutConstraint!
     
+    @IBOutlet weak var topImageY: NSLayoutConstraint!
     
     @IBOutlet weak var timerLabelWidth: NSLayoutConstraint!
     
@@ -72,6 +75,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
     @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
     @IBOutlet weak var imageViewY: NSLayoutConstraint!
     
+    @IBOutlet weak var button1width: NSLayoutConstraint!
+    @IBOutlet weak var button2width: NSLayoutConstraint!
+    @IBOutlet weak var button3width: NSLayoutConstraint!
+    @IBOutlet weak var button4width: NSLayoutConstraint!
     
     
     
@@ -108,6 +115,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+
         
         
         let tap = UITapGestureRecognizer(target: self,action: "taped")
@@ -182,6 +192,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
         
         
         self.photoSet()
+        self.imageSize()
         self.hightFirstLineInTextView(textView)
         
         
@@ -192,6 +203,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
         textViewContainerConst.constant = sizeThatShouldFitTheConst.height+60
         textViewConst.constant = sizeThatShouldFitTheConst.height+60
         textButtonConst.constant = sizeThatShouldFitTheConst.height+60
+        
+        
         allViewContainerConst.constant = (topImageViewContainerHeight.constant - 50) + sizeThatShouldFitTheConst.height+60
  
         print("調整")
@@ -330,18 +343,25 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
         
         if appDelegate?.noteFlag == true{
             
+            print("マンズ")
+            
             //最後のデータをrealmから取り出して表示
             let realm = try!Realm()
             note = realm.objects(Note).sorted("id", ascending: false)
             
             if note![0].photos.count == 0{
                 
+                print("ゴメス")
+                
                 self.imageViewY.constant = 0
                 self.topImageViewContainerHeight.constant = 0
+                
+                self.imageView4pic.hidden = true
                 
                 self.topImageViewHeight.constant = 0
                 self.imageViewHeight.constant = 0
                 
+                self.topImage.image = nil
                 
                 toPhotoDetailButton.hidden = true
                 
@@ -351,7 +371,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
             }else{
                 
                 
-                self.imageSize()
+                imageView4pic.hidden = false
                 
                 toPhotoDetailButton.hidden = false
                 
@@ -388,6 +408,9 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
                 
                 
             }
+            
+            
+           
             
             if note![0].noteText.isEmpty{
                 
@@ -461,7 +484,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
             
             
             
-     
+            
             
             
             
@@ -484,12 +507,19 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
                 self.topImageViewContainerHeight.constant = 0
                 self.imageViewHeight.constant = 0
                 
+                self.imageView4pic.hidden = true
+                
+                print("高さのさ\(imageViewHeight.constant)")
+                
+                self.topImage.image = nil
+                
            
                 
                 
             }else{
                 
-                self.imageSize()
+              
+                self.imageView4pic.hidden = false
                 
                 //メール添付用にシェアモーダルに送る
                 appDelegate?.Photoes = Notes![0].photos
@@ -510,6 +540,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
                         topImage.image = image
                         
                         presentTopImage = (Notes![0].photos[0].id)
+                            
+                          
                             
                         
                         }else if appDelegate?.albumFlag == true{
@@ -619,21 +651,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
             
             
             
-         
-            
-    
-            
         
-            
-            
-            
-       
-            
-            
-            
-           
-            
-            
         }else{
             
             if appDelegate?.timerFlag == true{
@@ -650,10 +668,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
                 
             }else{
                 
-                print("山")
-                
-                
-               
+                //写真登録などをキャンセルした時のノート画面。
+                self.imageView4pic.hidden = true
                 
                 self.topImageViewHeight.constant = 0
                 self.topImageViewContainerHeight.constant = 0
@@ -673,40 +689,156 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
         
         
         
+        
     }
     
     func imageSize(){
         
-        switch screenHeight{
+        //写真があるならば
+        if topImage.image != nil{
+        
+            print("家主")
+       
+            switch screenHeight{
             
-        case 480:
-            self.topImageViewContainerHeight.constant = 470
-            self.topImageViewHeight.constant = 470
-            self.imageViewY.constant = 330
-            self.imageViewHeight.constant = 79
+        
+            case 480:
+         
             
-        case 568:
-            self.topImageViewContainerHeight.constant = 510
-            self.topImageViewHeight.constant = 510
-            self.imageViewY.constant = 390
-            self.imageViewHeight.constant = 79
+            if topImage.image?.size.width <= topImage.image?.size.height{
+                
+                self.topImageViewContainerHeight.constant = 380
+                self.topImageViewHeight.constant = 320
+                self.imageViewY.constant = 270
+                self.topImageY.constant = 0
+                self.imageViewHeight.constant = 79
+                
+                
+            }else{
+                
+                self.topImageViewContainerHeight.constant = 380
+                self.topImageViewHeight.constant = 230
+                self.topImageY.constant = 15
+                self.imageViewY.constant = 270
+                self.backBlurImage.image = self.topImage.image
+                self.imageViewHeight.constant = 79
+                
+            }
             
-        case 667:
+       
+            case 568:
+       
+            
+            //仮説:横位置の写真と縦位置の写真でサイズを変えてみる。
+            if topImage.image?.size.width <= topImage.image?.size.height{
+                
+                self.topImageViewContainerHeight.constant = 450
+                self.topImageViewHeight.constant = 400
+                self.imageViewY.constant = 340
+                self.topImageY.constant = 0
+                self.imageViewHeight.constant = 79
+          
+                
+            }else{
+            
+                self.topImageViewContainerHeight.constant = 450
+                self.topImageViewHeight.constant = 230
+                self.topImageY.constant = 50
+                self.imageViewY.constant = 340
+                self.backBlurImage.image = self.topImage.image
+                self.imageViewHeight.constant = 79
+                
+            }
+            
+            
+            
+            
+       
+            case 667:
+            
+             print("写真の高さ\(topImage.image)")
+            
+            //仮説:横位置の写真と縦位置の写真でサイズを変えてみる。
+            if topImage.image?.size.width < topImage.image?.size.height{
             self.topImageViewContainerHeight.constant = 550
-            self.topImageViewHeight.constant = 550
+            self.topImageViewHeight.constant = 470
             self.imageViewY.constant = 430
+            self.topImageY.constant = 0
             self.imageViewHeight.constant = 79
+                print("写真の高さ\(topImage.image?.size.width)")
             
-        case 736:
-            self.topImageViewContainerHeight.constant = 570
-            self.topImageViewHeight.constant = 570
-            self.imageViewY.constant = 450
-            self.imageViewHeight.constant = 79
+                
+            }else if topImage.image?.size.width == topImage.image?.size.height{
+             //スクエアならば
+                self.topImageViewContainerHeight.constant = 550
+                print("写真の高さ\(topImage.image?.size.width)")
+                self.topImageViewHeight.constant = UIScreen.mainScreen().bounds.size.width
+                self.topImageY.constant = 26
+                
+                self.imageViewY.constant = 430
+                self.backBlurImage.image = self.topImage.image
+                self.imageViewHeight.constant = 79
+                
+                
             
-        default:
+            }else{
+                
+                self.topImageViewContainerHeight.constant = 550
+                self.topImageViewHeight.constant = 300
+                self.topImageY.constant = 60
+                
+                self.imageViewY.constant = 430
+                self.backBlurImage.image = self.topImage.image
+                self.imageViewHeight.constant = 79
+                
+            }
+            
+        
+        
+        
+       
+            case 736:
+   
+            
+            
+            if topImage.image?.size.width < topImage.image?.size.height{
+                self.topImageViewContainerHeight.constant = 580
+                self.topImageViewHeight.constant = 550
+                self.imageViewY.constant = 500
+                self.topImageY.constant = 0
+                self.imageViewHeight.constant = 79
+                
+            }else if topImage.image?.size.width == topImage.image?.size.height{
+            
+                self.topImageViewContainerHeight.constant = 580
+                self.topImageViewHeight.constant = UIScreen.mainScreen().bounds.width
+                self.topImageY.constant = 42
+                
+                self.imageViewY.constant = 500
+                self.backBlurImage.image = self.topImage.image
+                self.imageViewHeight.constant = 79
+            
+                
+                
+            }else{
+                
+                self.topImageViewContainerHeight.constant = 580
+                self.topImageViewHeight.constant = 330
+                self.topImageY.constant = 90
+                
+                self.imageViewY.constant = 500
+                self.backBlurImage.image = self.topImage.image
+                self.imageViewHeight.constant = 79
+                
+            }
+            
+        
+            default:
             print("エラー")
             
             
+        
+            }
         }
         
         
@@ -941,7 +1073,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
             
         }
         
-        
+        imageSize()
         
         
     }

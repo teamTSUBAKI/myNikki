@@ -13,13 +13,20 @@ import RealmSwift
 class PhotoDetailViewController: UIViewController,UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var imageView: UIImageView!
+
     
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
+    
+    
+ 
     var path:String?
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     //var image = UIImage()
     //var photoId = 0
+    
+    let screenHeight = UIScreen.mainScreen().bounds.size.height
     
     
     override func viewDidLoad() {
@@ -59,7 +66,106 @@ class PhotoDetailViewController: UIViewController,UIScrollViewDelegate {
         let builder = GAIDictionaryBuilder.createScreenView()
         tracker.send(builder.build() as [NSObject:AnyObject])
         
+        imageSize()
+        
     }
+    
+    func imageSize(){
+    
+        switch screenHeight{
+            
+        case 480:
+            
+            
+            if imageView.image?.size.width <= imageView.image?.size.height{
+                
+        
+                imageViewHeight.constant = screenHeight
+                
+            }else{
+                
+                imageViewHeight.constant =  230
+       
+            }
+            
+        case 568:
+            
+            
+            //仮説:横位置の写真と縦位置の写真でサイズを変えてみる。
+            if imageView.image?.size.width <= imageView.image?.size.height{
+                
+            
+                 imageViewHeight.constant = screenHeight
+                
+            }else{
+                
+                  imageViewHeight.constant = 200
+            
+            }
+            
+            
+            
+            
+        case 667:
+            
+            
+            
+            //仮説:横位置の写真と縦位置の写真でサイズを変えてみる。
+            if imageView.image?.size.width < imageView.image?.size.height{
+                
+                imageViewHeight.constant = screenHeight
+ 
+                
+            }else if imageView.image?.size.width == imageView.image?.size.height{
+                //スクエアならば
+
+                imageViewHeight.constant = UIScreen.mainScreen().bounds.width
+                
+            }else{
+                
+                print("家主")
+                imageViewHeight.constant = 270
+ 
+                
+            }
+            
+            
+            
+            
+        case 736:
+            
+            
+            
+            if imageView.image?.size.width < imageView.image?.size.height{
+          
+                imageViewHeight.constant = screenHeight
+                
+            }else if imageView.image?.size.width == imageView.image?.size.height{
+                
+                
+                imageViewHeight.constant = UIScreen.mainScreen().bounds.width
+ 
+                
+                
+            }else{
+                
+
+                imageViewHeight.constant = 270
+                
+            }
+            
+        default:
+            print("エラー")
+            
+            
+        }
+
+    
+    
+    }
+    
+    
+    
     
     func PhotoDeleteButtonTaped(){
         

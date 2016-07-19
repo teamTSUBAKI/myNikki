@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 import RealmSwift
+import SVProgressHUD
 
 
 //写真ピッカー画面になったら、裏で親ビューを画面遷移させたい
@@ -25,6 +26,11 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     
     let userDefaults = NSUserDefaults()
     
+    //保存完了通知
+    let saveCompleteNotification = "saveComplete"
+    
+    var saveCompObserver:NSObjectProtocol?
+    
     @IBOutlet weak var nonSelectedView: UIView!
     
     //選択された写真のインデックスパスを入れる配列
@@ -37,6 +43,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     var path:String?
     var data:NSData?
     
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     var filename:String?
     
     var PhotosSavedObserver:NSObjectProtocol?
@@ -53,10 +60,13 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        print("フラグス\(appDelegate?.noteFlag)")
+        
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
         
-     
+        
         //最初はdoneボタンを無効に
         toNoteButton.enabled = false
         
@@ -181,14 +191,14 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         if indexPath.row == 0{
             
             let status:AVAuthorizationStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
-
+            
             switch status{
             case AVAuthorizationStatus.Authorized:
                 //許可されている場合
                 let camera = self.storyboard?.instantiateViewControllerWithIdentifier("Camera")
                 appDelegate?.albumFlag = true
                 self.presentViewController(camera!, animated: true, completion: nil)
-            
+                
             case AVAuthorizationStatus.Denied:
                 //カメラの使用が禁止されている場合
                 break;
@@ -202,8 +212,8 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                         let camera = self.storyboard?.instantiateViewControllerWithIdentifier("Camera")
                         self.appDelegate?.albumFlag = true
                         self.presentViewController(camera!, animated: true, completion: nil)
-
-                    
+                        
+                        
                     }else{
                         
                         print("不許可")
@@ -249,125 +259,9 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     
     @IBAction func toNoteButton(sender: AnyObject) {
         
+        cancelButton.enabled = false
+        toNoteButton.enabled = false
         self.dataSave()
-        
-        //カメラを経由したならば、
-            if self.appDelegate?.cameraViewFlag == true{
-                
-                //写真追加
-                if self.appDelegate?.addPhotoFlag == true{
-                  
-                    print("恋こい")
-                    if appDelegate?.noteFlag == true && appDelegate?.returnCamera == false{
-                        self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-                        appDelegate?.addPhotoFlag = false
-                        appDelegate?.noteFlag = true
-                        appDelegate?.noPhotoButtonTaped = false
-                        print("ウグイス")
-                    }else if appDelegate?.noteFlag == false && appDelegate?.returnCamera == false{
-                        
-                        self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-                        appDelegate?.addPhotoFlag = false
-                        appDelegate?.noteFlag = false
-                        print("たらお")
-                    }
-                    
-                  
-                    if appDelegate?.returnCamera == true{
-                    
-                        //新規ノート
-                        if appDelegate?.noteFlag == true {
-                        
-                            //noPhotoButton経由ならば
-                            if appDelegate?.noPhotoButtonTaped == true{
-                                appDelegate?.returnCamera = false
-                                appDelegate?.addPhotoFlag = false
-                                appDelegate?.noteFlag = true
-                                appDelegate?.noPhotoButtonTaped = false
-                                print("らんま")
-                                self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                                
-                            
-                               }else{
-                               appDelegate?.noteFlag = true
-                               print("やぁ")
-                               appDelegate?.returnCamera = false
-                               appDelegate?.addPhotoFlag = false
-                               self.dismissViewControllerAnimated(true, completion: nil)
-                               
-                            }
-                           
-                        
-                        }else{
-                            
-                            //タイムライン
-                            appDelegate?.noteFlag = false
-                            self.dismissViewControllerAnimated(true, completion: nil)
-                            appDelegate?.returnCamera = false
-                            appDelegate?.addPhotoFlag = false
-                            print("やす")
-                        }
-                        
-                    }
-                    
-             
-                
-                }else{
-                    
-                    if appDelegate?.returnCamera == true{
-                        
-                        if appDelegate?.tabBarCamera == true{
-                             print("ユキ")
-                            self.appDelegate?.noteFlag = true
-                            appDelegate?.returnCamera = false
-                            appDelegate?.tabBarCamera = false
-                            self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                        
-                     
-                            
-                        }else{
-                        self.appDelegate?.noteFlag = true
-                        appDelegate?.returnCamera = false
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        print("ここ")
-                        }
-                        
-                    }else{
-                        
-                        self.appDelegate?.noteFlag = true
-                        self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                        print("呼ばれない？")
-                    }
-                    
-                }
-                
-                   self.appDelegate?.cameraViewFlag = false
-                
-        }else{
-                
-                //写真の追加ならば
-                if self.appDelegate?.addPhotoFlag == true{
-                    
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.appDelegate?.addPhotoFlag = false
-                    print("オドム")
-                    
-                }else{
-                    //新規作成ノートであることを伝える。
-                    self.appDelegate?.noteFlag = true
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    print("ランス")
-                    
-                }
-                
-                
-            }
-        
-        print("通る")
-        appDelegate?.tabBarCamera = false
-        
-     
-        
         
     }
     
@@ -377,236 +271,474 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         if paths.count > 0{
             path = paths[0]
         }
-       
-        let realm = try!Realm()
-        let maxNote = realm.objects(Note).sorted("id", ascending: false)
-        let note = Note()
         
-        print("why")
+    
+        
+        
         
         //写真の追加だったら
         if appDelegate?.addPhotoFlag == true{
             
-            
-            let editNoteIds:Int = (appDelegate?.editNoteId)!
-            let editNote = realm.objects(Note).filter("id = \(editNoteIds)")
-            
-            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            
-            if paths.count > 0{
+            SVProgressHUD.showWithStatus("写真を保存しています")
+            dispatch_async_global({
                 
-                path = paths[0]
+                let realm = try!Realm()
+                let maxNote = realm.objects(Note).sorted("id", ascending: false)
+                let note = Note()
                 
-            }else{
-                //エラー処理
-            }
-            
-            for ind in 0...selectPhots.count-1{
+                let editNoteIds:Int = (self.appDelegate?.editNoteId)!
+                let editNote = realm.objects(Note).filter("id = \(editNoteIds)")
                 
-                filename = NSUUID().UUIDString + ".jpg"
-                let filepath = (path! as NSString).stringByAppendingPathComponent(filename!)
-                let options = PHImageRequestOptions()
-                options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
-                options.synchronous = true
-                options.networkAccessAllowed = true
+                let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
                 
-                let asset = selectPhots[ind]
+                if paths.count > 0{
+                    
+                    self.path = paths[0]
+                    
+                }else{
+                    //エラー処理
+                }
                 
-                let manager = PHImageManager()
-                manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+                
+                var ind = 0
+                
+                for asset in self.selectPhots{
+                    
+                    self.filename = NSUUID().UUIDString + ".jpg"
+                    let filepath = (self.path! as NSString).stringByAppendingPathComponent(self.filename!)
                     
                     
+                    let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
                     
-                    self.data = UIImageJPEGRepresentation(image!, 0.8)
-                    if ((self.data?.writeToFile(filepath, atomically: true)) != nil){
+                    
+                    try!realm.write({ () -> Void in
+                        
+                        let photo = Photos()
                         
                         
-                        let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
-                      
+                        if maxPhoto.isEmpty{
+                            
+                            photo.id = 1
+                            
+                            
+                        }else{
+                            
+                            photo.id = maxPhoto[0].id + 1
+                            
+                        }
                         
-                        try!realm.write({ () -> Void in
+                        photo.createDate = editNote[0].createDate
+                        photo.filename = self.filename!
+                        
+                        if ind == self.selectPhots.count - 1{
                             
-                            let photo = Photos()
+                            editNote[0].photos.append(photo)
+                            
+                            
+                            
+                        }else{
+                            
+                            editNote[0].photos.append(photo)
+                            
+                        }
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
+                        
+                    })
                     
-                            
-                            if maxPhoto.isEmpty{
-                                
-                                photo.id = 1
-                                
-                                
-                            }else{
-                                
-                                photo.id = maxPhoto[0].id + 1
-                                
-                            }
-                            
-                            photo.createDate = editNote[0].createDate
-                            photo.filename = self.filename!
-                            
-                            if ind == self.selectPhots.count - 1{
-                                
-                                editNote[0].photos.append(photo)
-                                
-                            
-                            
-                            }else{
-                                
-                                editNote[0].photos.append(photo)
-                                
-                            }
-                            
-                    NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
-                            
-                        })
+                    let options = PHImageRequestOptions()
+                    options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
+                    options.networkAccessAllowed = true
+                    
+                    let manager = PHImageManager()
+                    //仮説１：オプションをnilにして画質がどうなるかをチェックする。
+                    //結果：少し早くなった気もするがあまり効果的ではない感じ。
+                    
+                    //仮説２：写真サイズをオリジナルにする
+                    //結果:あまり変わらず。
+                    
+                    //比率
+                    var minRatio:CGFloat = 1
+                    
+                    if CGFloat(asset.pixelWidth) > UIScreen.mainScreen().bounds.width || CGFloat(asset.pixelHeight) > UIScreen.mainScreen().bounds.height{
+                        
+                        //小さい方の辺の比率に合わせる
+                        minRatio = min(UIScreen.mainScreen().bounds.width / CGFloat(asset.pixelWidth), UIScreen.mainScreen().bounds.height / CGFloat(asset.pixelHeight))
+                        
                     }
+                    
+                    let size:CGSize = CGSizeMake(CGFloat(asset.pixelWidth)*minRatio + 125, CGFloat(asset.pixelHeight)*minRatio)
+                    
+                    manager.requestImageForAsset(asset, targetSize:size , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+                        
+                        
+                        if image != nil{
+                        self.data = UIImageJPEGRepresentation(image!, 0.8)
+                        self.data?.writeToFile(filepath, atomically: true)
+                        }
+                        
+                        if ind == self.selectPhots.count - 1{
+                           
+                            NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
+                        }
+                        
+                        ind += 1
+                    })
+                    
+                }
+                
+                self.dispatch_async_main({
+                    
+                   self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification)in
+                        SVProgressHUD.dismiss()
+                        self.toNoteDetail()
+                    
+                    })
+                    
                 })
                 
-            }
+                
+            })
+            
+            
+            
             
             
             
         }else{
             //新規のノートの追加。
             
-            if maxNote.isEmpty{
-                note.id = 1
-            }else{
+            
+            
+            SVProgressHUD.showWithStatus("写真を保存しています")
+            dispatch_async_global({
                 
-                note.id = maxNote[0].id + 1
-            }
-            
-            
-            //元に戻し済み。大丈夫な状態。
-            note.createDate = NSDate()
-            
-        
-            /*
-            let date:String = "2016-7-16 22:34:12"
-            let dateformatter:NSDateFormatter = NSDateFormatter()
-            dateformatter.locale = NSLocale(localeIdentifier: "ja")
-            dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-            let changeDate = dateformatter.dateFromString(date)
-            note.createDate = changeDate
-            */
-            
-            
-            try!realm.write({ () -> Void in
+                let realms = try!Realm()
+                let maxNotes = realms.objects(Note).sorted("id", ascending: false)
+                let notes = Note()
                 
-                realm.add(note, update: true)
-                
-            })
-            
-        
-            
-   
-            //画像の保存先パスを取得
-            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            if paths.count > 0{
-                path = paths[0]
-            }else{
-                
-                //エラー処理
-            }
-            
-            
-            
-            for ind in 0...selectPhots.count - 1{
-                
-                let options = PHImageRequestOptions()
-                options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
-                options.networkAccessAllowed = true
-                options.synchronous = true
-                
-                
-                let asset = selectPhots[ind]
-                
-                let manager = PHImageManager()
-                manager.requestImageForAsset(asset, targetSize:CGSizeMake(self.view.bounds.size.width,360) , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
-                   
+                if maxNotes.isEmpty{
+                    notes.id = 1
+                }else{
                     
-                    self.data = UIImageJPEGRepresentation(image!, 0.8)
-                    //ここに移動してみた！結果、問題は起きないけど、問題解決も出来なかった。
-                     self.filename = NSUUID().UUIDString + ".jpg"
+                    notes.id = maxNotes[0].id + 1
+                }
+                
+                
+                //元に戻し済み。大丈夫な状態。
+                notes.createDate = NSDate()
+                
+                
+                /*
+                 let date:String = "2016-7-16 22:34:12"
+                 let dateformatter:NSDateFormatter = NSDateFormatter()
+                 dateformatter.locale = NSLocale(localeIdentifier: "ja")
+                 dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+                 let changeDate = dateformatter.dateFromString(date)
+                 note.createDate = changeDate
+                 */
+                
+                
+                try!realms.write({ () -> Void in
+                    
+                    realms.add(notes, update: true)
+                    
+                })
+                
+                
+                
+                
+                //画像の保存先パスを取得
+                let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+                if paths.count > 0{
+                    self.path = paths[0]
+                }else{
+                    
+                    //エラー処理
+                }
+
+                
+                
+                var ind = 0
+                
+                for asset in self.selectPhots{
+                    
+                    self.filename = NSUUID().UUIDString + ".jpg"
                     
                     let filepath = (self.path! as NSString).stringByAppendingPathComponent(self.filename!)
                     
-                    if((self.data?.writeToFile(filepath, atomically: true)) != nil){
-                        
-                
-                        
-                        let maxPhoto = realm.objects(Photos).sorted("id", ascending: false)
-                        
-                        try!realm.write({ () -> Void in
-                            
-                            let photo = Photos()
-                            
-                            
-                            if maxPhoto.isEmpty{
-                                
-                                photo.id = 1
-                                
-                            }else{
-                                
-                                photo.id = maxPhoto[0].id + 1
-                                
-                            }
-                            
-                            photo.createDate = NSDate()
-                            photo.filename = self.filename!
-                            
-                            //選ばれた写真の最後の一枚ならば、
-                            if ind == self.selectPhots.count - 1{
-                                
-                                note.photos.append(photo)
-                            
-                            }else{
-                                
-                                note.photos.append(photo)
-                                
-                            }
-                            
-                            NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
-                        })
-                        
+    
+                    let maxPhoto = realms.objects(Photos).sorted("id", ascending: false)
                     
+                    try!realms.write({ () -> Void in
                         
+                        let photo = Photos()
+                        
+                        
+                        if maxPhoto.isEmpty{
+                            
+                            photo.id = 1
+                            
+                        }else{
+                            
+                            photo.id = maxPhoto[0].id + 1
+                            
+                        }
+                        
+                        photo.createDate = NSDate()
+                        photo.filename = self.filename!
+                        
+                        notes.photos.append(photo)
+                            
+                NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
+                    })
+                    
+                    
+                    let options = PHImageRequestOptions()
+                    options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
+                    options.networkAccessAllowed = true
+                    // options.synchronous = true
+                    
+                    
+                    
+                    
+                    let manager = PHImageManager()
+                    
+                    
+                    var minRatio:CGFloat = 1
+                    
+                    if CGFloat(asset.pixelWidth) > UIScreen.mainScreen().bounds.width || CGFloat(asset.pixelHeight) > UIScreen.mainScreen().bounds.height{
+                        
+                        minRatio = min(UIScreen.mainScreen().bounds.width / CGFloat(asset.pixelWidth), UIScreen.mainScreen().bounds.height / CGFloat(asset.pixelHeight))
                         
                     }
                     
                     
+                    let size:CGSize = CGSizeMake(CGFloat(asset.pixelWidth)*minRatio + 125, CGFloat(asset.pixelHeight)*minRatio)
+                    
+                    
+                    
+                    manager.requestImageForAsset(asset, targetSize:size , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+                        
+                        
+                        if image != nil{
+                        self.data = UIImageJPEGRepresentation(image!,0.8)
+                        self.data?.writeToFile(filepath, atomically: true)
+                        }
+                    
+                    
+                        
+                        if ind == self.selectPhots.count - 1{
+                            
+                            NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
+                        }
+                        
+                            ind += 1
+                        
+                    })
+                    
+                    
+                    
+                }
+
+                self.dispatch_async_main({ 
+                    
+                    
+                   self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification) in
+                    
+                           SVProgressHUD.dismiss()
+                           self.toNoteDetail()
+                    })
+                    
+                    
+                    
+                    
                 })
                 
-            }
+                
+                
+                
+            })
+            
             
         }
     }
     
     
+    //非同期処理関数
+    func dispatch_async_main(block:()->()){
+        
+        dispatch_async(dispatch_get_main_queue(),block)
+        
+    }
     
+    func dispatch_async_global(block:()->()){
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
+        
+    }
+    
+    
+    
+    
+    func toNoteDetail(){
+        
+        
+        //カメラを経由したならば、
+        if self.appDelegate?.cameraViewFlag == true{
+            
+            //写真追加
+            if self.appDelegate?.addPhotoFlag == true{
+                
+                
+                if appDelegate?.noteFlag == true && appDelegate?.returnCamera == false{
+                    self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+                    appDelegate?.addPhotoFlag = false
+                    appDelegate?.noteFlag = true
+                    appDelegate?.noPhotoButtonTaped = false
+                    
+                }else if appDelegate?.noteFlag == false && appDelegate?.returnCamera == false{
+                    
+                    self.presentingViewController?.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+                    appDelegate?.addPhotoFlag = false
+                    appDelegate?.noteFlag = false
+                    
+                }
+                
+                
+                if appDelegate?.returnCamera == true{
+                    
+                    //新規ノート
+                    if appDelegate?.noteFlag == true {
+                        
+                        //noPhotoButton経由ならば
+                        if appDelegate?.noPhotoButtonTaped == true{
+                            appDelegate?.returnCamera = false
+                            appDelegate?.addPhotoFlag = false
+                            appDelegate?.noteFlag = true
+                            appDelegate?.noPhotoButtonTaped = false
+                            
+                            self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                            
+                            
+                        }else{
+                            appDelegate?.noteFlag = true
+                            
+                            appDelegate?.returnCamera = false
+                            appDelegate?.addPhotoFlag = false
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            
+                        }
+                        
+                        
+                    }else{
+                        
+                        //タイムライン
+                        appDelegate?.noteFlag = false
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        appDelegate?.returnCamera = false
+                        appDelegate?.addPhotoFlag = false
+                        
+                    }
+                    
+                }
+                
+                
+                
+            }else{
+                
+                if appDelegate?.returnCamera == true{
+                    
+                    if appDelegate?.tabBarCamera == true{
+                        
+                        self.appDelegate?.noteFlag = true
+                        appDelegate?.returnCamera = false
+                        appDelegate?.tabBarCamera = false
+                        self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                        
+                        
+                        
+                    }else{
+                        self.appDelegate?.noteFlag = true
+                        appDelegate?.returnCamera = false
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        
+                    }
+                    
+                }else{
+                    
+                    self.appDelegate?.noteFlag = true
+                    self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                    
+                }
+                
+            }
+            
+            self.appDelegate?.cameraViewFlag = false
+            
+        }else{
+            
+            //写真の追加ならば
+            if self.appDelegate?.addPhotoFlag == true{
+                
+                print("ここます")
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.appDelegate?.addPhotoFlag = false
+                
+                
+            }else{
+                //新規作成ノートであることを伝える。
+                self.appDelegate?.noteFlag = true
+                self.dismissViewControllerAnimated(true, completion: nil)
+                
+                
+            }
+            
+            
+        }
+        
+        
+        appDelegate?.tabBarCamera = false
+        
+        print("フラグス後編\(appDelegate?.noteFlag)")
 
+        
+    }
+    
+    
+    
+    
     @IBAction func canceButton(sender: AnyObject) {
         
         appDelegate?.tabBarCamera = false
         
         appDelegate?.noPhotoButtonTaped = false
         if appDelegate?.textOrCameraFlag == true{
-       
+            
             self.presentingViewController!.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             appDelegate?.addPhotoFlag = false
             appDelegate?.textOrCameraFlag = false
             appDelegate?.cameraViewFlag = false
             
-          
+            
         }else{
             
             appDelegate?.addPhotoFlag = false
             self.dismissViewControllerAnimated(true, completion: nil)
             
-        
+            
             
         }
         
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        print(self.saveCompObserver)
+        if saveCompObserver != nil{
+        NSNotificationCenter.defaultCenter().removeObserver(self.saveCompObserver!)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -616,13 +748,13 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     
     
     /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
 }
