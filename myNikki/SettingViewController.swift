@@ -168,7 +168,7 @@ class SettingViewController: UIViewController,UITableViewDataSource,UITableViewD
             case 1:
                 
                 cells.menuLabel.text = "バージョン"
-                cells.accessoryLabel.text = "1.0.2"
+                cells.accessoryLabel.text = "1.0.3"
                 cells.selectionStyle = UITableViewCellSelectionStyle.None
                 return cells
                 
