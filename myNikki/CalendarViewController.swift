@@ -71,27 +71,44 @@ class CalendarViewController: UIViewController,modalViewDelegate{
     
     func reload(){
         print("リロードさん")
-        let subViews:[UIView] = self.viewContainer.subviews
         
-        for view in subViews{
+        disptch_async_main({
+        
+        
+            let subViews:[UIView] = self.viewContainer.subviews
             
-            if view.isKindOfClass(CalendarView){
+            for view in subViews{
                 
-                view.removeFromSuperview()
+                if view.isKindOfClass(CalendarView){
+                    
+                    view.removeFromSuperview()
+                    
+                }
                 
             }
             
-        }
+            self.calendarView = CalendarView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,1000))
+            self.calendarView.currentMonthView.delegate = self
+            self.calendarView.nextMonthView.delegate = self
+            self.calendarView.prevMonthView.delegate = self
+            
+            
+            self.viewContainer.addSubview(self.calendarView)
+            
+
         
-        calendarView = CalendarView(frame: CGRectMake(0,0,UIScreen.mainScreen().bounds.size.width,1000))
-        calendarView.currentMonthView.delegate = self
-        calendarView.nextMonthView.delegate = self
-        calendarView.prevMonthView.delegate = self
+        
+        })
         
         
-        self.viewContainer.addSubview(calendarView)
         
+    }
+    
+
+    
+    func disptch_async_main(block:()->()){
         
+        dispatch_async(dispatch_get_main_queue(), block)
         
     }
     
