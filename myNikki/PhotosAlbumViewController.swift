@@ -274,12 +274,13 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         
     
         
-        
+          collectionView.allowsSelection = false
         
         //写真の追加だったら
         if appDelegate?.addPhotoFlag == true{
             
             SVProgressHUD.showWithStatus("写真を保存しています")
+          
             dispatch_async_global({
                 
                 let realm = try!Realm()
@@ -411,6 +412,9 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
             
             SVProgressHUD.showWithStatus("写真を保存しています")
+            
+            
+            
             dispatch_async_global({
                 
                 let realms = try!Realm()

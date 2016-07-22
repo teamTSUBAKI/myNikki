@@ -88,6 +88,10 @@ class AlbumViewController: UIViewController,toNoteDetailDelegate {
     
     
     
+    
+    
+    
+    
     deinit{
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
