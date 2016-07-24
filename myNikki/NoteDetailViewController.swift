@@ -117,7 +117,7 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
         super.viewDidLoad()
         
         
-
+          print("ロード")
         
         
         let tap = UITapGestureRecognizer(target: self,action: "taped")
@@ -340,6 +340,8 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
     func photoSet(){
         
         //遷移元が新規ノート作成画面の時
+        
+         print("マンズ")
         
         if appDelegate?.noteFlag == true{
             

@@ -271,7 +271,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         if paths.count > 0{
             path = paths[0]
         }
-        
+           SVProgressHUD.showWithStatus("写真を保存しています")
     
         
           collectionView.allowsSelection = false
@@ -408,14 +408,15 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
         }else{
             //新規のノートの追加。
+        
             
+            let semaphore = dispatch_semaphore_create(0)
             
             
             SVProgressHUD.showWithStatus("写真を保存しています")
-            
-            
-            
             dispatch_async_global({
+            
+            
                 
                 let realms = try!Realm()
                 let maxNotes = realms.objects(Note).sorted("id", ascending: false)
@@ -460,7 +461,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     //エラー処理
                 }
-
+                
                 
                 
                 var ind = 0
@@ -471,7 +472,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     let filepath = (self.path! as NSString).stringByAppendingPathComponent(self.filename!)
                     
-    
+                    
                     let maxPhoto = realms.objects(Photos).sorted("id", ascending: false)
                     
                     try!realms.write({ () -> Void in
@@ -493,15 +494,16 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                         photo.filename = self.filename!
                         
                         notes.photos.append(photo)
-                            
-                NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
                     })
                     
                     
                     let options = PHImageRequestOptions()
                     options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
+                    options.resizeMode = .Exact
                     options.networkAccessAllowed = true
-                    // options.synchronous = true
+                    options.synchronous = true
                     
                     
                     
@@ -521,48 +523,93 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     let size:CGSize = CGSizeMake(CGFloat(asset.pixelWidth)*minRatio + 125, CGFloat(asset.pixelHeight)*minRatio)
                     
                     
-                    
+                    print("アセット\(asset)")
                     manager.requestImageForAsset(asset, targetSize:size , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
                         
+                        /*
+                         if image != nil{
+                         self.data = UIImageJPEGRepresentation(image!,0.8)
+                         self.data?.writeToFile(filepath, atomically: true)
+                         
+                         }*/
                         
-                        if image != nil{
-                        self.data = UIImageJPEGRepresentation(image!,0.8)
-                        self.data?.writeToFile(filepath, atomically: true)
+                        
+                        
+                        if let images = image{
+                            
+                            print("ヤーゴン")
+                            self.data = UIImageJPEGRepresentation(images,0.8)
+                            self.data?.writeToFile(filepath, atomically: true)
+                            
                         }
-                    
-                    
                         
+                        
+                        print("インド\(ind)")
+                        print("写真の数すう\(self.selectPhots.count - 1)")
+                        
+                        /*
                         if ind == self.selectPhots.count - 1{
                             
-                            NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
-                        }
+                            print("ジュベス")
+                            
                         
-                            ind += 1
+                            NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
+                        }*/
+                        
+                        ind += 1
+                        
+                        
                         
                     })
                     
                     
                     
                 }
-
-                self.dispatch_async_main({ 
-                    
-                    
-                   self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification) in
-                    
-                           SVProgressHUD.dismiss()
-                           self.toNoteDetail()
-                    })
-                    
-                    
-                    
-                    
-                })
+                
+                
+                
+                dispatch_semaphore_signal(semaphore)
+            
+            
+            
+            
+            })
+            
+            
+            
+            
+            print("こきあ")
+            
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            
+            
+            print("画面遷移先生")
+       
+            
+            self.dispatch_async_main({
+                
+                SVProgressHUD.dismiss()
+                self.toNoteDetail()
+                
+              /*  print("画面遷移先生")
+                    SVProgressHUD.dismiss()
+                    self.toNoteDetail()
+                */
+                
+                /*  self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification) in
+                 
+                 print("画面遷移先生")
+                 SVProgressHUD.dismiss()
+                 self.toNoteDetail()
+                 })*/
                 
                 
                 
                 
             })
+            
+            
+      
             
             
         }
