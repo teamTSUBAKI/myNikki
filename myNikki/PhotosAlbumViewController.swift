@@ -272,15 +272,15 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             path = paths[0]
         }
         
-    
         
-          collectionView.allowsSelection = false
+        
+        collectionView.allowsSelection = false
         
         //写真の追加だったら
         if appDelegate?.addPhotoFlag == true{
             
             SVProgressHUD.showWithStatus("写真を保存しています")
-          
+            
             dispatch_async_global({
                 
                 let realm = try!Realm()
@@ -357,29 +357,17 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     //仮説２：写真サイズをオリジナルにする
                     //結果:あまり変わらず。
-                    
-                    //比率
-                    var minRatio:CGFloat = 1
-                    
-                    if CGFloat(asset.pixelWidth) > UIScreen.mainScreen().bounds.width || CGFloat(asset.pixelHeight) > UIScreen.mainScreen().bounds.height{
-                        
-                        //小さい方の辺の比率に合わせる
-                        minRatio = min(UIScreen.mainScreen().bounds.width / CGFloat(asset.pixelWidth), UIScreen.mainScreen().bounds.height / CGFloat(asset.pixelHeight))
-                        
-                    }
-                    
-                    let size:CGSize = CGSizeMake(CGFloat(asset.pixelWidth)*minRatio + 125, CGFloat(asset.pixelHeight)*minRatio)
-                    
-                    manager.requestImageForAsset(asset, targetSize:size , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+        
+                    manager.requestImageForAsset(asset, targetSize:PHImageManagerMaximumSize , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
                         
                         
                         if image != nil{
-                        self.data = UIImageJPEGRepresentation(image!, 0.8)
-                        self.data?.writeToFile(filepath, atomically: true)
+                            self.data = UIImageJPEGRepresentation(image!, 0.8)
+                            self.data?.writeToFile(filepath, atomically: true)
                         }
                         
                         if ind == self.selectPhots.count - 1{
-                           
+                            
                             NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
                         }
                         
@@ -390,10 +378,10 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 
                 self.dispatch_async_main({
                     
-                   self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification)in
+                    self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification)in
                         SVProgressHUD.dismiss()
                         self.toNoteDetail()
-                    
+                        
                     })
                     
                 })
@@ -460,7 +448,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     //エラー処理
                 }
-
+                
                 
                 
                 var ind = 0
@@ -471,7 +459,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     let filepath = (self.path! as NSString).stringByAppendingPathComponent(self.filename!)
                     
-    
+                    
                     let maxPhoto = realms.objects(Photos).sorted("id", ascending: false)
                     
                     try!realms.write({ () -> Void in
@@ -493,65 +481,49 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                         photo.filename = self.filename!
                         
                         notes.photos.append(photo)
-                            
-                NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName("savePhoto", object: nil)
                     })
                     
                     
                     let options = PHImageRequestOptions()
                     options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
                     options.networkAccessAllowed = true
-                    // options.synchronous = true
-                    
-                    
-                    
+                   // options.synchronous = true
                     
                     let manager = PHImageManager()
                     
-                    
-                    var minRatio:CGFloat = 1
-                    
-                    if CGFloat(asset.pixelWidth) > UIScreen.mainScreen().bounds.width || CGFloat(asset.pixelHeight) > UIScreen.mainScreen().bounds.height{
-                        
-                        minRatio = min(UIScreen.mainScreen().bounds.width / CGFloat(asset.pixelWidth), UIScreen.mainScreen().bounds.height / CGFloat(asset.pixelHeight))
-                        
-                    }
-                    
-                    
-                    let size:CGSize = CGSizeMake(CGFloat(asset.pixelWidth)*minRatio + 125, CGFloat(asset.pixelHeight)*minRatio)
-                    
-                    
-                    
-                    manager.requestImageForAsset(asset, targetSize:size , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+                    manager.requestImageForAsset(asset, targetSize:PHImageManagerMaximumSize, contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
                         
                         
                         if image != nil{
-                        self.data = UIImageJPEGRepresentation(image!,0.8)
-                        self.data?.writeToFile(filepath, atomically: true)
+                            self.data = UIImageJPEGRepresentation(image!,0.8)
+                            self.data?.writeToFile(filepath, atomically: true)
                         }
-                    
-                    
+                        
+                        
                         
                         if ind == self.selectPhots.count - 1{
                             
                             NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
                         }
                         
-                            ind += 1
+                        ind += 1
                         
                     })
                     
                     
                     
                 }
-
-                self.dispatch_async_main({ 
+                
+                self.dispatch_async_main({
                     
+               
                     
-                   self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification) in
-                    
-                           SVProgressHUD.dismiss()
-                           self.toNoteDetail()
+                    self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification) in
+                        
+                        SVProgressHUD.dismiss()
+                        self.toNoteDetail()
                     })
                     
                     
@@ -706,7 +678,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         appDelegate?.tabBarCamera = false
         
         print("フラグス後編\(appDelegate?.noteFlag)")
-
+        
         
     }
     
@@ -741,7 +713,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     override func viewWillDisappear(animated: Bool) {
         print(self.saveCompObserver)
         if saveCompObserver != nil{
-        NSNotificationCenter.defaultCenter().removeObserver(self.saveCompObserver!)
+            NSNotificationCenter.defaultCenter().removeObserver(self.saveCompObserver!)
         }
     }
     
