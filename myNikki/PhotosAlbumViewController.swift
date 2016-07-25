@@ -271,16 +271,16 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         if paths.count > 0{
             path = paths[0]
         }
-           SVProgressHUD.showWithStatus("写真を保存しています")
-    
         
-          collectionView.allowsSelection = false
+        
+        
+        collectionView.allowsSelection = false
         
         //写真の追加だったら
         if appDelegate?.addPhotoFlag == true{
             
             SVProgressHUD.showWithStatus("写真を保存しています")
-          
+            
             dispatch_async_global({
                 
                 let realm = try!Realm()
@@ -357,29 +357,17 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     //仮説２：写真サイズをオリジナルにする
                     //結果:あまり変わらず。
-                    
-                    //比率
-                    var minRatio:CGFloat = 1
-                    
-                    if CGFloat(asset.pixelWidth) > UIScreen.mainScreen().bounds.width || CGFloat(asset.pixelHeight) > UIScreen.mainScreen().bounds.height{
-                        
-                        //小さい方の辺の比率に合わせる
-                        minRatio = min(UIScreen.mainScreen().bounds.width / CGFloat(asset.pixelWidth), UIScreen.mainScreen().bounds.height / CGFloat(asset.pixelHeight))
-                        
-                    }
-                    
-                    let size:CGSize = CGSizeMake(CGFloat(asset.pixelWidth)*minRatio + 125, CGFloat(asset.pixelHeight)*minRatio)
-                    
-                    manager.requestImageForAsset(asset, targetSize:size , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
+        
+                    manager.requestImageForAsset(asset, targetSize:PHImageManagerMaximumSize , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
                         
                         
                         if image != nil{
-                        self.data = UIImageJPEGRepresentation(image!, 0.8)
-                        self.data?.writeToFile(filepath, atomically: true)
+                            self.data = UIImageJPEGRepresentation(image!, 0.8)
+                            self.data?.writeToFile(filepath, atomically: true)
                         }
                         
                         if ind == self.selectPhots.count - 1{
-                           
+                            
                             NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
                         }
                         
@@ -390,10 +378,10 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                 
                 self.dispatch_async_main({
                     
-                   self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification)in
+                    self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification)in
                         SVProgressHUD.dismiss()
                         self.toNoteDetail()
-                    
+                        
                     })
                     
                 })
@@ -408,15 +396,14 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
             
         }else{
             //新規のノートの追加。
-        
             
-            let semaphore = dispatch_semaphore_create(0)
             
             
             SVProgressHUD.showWithStatus("写真を保存しています")
+            
+            
+            
             dispatch_async_global({
-            
-            
                 
                 let realms = try!Realm()
                 let maxNotes = realms.objects(Note).sorted("id", ascending: false)
@@ -501,64 +488,27 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                     let options = PHImageRequestOptions()
                     options.deliveryMode = PHImageRequestOptionsDeliveryMode.HighQualityFormat
-                    options.resizeMode = .Exact
                     options.networkAccessAllowed = true
-                    options.synchronous = true
-                    
-                    
-                    
+                   // options.synchronous = true
                     
                     let manager = PHImageManager()
                     
-                    
-                    var minRatio:CGFloat = 1
-                    
-                    if CGFloat(asset.pixelWidth) > UIScreen.mainScreen().bounds.width || CGFloat(asset.pixelHeight) > UIScreen.mainScreen().bounds.height{
-                        
-                        minRatio = min(UIScreen.mainScreen().bounds.width / CGFloat(asset.pixelWidth), UIScreen.mainScreen().bounds.height / CGFloat(asset.pixelHeight))
-                        
-                    }
-                    
-                    
-                    let size:CGSize = CGSizeMake(CGFloat(asset.pixelWidth)*minRatio + 125, CGFloat(asset.pixelHeight)*minRatio)
-                    
-                    
-                    print("アセット\(asset)")
-                    manager.requestImageForAsset(asset, targetSize:size , contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
-                        
-                        /*
-                         if image != nil{
-                         self.data = UIImageJPEGRepresentation(image!,0.8)
-                         self.data?.writeToFile(filepath, atomically: true)
-                         
-                         }*/
+                    manager.requestImageForAsset(asset, targetSize:PHImageManagerMaximumSize, contentMode: .AspectFill, options: options, resultHandler: {(image,info)->Void in
                         
                         
-                        
-                        if let images = image{
-                            
-                            print("ヤーゴン")
-                            self.data = UIImageJPEGRepresentation(images,0.8)
+                        if image != nil{
+                            self.data = UIImageJPEGRepresentation(image!,0.8)
                             self.data?.writeToFile(filepath, atomically: true)
-                            
                         }
                         
                         
-                        print("インド\(ind)")
-                        print("写真の数すう\(self.selectPhots.count - 1)")
                         
-                        /*
                         if ind == self.selectPhots.count - 1{
                             
-                            print("ジュベス")
-                            
-                        
                             NSNotificationCenter.defaultCenter().postNotificationName(self.saveCompleteNotification, object: nil)
-                        }*/
+                        }
                         
                         ind += 1
-                        
-                        
                         
                     })
                     
@@ -566,50 +516,25 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
                     
                 }
                 
-                
-                
-                dispatch_semaphore_signal(semaphore)
-            
-            
-            
-            
-            })
-            
-            
-            
-            
-            print("こきあ")
-            
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-            
-            
-            print("画面遷移先生")
-       
-            
-            self.dispatch_async_main({
-                
-                SVProgressHUD.dismiss()
-                self.toNoteDetail()
-                
-              /*  print("画面遷移先生")
-                    SVProgressHUD.dismiss()
-                    self.toNoteDetail()
-                */
-                
-                /*  self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification) in
-                 
-                 print("画面遷移先生")
-                 SVProgressHUD.dismiss()
-                 self.toNoteDetail()
-                 })*/
+                self.dispatch_async_main({
+                    
+               
+                    
+                    self.saveCompObserver = NSNotificationCenter.defaultCenter().addObserverForName(self.saveCompleteNotification, object: nil, queue: nil, usingBlock: {(notification) in
+                        
+                        SVProgressHUD.dismiss()
+                        self.toNoteDetail()
+                    })
+                    
+                    
+                    
+                    
+                })
                 
                 
                 
                 
             })
-            
-            
-      
             
             
         }
@@ -753,7 +678,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
         appDelegate?.tabBarCamera = false
         
         print("フラグス後編\(appDelegate?.noteFlag)")
-
+        
         
     }
     
@@ -788,7 +713,7 @@ class PhotosAlbumViewController: UIViewController,UICollectionViewDelegate,UICol
     override func viewWillDisappear(animated: Bool) {
         print(self.saveCompObserver)
         if saveCompObserver != nil{
-        NSNotificationCenter.defaultCenter().removeObserver(self.saveCompObserver!)
+            NSNotificationCenter.defaultCenter().removeObserver(self.saveCompObserver!)
         }
     }
     
