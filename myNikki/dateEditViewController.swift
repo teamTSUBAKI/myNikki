@@ -52,7 +52,21 @@ class dateEditViewController: UIViewController {
         timeFormatter.locale = NSLocale(localeIdentifier:"ja")
         timeFormatter.dateFormat =  "HH:mm"
         
-        datelabel.text = dateFormatter.stringFromDate(NSDate()) + timeFormatter.stringFromDate(NSDate())
+        if appDelegate?.addPhotoFlag == true{
+            print("とこ")
+            let realm = try!Realm()
+            let editId = appDelegate?.editNoteId
+            
+            let note = realm.objects(Note).filter("id = \(editId!)")
+            
+            datelabel.text = dateFormatter.stringFromDate(note[0].createDate!) + timeFormatter.stringFromDate(note[0].createDate!)
+        }else{
+       
+             datelabel.text = dateFormatter.stringFromDate(NSDate()) + timeFormatter.stringFromDate(NSDate())
+            
+        }
+        
+       
        // timeLabel.text = timeFormatter.stringFromDate(NSDate())
         
         // Do any additional setup after loading the view.
