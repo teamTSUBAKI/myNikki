@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //タイムラインとノート作成画面からの遷移を判定
     var noteFlag:Bool?
+    
     //noteDetailからphotoDetailに渡す
     var detailPhoto:UIImage?
     var detailPhotoId = 0
@@ -90,7 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var nowMonthsForCal:Int!
     
     
-    
+    //変更する日付入れ
+    var editDate:NSDate!
     
 
     //初回起動時に呼ばれる
@@ -119,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         //開発中のためFablicを一度止める
-        Fabric.with([Crashlytics.self])
+        //Fabric.with([Crashlytics.self])
         
         //クラッシュさせるコード。必ず、コメントアウトか、消す。ここ以外には一切書いてない
         //Crashlytics.sharedInstance().crash()
@@ -134,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         gai.logger.logLevel = GAILogLevel.Verbose
         
         //これをコメントアウトすることで、アナリティクスが起動する。
-       // gai.dryRun = true
+          gai.dryRun = true
         
         
         //UserDefaultsにtrueを保存

@@ -277,12 +277,14 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             
            
             let realm = try!Realm()
-            notes = realm.objects(Note).sorted("id", ascending: false)
+            notes = realm.objects(Note).sorted("createDate", ascending: false)
       
       
     
         
         }else if self.navigationController is CalendarViewNavigationController{
+            //カレンダーからのタイムライン
+            
             let calendar:NSCalendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             calendar.timeZone = NSTimeZone(abbreviation: "GMT")!
             
@@ -294,13 +296,13 @@ class timeLineViewController: UIViewController,UITableViewDataSource,UITableView
             let realm = try!Realm()
             
             let predicate = NSPredicate(format: "createDate BETWEEN {%@,%@}", targetDate,lastTargetDate)
-            notes = realm.objects(Note).filter(predicate).sorted("id",ascending: false)
+            notes = realm.objects(Note).filter(predicate).sorted("createDate",ascending: false)
             
         }
         
         
         
-        //帰ってきた全てのノートデータを取り出す
+        //返ってきた全てのノートデータを取り出す
         for note in notes!  {
             
             

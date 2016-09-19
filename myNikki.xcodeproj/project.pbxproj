@@ -57,6 +57,7 @@
 		597F1EC41D1C180A00C4DAA4 /* editItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */; };
 		597F1EC61D1D1EB500C4DAA4 /* completeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */; };
 		597F1ECA1D269E2000C4DAA4 /* wantsListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597F1EC91D269E2000C4DAA4 /* wantsListSettingViewController.swift */; };
+		599507741D8F3E070039D37F /* dateEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599507731D8F3E070039D37F /* dateEditViewController.swift */; };
 		59A04D421C82D16000C75001 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D411C82D16000C75001 /* SystemConfiguration.framework */; };
 		59A04D441C82D17200C75001 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D431C82D17200C75001 /* StoreKit.framework */; };
 		59A04D461C82D18000C75001 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A04D451C82D18000C75001 /* Security.framework */; };
@@ -167,6 +168,7 @@
 		597F1EC31D1C180A00C4DAA4 /* editItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editItemViewController.swift; sourceTree = "<group>"; };
 		597F1EC51D1D1EB500C4DAA4 /* completeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = completeViewController.swift; sourceTree = "<group>"; };
 		597F1EC91D269E2000C4DAA4 /* wantsListSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wantsListSettingViewController.swift; sourceTree = "<group>"; };
+		599507731D8F3E070039D37F /* dateEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dateEditViewController.swift; sourceTree = "<group>"; };
 		59A04D411C82D16000C75001 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		59A04D431C82D17200C75001 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		59A04D451C82D18000C75001 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -466,6 +468,7 @@
 				59E44BD91C2111F7005AF7F3 /* CameraCollectionViewCell.swift */,
 				594A5F3B1C2B98AF002CB673 /* TextViewController.swift */,
 				595E86C91C5511A70048BEF5 /* SEManager.swift */,
+				599507731D8F3E070039D37F /* dateEditViewController.swift */,
 			);
 			name = note;
 			sourceTree = "<group>";
@@ -818,6 +821,7 @@
 				595E86CA1C5511A70048BEF5 /* SEManager.swift in Sources */,
 				593E99A81C69905D005465D6 /* WalkTroughViewController.swift in Sources */,
 				59F610F51C47751900BBD25A /* MonthView.swift in Sources */,
+				599507741D8F3E070039D37F /* dateEditViewController.swift in Sources */,
 				594A5F8B1C301EA1002CB673 /* timeLineTableViewCell.swift in Sources */,
 				597F1ECA1D269E2000C4DAA4 /* wantsListSettingViewController.swift in Sources */,
 				593CF4A61CBBD04400B6F4E1 /* AddReminderViewController.swift in Sources */,

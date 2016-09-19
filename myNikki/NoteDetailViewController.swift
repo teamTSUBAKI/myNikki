@@ -116,10 +116,10 @@ class NoteDetailViewController: UIViewController,UITextViewDelegate,UIGestureRec
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let backButtonItem = UIBarButtonItem(title:"",style: .Plain,target: nil,action: nil)
+        navigationItem.backBarButtonItem = backButtonItem
         
           print("ロード")
-        
-        
         let tap = UITapGestureRecognizer(target: self,action: "taped")
         
         self.view.addGestureRecognizer(tap)

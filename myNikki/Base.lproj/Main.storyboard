@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--カレンダー-->
@@ -865,20 +866,124 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="A7P-8K-ANh" firstAttribute="top" secondItem="bKr-Uq-u4z" secondAttribute="bottom" constant="-55" id="2Ts-SW-wo0"/>
+                            <constraint firstItem="ehQ-9h-JYx" firstAttribute="top" secondItem="A7P-8K-ANh" secondAttribute="bottom" id="2XL-c4-LUx"/>
                             <constraint firstItem="A7P-8K-ANh" firstAttribute="leading" secondItem="QDG-QY-bY2" secondAttribute="leading" id="Vnf-Gx-vys"/>
-                            <constraint firstItem="ehQ-9h-JYx" firstAttribute="top" secondItem="A7P-8K-ANh" secondAttribute="bottom" id="bnE-TU-IhD"/>
                             <constraint firstAttribute="trailing" secondItem="A7P-8K-ANh" secondAttribute="trailing" id="n5H-sU-LIh"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="textView" destination="A7P-8K-ANh" id="ySS-BA-5sL"/>
-                        <outlet property="textViewBottomConst" destination="bnE-TU-IhD" id="0mb-Sp-xtW"/>
+                        <outlet property="textViewBottomConst" destination="2XL-c4-LUx" id="2Bo-Nr-Xcp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PKO-ZZ-zQA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6180" y="-488"/>
+        </scene>
+        <!--日時の変更-->
+        <scene sceneID="17x-pa-XCB">
+            <objects>
+                <viewController storyboardIdentifier="dateEdit" id="M7w-z5-8P7" customClass="dateEditViewController" customModule="TSUBAKI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8gF-cS-8Fu"/>
+                        <viewControllerLayoutGuide type="bottom" id="QWi-W8-SA0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5sD-cI-Vlt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016年6月30日" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCw-Ft-JOa">
+                                <rect key="frame" x="10" y="84" width="300" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="8AA-eG-cgC"/>
+                                    <constraint firstAttribute="width" constant="300" id="os7-Ib-d2S"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SCQ-lA-uxg">
+                                <rect key="frame" x="21" y="120" width="278" height="29"/>
+                                <segments>
+                                    <segment title="Date"/>
+                                    <segment title="Time"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentTaped:" destination="M7w-z5-8P7" eventType="valueChanged" id="62E-SQ-2mw"/>
+                                </connections>
+                            </segmentedControl>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="CMG-rb-ubY">
+                                <rect key="frame" x="0.0" y="158" width="320" height="155"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="155" id="glS-du-kBV"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="495927262.82961202">
+                                    <!--2016-09-18 21:34:22 +0000-->
+                                </date>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnp-FE-FwD">
+                                <rect key="frame" x="36" y="315" width="248" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="zP5-An-5de"/>
+                                </constraints>
+                                <state key="normal" title="TODAY"/>
+                                <connections>
+                                    <action selector="todayButtonTaped:" destination="M7w-z5-8P7" eventType="touchUpInside" id="vag-df-AYq"/>
+                                </connections>
+                            </button>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vw0-gx-NF0">
+                                <rect key="frame" x="0.0" y="158" width="320" height="155"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="155" id="sK2-7L-Z5f"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="495928650.38598597">
+                                    <!--2016-09-18 21:57:30 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CMG-rb-ubY" firstAttribute="leading" secondItem="5sD-cI-Vlt" secondAttribute="leading" id="0br-Kd-TmG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Lnp-FE-FwD" secondAttribute="trailing" constant="20" id="2nD-cA-f1y"/>
+                            <constraint firstItem="Vw0-gx-NF0" firstAttribute="leading" secondItem="5sD-cI-Vlt" secondAttribute="leading" id="8of-7n-eA4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SCQ-lA-uxg" secondAttribute="trailing" constant="5" id="95c-oh-iuI"/>
+                            <constraint firstItem="gCw-Ft-JOa" firstAttribute="top" secondItem="8gF-cS-8Fu" secondAttribute="bottom" constant="20" id="Nb6-VU-fW4"/>
+                            <constraint firstItem="SCQ-lA-uxg" firstAttribute="top" secondItem="gCw-Ft-JOa" secondAttribute="bottom" constant="15" id="SaM-xz-7Qk"/>
+                            <constraint firstItem="gCw-Ft-JOa" firstAttribute="centerX" secondItem="5sD-cI-Vlt" secondAttribute="centerX" id="bhO-bl-0VV"/>
+                            <constraint firstItem="Lnp-FE-FwD" firstAttribute="leading" secondItem="5sD-cI-Vlt" secondAttribute="leadingMargin" constant="20" id="d78-st-uW7"/>
+                            <constraint firstItem="Lnp-FE-FwD" firstAttribute="top" secondItem="CMG-rb-ubY" secondAttribute="bottom" constant="2" id="ir3-xD-Cbk"/>
+                            <constraint firstAttribute="trailing" secondItem="Vw0-gx-NF0" secondAttribute="trailing" id="n8h-Ff-9wM"/>
+                            <constraint firstItem="SCQ-lA-uxg" firstAttribute="leading" secondItem="5sD-cI-Vlt" secondAttribute="leadingMargin" constant="5" id="t0q-SQ-mCv"/>
+                            <constraint firstAttribute="trailing" secondItem="CMG-rb-ubY" secondAttribute="trailing" id="tH4-1o-7Rz"/>
+                            <constraint firstItem="Vw0-gx-NF0" firstAttribute="top" secondItem="SCQ-lA-uxg" secondAttribute="bottom" constant="10" id="vdW-pI-VzX"/>
+                            <constraint firstItem="CMG-rb-ubY" firstAttribute="top" secondItem="SCQ-lA-uxg" secondAttribute="bottom" constant="10" id="zQh-B2-9U0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="日時の変更" id="mJf-Gd-Edo">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="gRR-gK-ZqE">
+                            <connections>
+                                <action selector="cancelBUttonTAped:" destination="M7w-z5-8P7" id="fsG-Y1-1Gf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="完了" id="qKU-zK-1S2">
+                            <connections>
+                                <action selector="saveButtonTaped:" destination="M7w-z5-8P7" id="Mu7-xI-u4k"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="datePicker" destination="CMG-rb-ubY" id="oBO-Qx-p8P"/>
+                        <outlet property="datePicker2" destination="Vw0-gx-NF0" id="54g-n6-5Ma"/>
+                        <outlet property="datelabel" destination="gCw-Ft-JOa" id="UWR-uD-zJf"/>
+                        <outlet property="segmentControl" destination="SCQ-lA-uxg" id="icQ-fD-fiQ"/>
+                        <outlet property="todayButton" destination="Lnp-FE-FwD" id="m0m-kc-AER"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X4o-hX-caY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6909" y="-488"/>
         </scene>
         <!--メール/PDFで共有-->
         <scene sceneID="fSQ-xW-58A">
@@ -927,7 +1032,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxg-WP-JgN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7194" y="-488"/>
+            <point key="canvasLocation" x="8006" y="-488"/>
         </scene>
         <!--やりたいことリスト-->
         <scene sceneID="zbD-74-oYr">
@@ -2225,7 +2330,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I8N-lf-yX5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6791" y="-488"/>
+            <point key="canvasLocation" x="7960" y="-528"/>
         </scene>
         <!--アルバム-->
         <scene sceneID="Qbs-ym-yp1">
@@ -2283,6 +2388,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aqj-O7-oe8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1803" y="123"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Hse-yd-aEE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PXK-Vc-4sk" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="azG-lG-US8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="M7w-z5-8P7" kind="relationship" relationship="rootViewController" id="J4V-UX-Y7o"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="svK-H0-FUU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6553" y="-488"/>
         </scene>
     </scenes>
     <resources>

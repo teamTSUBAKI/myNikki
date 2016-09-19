@@ -102,7 +102,7 @@ class monthAlbum: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UIC
         
         let predicate = NSPredicate(format: "createDate BETWEEN {%@,%@}", startTarget,lastTarget!)
         
-        Notes = realm.objects(Note).filter(predicate).sorted("id", ascending: false)
+        Notes = realm.objects(Note).filter(predicate).sorted("createDate", ascending: false)
         sections = []
         let PhotoBox:NSMutableArray = []
         
